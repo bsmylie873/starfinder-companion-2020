@@ -25,18 +25,13 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
-  final _notifier = ValueNotifier<ThemeNotifier>(
-      ThemeNotifier(ThemeMode.light));
+  final _notifier =
+      ValueNotifier<ThemeNotifier>(ThemeNotifier(ThemeMode.light));
 
   @override
   Widget build(BuildContext context) {
     Widget bodySection = Container(
-      child: SingleChildScrollView(
-          child: Row(
-              children: [ExpandedBlueBox()]
-          )
-      ),
-
+      child: SingleChildScrollView(child: Row(children: [ExpandedBlueBox()])),
     );
 
     return ValueListenableBuilder<ThemeNotifier>(
@@ -44,26 +39,25 @@ class MyApp extends StatelessWidget {
       builder: (_, model, __) {
         final themeMode = model.getThemeMode();
         return MaterialApp(
-            theme: myThemeLight,
-            // Provide light theme.
-            darkTheme: myThemeDark,
-            // Provide dark theme.
-            themeMode: themeMode,
-            // Decides which theme to show.
-            home: Scaffold(
-                appBar: AppBar(
-                    title: Text('Light/Dark Theme'),
-                    actions: <Widget> [
-                    RaisedButton(
-                    onPressed: () =>
-                _notifier.value = ThemeNotifier(themeMode == ThemeMode.light ?
-                ThemeMode.dark : ThemeMode.light),
-            child: Text('Toggle Theme'),
-                    ),
-            ]
-        ),
-            body: ExpandedBlueBox()
-        ),
+          theme: myThemeLight,
+          // Provide light theme.
+          darkTheme: myThemeDark,
+          // Provide dark theme.
+          themeMode: themeMode,
+          // Decides which theme to show.
+          home: Scaffold(
+              appBar:
+                  AppBar(title: Text('Starfinder Companion'), actions: <Widget>[
+                IconButton(
+                  icon: Icon(Icons.brightness_4_outlined),
+                  onPressed: () => _notifier.value = ThemeNotifier(
+                      themeMode == ThemeMode.light
+                          ? ThemeMode.dark
+                          : ThemeMode.light),
+
+                ),
+              ]),
+              body: ExpandedBlueBox()),
         );
       },
     );
@@ -98,7 +92,6 @@ class BlueBox extends StatelessWidget {
     );
   }
 }
-
 
 class ExpandedBlueBox extends StatelessWidget {
   @override
@@ -138,7 +131,6 @@ class SecondRoute extends StatelessWidget {
     );
   }
 }
-
 
 // /*
 // import 'package:flutter/material.dart';
