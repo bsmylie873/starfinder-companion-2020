@@ -89,7 +89,10 @@ class BlueBox extends StatelessWidget {
         label: Text('Button'),
         //`Text` to display
         onPressed: () {
-
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => SecondRoute()),
+          );
         },
       ),
     );
@@ -116,6 +119,26 @@ class ExpandedBlueBox extends StatelessWidget {
     );
   }
 }
+
+class SecondRoute extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("Second Route"),
+      ),
+      body: Center(
+        child: ElevatedButton(
+          onPressed: () {
+            // Navigate back to first route when tapped.
+          },
+          child: Text('Go back!'),
+        ),
+      ),
+    );
+  }
+}
+
 
 // /*
 // import 'package:flutter/material.dart';
