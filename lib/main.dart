@@ -27,15 +27,15 @@ class MyApp extends StatelessWidget {
       ThemeNotifier(ThemeMode.light));
 
   @override
-  Widget build(BuildContext context) {
-    Widget bodySection = Container(
-      child: SingleChildScrollView(
-          child: Row(
-              children: [ExpandedBlueBox()]
-          )
-      ),
-
-    );
+   Widget build(BuildContext context) {
+  //   Widget bodySection = Container(
+  //     child: SingleChildScrollView(
+  //         child: Row(
+  //             children: [ExpandedBlueBox()]
+  //         )
+  //     ),
+  //
+  //   );
 
     return ValueListenableBuilder<ThemeNotifier>(
       valueListenable: _notifier,
