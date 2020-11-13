@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:testflutter/ThemeNotifier.dart';
@@ -8,6 +9,10 @@ import 'ThemeNotifier.dart';
 
 ThemeData myThemeLight = lightTheme;
 ThemeData myThemeDark = darkTheme;
+const double constNumOfButtons = 6;
+const double constContainerHeight = 1;
+
+//This is an edit
 
 void main() {
   runApp(
@@ -27,15 +32,15 @@ class MyApp extends StatelessWidget {
       ThemeNotifier(ThemeMode.light));
 
   @override
-   Widget build(BuildContext context) {
-  //   Widget bodySection = Container(
-  //     child: SingleChildScrollView(
-  //         child: Row(
-  //             children: [ExpandedBlueBox()]
-  //         )
-  //     ),
-  //
-  //   );
+  Widget build(BuildContext context) {
+    // Widget bodySection = Container(
+    //   child: ListView(
+    //
+    //           children: [ExpandedBlueBox()]
+    //
+    //   ),
+    //
+    // );
 
     return ValueListenableBuilder<ThemeNotifier>(
       valueListenable: _notifier,
@@ -61,7 +66,7 @@ class MyApp extends StatelessWidget {
             ]
         ),
             body: ExpandedBlueBox()
-        ),
+          ),
         );
       },
     );
@@ -71,27 +76,48 @@ class MyApp extends StatelessWidget {
 class BlueBox extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    var screenSize = MediaQuery.of(context).size;
+    var width = screenSize.width;
+
     return Container(
-      width: 125,
-      height: 75,
+      width: width,
+      height: buttonHeightWithToolbar(context),
       decoration: BoxDecoration(
         color: Theme.of(context).buttonColor,
         border: Border.all(),
       ),
       child: FlatButton.icon(
-        minWidth: 100,
-        height: 75,
+        minWidth: width,
+        height: buttonHeight(context),
+        //
         //color: Colors.red,
         icon: Icon(Icons.audiotrack_rounded),
         //`Icon` to display
         label: Text('Button'),
         //`Text` to display
         onPressed: () {
-
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => SecondRoute()),
+          );
         },
       ),
     );
   }
+
+  Size screenSize(BuildContext context) {
+    return MediaQuery.of(context).size;
+  }
+
+  double buttonHeight(BuildContext context, {double numOfButtons = constNumOfButtons, double sizeReduction = 0.0}) {
+    return (screenSize(context).height - sizeReduction) / numOfButtons;
+  }
+
+  double buttonHeightWithToolbar(BuildContext context, {double numOfButtons = constNumOfButtons}){
+    return buttonHeight(context, numOfButtons: numOfButtons, sizeReduction: kToolbarHeight);
+  }
+
+
 }
 
 
@@ -99,21 +125,58 @@ class ExpandedBlueBox extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final children = <Widget>[];
-    for (var i = 0; i < 10; i++) {
+    var screenSize = MediaQuery.of(context).size;
+    var width = screenSize.width;
+    var quarterWitdth  = width/8;
+    for (var i = 0; i < 6; i++) {
       children.add(new BlueBox());
     }
     return new SingleChildScrollView(
       child: Container(
-        //width: 125,
-        height: 75,
+        width: width,
+        height: containerHeightWithToolbar(context),
+        padding: EdgeInsets.only(left: quarterWitdth, right: quarterWitdth),
         child: ListView(
-          scrollDirection: Axis.horizontal,
+          scrollDirection: Axis.vertical,
           children: children,
         ),
       ),
     );
   }
+
+  Size screenSize(BuildContext context) {
+    return MediaQuery.of(context).size;
+  }
+
+  double containerHeight(BuildContext context, {double containerHeight = constContainerHeight, double sizeReduction = 0.0}) {
+    return (screenSize(context).height - sizeReduction) / containerHeight;
+  }
+
+  double containerHeightWithToolbar(BuildContext context, {double newContainerHeight = constContainerHeight}){
+    return containerHeight(context, containerHeight: newContainerHeight, sizeReduction: kToolbarHeight);
+  }
+
 }
+
+class SecondRoute extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("Second Route"),
+      ),
+      body: Center(
+        child: ElevatedButton(
+          onPressed: () {
+            // Navigate back to first route when tapped.
+          },
+          child: Text('Go back!'),
+        ),
+      ),
+    );
+  }
+}
+
 
 // /*
 // import 'package:flutter/material.dart';
