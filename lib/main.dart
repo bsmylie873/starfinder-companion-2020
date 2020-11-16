@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:webview_flutter/webview_flutter.dart';
+import 'package:animated_splash_screen/animated_splash_screen.dart';
+import 'package:page_transition/page_transition.dart';
 import 'theme.dart';
 import 'darktheme.dart';
 import 'ThemeManager.dart';
@@ -20,8 +22,25 @@ void main() {
   );
 }
 
-
 class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+        title: 'Splash Screen',
+        home: AnimatedSplashScreen(
+            duration: 1000,
+            splash: 'images/StarLogo.png',
+            splashIconSize: 1500,
+            nextScreen: MainScreen(),
+            splashTransition: SplashTransition.rotationTransition,
+            pageTransitionType: PageTransitionType.scale,
+            backgroundColor: Colors.black
+        )
+    );
+  }
+}
+
+class MainScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Consumer<ThemeManager>(
