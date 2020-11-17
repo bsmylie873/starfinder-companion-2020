@@ -15,10 +15,11 @@ const double constNumOfButtons = 6;
 const double constContainerHeight = 1;
 
 void main() {
-  return runApp(ChangeNotifierProvider<ThemeManager>(
-    create: (_) => new ThemeManager(),
-    child: MyApp(),
-  ),
+  return runApp(
+    ChangeNotifierProvider<ThemeManager>(
+      create: (_) => new ThemeManager(),
+      child: MyApp(),
+    ),
   );
 }
 
@@ -34,9 +35,7 @@ class MyApp extends StatelessWidget {
             nextScreen: MainScreen(),
             splashTransition: SplashTransition.rotationTransition,
             pageTransitionType: PageTransitionType.scale,
-            backgroundColor: Colors.black
-        )
-    );
+            backgroundColor: Colors.black));
   }
 }
 
@@ -44,24 +43,37 @@ class MainScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Consumer<ThemeManager>(
-        builder: (context, theme, child) =>
-            MaterialApp(
+        builder: (context, theme, child) => MaterialApp(
               theme: theme.getTheme(),
               home: Scaffold(
                   appBar: AppBar(
+                    leading: Builder(
+                      builder: (BuildContext context) {
+                        return IconButton(
+                          icon: const Icon(Icons.settings),
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => SettingsRoute()),
+                            );
+                          },
+                          tooltip: MaterialLocalizations.of(context)
+                              .openAppDrawerTooltip,
+                        );
+                      },
+                    ),
                     actions: <Widget>[
                       IconButton(
-                        icon: Icon(Icons.brightness_4_outlined),
-                        onPressed: () => {
-                          theme.toggleMode()
-                        }
-                      ),
+                          icon: Icon(Icons.brightness_4_outlined),
+                          onPressed: () => {theme.toggleMode()}),
                     ],
-                    title: Text('Starfinder Companion'),
+                    title: Center(
+                      child: Text('Starfinder Companion'),
+                    ),
                   ),
                   body: ExpandedBlueBox()),
-            )
-    );
+            ));
   }
 }
 
@@ -101,15 +113,16 @@ class BlueBox extends StatelessWidget {
     return MediaQuery.of(context).size;
   }
 
-  double buttonHeight(BuildContext context, {double numOfButtons = constNumOfButtons, double sizeReduction = 0.0}) {
+  double buttonHeight(BuildContext context,
+      {double numOfButtons = constNumOfButtons, double sizeReduction = 0.0}) {
     return (screenSize(context).height - sizeReduction) / numOfButtons;
   }
 
-  double buttonHeightWithToolbar(BuildContext context, {double numOfButtons = constNumOfButtons}){
-    return buttonHeight(context, numOfButtons: numOfButtons, sizeReduction: kToolbarHeight);
+  double buttonHeightWithToolbar(BuildContext context,
+      {double numOfButtons = constNumOfButtons}) {
+    return buttonHeight(context,
+        numOfButtons: numOfButtons, sizeReduction: kToolbarHeight);
   }
-
-
 }
 
 class ExpandedBlueBox extends StatelessWidget {
@@ -118,7 +131,7 @@ class ExpandedBlueBox extends StatelessWidget {
     final children = <Widget>[];
     var screenSize = MediaQuery.of(context).size;
     var width = screenSize.width;
-    var quarterWidth  = width/4;
+    var quarterWidth = width / 4;
 
     for (var i = 0; i < 6; i++) {
       children.add(new BlueBox());
@@ -140,14 +153,17 @@ class ExpandedBlueBox extends StatelessWidget {
     return MediaQuery.of(context).size;
   }
 
-  double containerHeight(BuildContext context, {double containerHeight = constContainerHeight, double sizeReduction = 0.0}) {
+  double containerHeight(BuildContext context,
+      {double containerHeight = constContainerHeight,
+      double sizeReduction = 0.0}) {
     return (screenSize(context).height - sizeReduction) / containerHeight;
   }
 
-  double containerHeightWithToolbar(BuildContext context, {double newContainerHeight = constContainerHeight}){
-    return containerHeight(context, containerHeight: newContainerHeight, sizeReduction: kToolbarHeight);
+  double containerHeightWithToolbar(BuildContext context,
+      {double newContainerHeight = constContainerHeight}) {
+    return containerHeight(context,
+        containerHeight: newContainerHeight, sizeReduction: kToolbarHeight);
   }
-
 }
 
 /*class IconState extends State<StatefulWidget> {
@@ -202,7 +218,7 @@ class SettingsRoute extends StatelessWidget {
   }
 }
 
-const htmlData ="""
+const htmlData = """
 <h1>Header 1</h1>
 <h2>Header 2</h2>
 <h3>Header 3</h3>
@@ -301,4 +317,3 @@ const htmlData ="""
       <iframe src="https://google.com"></iframe>
       -->
 """;
-
