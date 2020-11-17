@@ -6,7 +6,7 @@ import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:page_transition/page_transition.dart';
 import 'theme.dart';
 import 'darktheme.dart';
-import 'ThemeManager.dart';
+import 'thememanager.dart';
 import 'wiki.dart';
 
 ThemeData myThemeLight = lightTheme;
