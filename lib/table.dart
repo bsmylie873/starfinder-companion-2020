@@ -12,10 +12,13 @@ class _TableLayoutState extends State<TableLayout> {
   List<List<dynamic>> data = [];
 
   loadAsset() async {
-    final myData = await rootBundle.loadString("assets/sales.csv");
+    final myData = await rootBundle.loadString("data/example.csv");
     List<List<dynamic>> csvTable = CsvToListConverter().convert(myData);
-
+    print(csvTable);
     data = csvTable;
+    setState(() {
+
+    });
   }
 
   @override
@@ -29,13 +32,14 @@ class _TableLayoutState extends State<TableLayout> {
             print(data);
           }),
       appBar: AppBar(
-        title: Text("Table Layout and CSV"),
+        title: Text("Sample Table Layout and CSV"),
       ),
       body: SingleChildScrollView(
         child: Table(
           columnWidths: {
-            0: FixedColumnWidth(100.0),
+            0: FixedColumnWidth(200.0),
             1: FixedColumnWidth(200.0),
+            2: FixedColumnWidth(50.0),
           },
           border: TableBorder.all(width: 1.0),
           children: data.map((item) {
@@ -59,5 +63,3 @@ class _TableLayoutState extends State<TableLayout> {
     );
   }
 }
-
-

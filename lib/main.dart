@@ -4,10 +4,14 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:page_transition/page_transition.dart';
+import 'package:csv/csv.dart';
+import 'dart:async' show Future;
+import 'package:flutter/services.dart' show rootBundle;
 import 'theme.dart';
 import 'darktheme.dart';
 import 'thememanager.dart';
 import 'wiki.dart';
+import 'table.dart';
 
 ThemeData myThemeLight = lightTheme;
 ThemeData myThemeDark = darkTheme;
@@ -102,7 +106,7 @@ class BlueBox extends StatelessWidget {
         onPressed: () {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => SecondRoute()),
+            MaterialPageRoute(builder: (context) => TableLayout()),
           );
         },
       ),
