@@ -12,6 +12,7 @@ import 'darktheme.dart';
 import 'thememanager.dart';
 import 'wiki.dart';
 import 'table.dart';
+import 'BlueBoxes.dart';
 
 ThemeData myThemeLight = lightTheme;
 ThemeData myThemeDark = darkTheme;
@@ -85,53 +86,6 @@ class MainScreen extends StatelessWidget {
   }
 }
 
-class BlueBox extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    var screenSize = MediaQuery.of(context).size;
-    var width = screenSize.width;
-
-    return Container(
-      width: width,
-      height: buttonHeightWithToolbar(context),
-      decoration: BoxDecoration(
-        color: Theme.of(context).buttonColor,
-        border: Border.all(),
-      ),
-      child: FlatButton.icon(
-        minWidth: width,
-        height: buttonHeight(context),
-        //
-        //color: Colors.red,
-        icon: Icon(Icons.audiotrack_rounded),
-        //`Icon` to display
-        label: Text('Button'),
-        //`Text` to display
-        onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => TableLayout()),
-          );
-        },
-      ),
-    );
-  }
-
-  Size screenSize(BuildContext context) {
-    return MediaQuery.of(context).size;
-  }
-
-  double buttonHeight(BuildContext context,
-      {double numOfButtons = constNumOfButtons, double sizeReduction = 0.0}) {
-    return (screenSize(context).height - sizeReduction) / numOfButtons;
-  }
-
-  double buttonHeightWithToolbar(BuildContext context,
-      {double numOfButtons = constNumOfButtons}) {
-    return buttonHeight(context,
-        numOfButtons: numOfButtons, sizeReduction: kToolbarHeight);
-  }
-}
 
 class ExpandedBlueBox extends StatelessWidget {
   @override
@@ -141,8 +95,30 @@ class ExpandedBlueBox extends StatelessWidget {
     var width = screenSize.width;
     var quarterWidth = width / 4;
 
-    for (var i = 0; i < 6; i++) {
-      children.add(new BlueBox());
+    for (var i = 0; i < 7; i++) {
+      switch(i) {
+        case 0:
+          children.add(new BlueBox());
+          break;
+        case 1:
+          children.add(new BlueBox1());
+          break;
+        case 2:
+          children.add(new BlueBox2());
+          break;
+        case 3:
+          children.add(new BlueBox3());
+          break;
+        case 4:
+          children.add(new BlueBox4());
+          break;
+        case 5:
+          children.add(new BlueBox5());
+          break;
+        case 6:
+          children.add(new BlueBox6());
+          break;
+      }
     }
     return new SingleChildScrollView(
       child: Container(
@@ -163,7 +139,7 @@ class ExpandedBlueBox extends StatelessWidget {
 
   double containerHeight(BuildContext context,
       {double containerHeight = constContainerHeight,
-      double sizeReduction = 0.0}) {
+        double sizeReduction = 0.0}) {
     return (screenSize(context).height - sizeReduction) / containerHeight;
   }
 
