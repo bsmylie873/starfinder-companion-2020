@@ -25,6 +25,14 @@ dependencies:
     sdk: flutter
   provider: ^4.3.2+2
   shared_preferences: ^0.5.12+4
+  webview_flutter: ^1.0.7
+  splashscreen: ^1.2.0
+  flare_flutter: ^2.0.1
+  animated_splash_screen: ^1.0.1+2
+  page_transition: ^1.1.7+2
+  csv: ^4.1.0
+  path_provider: ^1.6.24
+  open_file: ^3.0.3
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
@@ -41,6 +49,8 @@ dev_dependencies:
 flutter:
   assets:
     - images/
+    - data/
+    - data/Game Mastering/
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
   # the material Icons class.

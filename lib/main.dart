@@ -1,98 +1,95 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:webview_flutter/webview_flutter.dart';
+import 'package:animated_splash_screen/animated_splash_screen.dart';
+import 'package:page_transition/page_transition.dart';
+import 'package:csv/csv.dart';
+import 'package:flutter/services.dart';
+import 'package:path_provider/path_provider.dart';
+import 'dart:async' show Future;
+import 'dart:io';
 import 'theme.dart';
 import 'darktheme.dart';
-import 'ThemeManager.dart';
+import 'thememanager.dart';
+import 'wiki.dart';
+import 'table.dart';
+import 'BlueBoxes.dart';
 
 ThemeData myThemeLight = lightTheme;
 ThemeData myThemeDark = darkTheme;
 const double constNumOfButtons = 6;
 const double constContainerHeight = 1;
 
+String gmpath = 'data/Game Mastering';
+Directory gmdir = Directory(gmpath);
+var gmList = gmdir.list(recursive: false).toList();
+
 void main() {
-  return runApp(ChangeNotifierProvider<ThemeManager>(
-    create: (_) => new ThemeManager(),
-    child: MyApp(),
-  ),
+  return runApp(
+    ChangeNotifierProvider<ThemeManager>(
+      create: (_) => new ThemeManager(),
+      child: MyApp(),
+    ),
   );
 }
-
 
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    Widget bodySection = Container(
-      child: SingleChildScrollView(child: Row(children: [ExpandedBlueBox()])),
-    );
-
-    return Consumer<ThemeManager>(
-        builder: (context, theme, child) =>
-            MaterialApp(
-              theme: theme.getTheme(),
-              home: Scaffold(
-                  appBar: AppBar(
-                    actions: <Widget>[
-                      IconButton(
-                        icon: Icon(Icons.brightness_4_outlined),
-                        onPressed: () => {
-                          theme.toggleMode()
-                        }
-                      ),
-                    ],
-                    title: Text('Starfinder Companion'),
-                  ),
-                  body: ExpandedBlueBox()),
-            )
-    );
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+      DeviceOrientation.portraitDown,
+    ]);
+    return MaterialApp(
+        title: 'Splash Screen',
+        home: AnimatedSplashScreen(
+            duration: 1000,
+            splash: 'images/StarLogo.png',
+            splashIconSize: 1500,
+            nextScreen: MainScreen(),
+            splashTransition: SplashTransition.rotationTransition,
+            pageTransitionType: PageTransitionType.scale,
+            backgroundColor: Colors.black));
   }
 }
 
-class BlueBox extends StatelessWidget {
+class MainScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    var screenSize = MediaQuery.of(context).size;
-    var width = screenSize.width;
-
-    return Container(
-      width: width,
-      height: buttonHeightWithToolbar(context),
-      decoration: BoxDecoration(
-        color: Theme.of(context).buttonColor,
-        border: Border.all(),
-      ),
-      child: FlatButton.icon(
-        minWidth: width,
-        height: buttonHeight(context),
-        //
-        //color: Colors.red,
-        icon: Icon(Icons.audiotrack_rounded),
-        //`Icon` to display
-        label: Text('Button'),
-        //`Text` to display
-        onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => SecondRoute()),
-          );
-        },
-      ),
-    );
+    return Consumer<ThemeManager>(
+        builder: (context, theme, child) => MaterialApp(
+              theme: theme.getTheme(),
+              home: Scaffold(
+                  appBar: AppBar(
+                    leading: Builder(
+                      builder: (BuildContext context) {
+                        return IconButton(
+                          icon: const Icon(Icons.settings),
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => SettingsRoute()),
+                            );
+                          },
+                          tooltip: MaterialLocalizations.of(context)
+                              .openAppDrawerTooltip,
+                        );
+                      },
+                    ),
+                    actions: <Widget>[
+                      IconButton(
+                          icon: Icon(Icons.brightness_4_outlined),
+                          onPressed: () => {theme.toggleMode()}),
+                    ],
+                    title: Center(
+                      child: Text('Starfinder Companion'),
+                    ),
+                  ),
+                  body: ExpandedBlueBox()),
+            ));
   }
-
-  Size screenSize(BuildContext context) {
-    return MediaQuery.of(context).size;
-  }
-
-  double buttonHeight(BuildContext context, {double numOfButtons = constNumOfButtons, double sizeReduction = 0.0}) {
-    return (screenSize(context).height - sizeReduction) / numOfButtons;
-  }
-
-  double buttonHeightWithToolbar(BuildContext context, {double numOfButtons = constNumOfButtons}){
-    return buttonHeight(context, numOfButtons: numOfButtons, sizeReduction: kToolbarHeight);
-  }
-
-
 }
 
 class ExpandedBlueBox extends StatelessWidget {
@@ -101,15 +98,38 @@ class ExpandedBlueBox extends StatelessWidget {
     final children = <Widget>[];
     var screenSize = MediaQuery.of(context).size;
     var width = screenSize.width;
-    var quarterWitdth  = width/8;
-    for (var i = 0; i < 6; i++) {
-      children.add(new BlueBox());
+    var quarterWidth = width / 4;
+
+    for (var i = 0; i < 7; i++) {
+      switch(i) {
+        case 0:
+          children.add(new BlueBox());
+          break;
+        case 1:
+          children.add(new BlueBox1());
+          break;
+        case 2:
+          children.add(new BlueBox2());
+          break;
+        case 3:
+          children.add(new BlueBox3());
+          break;
+        case 4:
+          children.add(new BlueBox4());
+          break;
+        case 5:
+          children.add(new BlueBox5());
+          break;
+        case 6:
+          children.add(new BlueBox6());
+          break;
+      }
     }
     return new SingleChildScrollView(
       child: Container(
         width: width,
         height: containerHeightWithToolbar(context),
-        padding: EdgeInsets.only(left: quarterWitdth, right: quarterWitdth),
+        padding: EdgeInsets.only(left: quarterWidth, right: quarterWidth),
         child: ListView(
           scrollDirection: Axis.vertical,
           children: children,
@@ -122,39 +142,25 @@ class ExpandedBlueBox extends StatelessWidget {
     return MediaQuery.of(context).size;
   }
 
-  double containerHeight(BuildContext context, {double containerHeight = constContainerHeight, double sizeReduction = 0.0}) {
+  double containerHeight(BuildContext context,
+      {double containerHeight = constContainerHeight,
+        double sizeReduction = 0.0}) {
     return (screenSize(context).height - sizeReduction) / containerHeight;
   }
 
-  double containerHeightWithToolbar(BuildContext context, {double newContainerHeight = constContainerHeight}){
-    return containerHeight(context, containerHeight: newContainerHeight, sizeReduction: kToolbarHeight);
+  double containerHeightWithToolbar(BuildContext context,
+      {double newContainerHeight = constContainerHeight}) {
+    return containerHeight(context,
+        containerHeight: newContainerHeight, sizeReduction: kToolbarHeight);
   }
-
 }
 
-/*class IconState extends State<StatefulWidget> {
-  @override
-  Widget build(BuildContext context) {
-    return ListTile(
-        leading: new IconButton(
-          icon: Icon(Icons.brightness_7),
-          onPressed: () => _notifier.value = ThemeNotifier(
-        themeMode == ThemeMode.light
-            ? ThemeMode.dark
-            : ThemeMode.light),
-
-    ),,
-        )
-    )
-  }
-}*/
-
-class SecondRoute extends StatelessWidget {
+class SettingsRoute extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Second Route"),
+        title: Text("Settings Screen"),
       ),
       body: Center(
         child: ElevatedButton(
