@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:webview_flutter/webview_flutter.dart';
@@ -90,6 +91,20 @@ class MainScreen extends StatelessWidget {
                   body: ExpandedBlueBox()),
             ));
   }
+
+  Size screenSize(BuildContext context) {
+    return MediaQuery.of(context).size;
+  }
+
+  double buttonHeight(BuildContext context, {double numOfButtons = constNumOfButtons, double sizeReduction = 0.0}) {
+    return (screenSize(context).height - sizeReduction) / numOfButtons;
+  }
+
+  double buttonHeightWithToolbar(BuildContext context, {double numOfButtons = constNumOfButtons}){
+    return buttonHeight(context, numOfButtons: numOfButtons, sizeReduction: kToolbarHeight);
+  }
+
+
 }
 
 class ExpandedBlueBox extends StatelessWidget {
