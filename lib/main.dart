@@ -6,7 +6,7 @@ import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:csv/csv.dart';
 import 'dart:async' show Future;
-import 'package:flutter/services.dart' show rootBundle;
+import 'package:flutter/services.dart';
 import 'theme.dart';
 import 'darktheme.dart';
 import 'thememanager.dart';
@@ -30,6 +30,10 @@ void main() {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+      DeviceOrientation.portraitDown,
+    ]);
     return MaterialApp(
         title: 'Splash Screen',
         home: AnimatedSplashScreen(
