@@ -7,8 +7,10 @@ import 'package:page_transition/page_transition.dart';
 import 'package:csv/csv.dart';
 import 'package:flutter/services.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:path/path.dart';
 import 'dart:async' show Future;
 import 'dart:io';
+import 'dart:convert';
 import 'theme.dart';
 import 'darktheme.dart';
 import 'thememanager.dart';
@@ -41,6 +43,11 @@ class MyApp extends StatelessWidget {
       DeviceOrientation.portraitUp,
       DeviceOrientation.portraitDown,
     ]);
+    Future<String> assetLoad() async {
+        final manifestJson = await DefaultAssetBundle.of(context).loadString('AssetManifest.json');
+        final images = jsonDecode(manifestJson).keys.where((String key) => key.startsWith('assets/data'));
+      }
+      assetLoad();
     return MaterialApp(
         title: 'Splash Screen',
         home: AnimatedSplashScreen(
@@ -100,7 +107,7 @@ class ExpandedBlueBox extends StatelessWidget {
     var width = screenSize.width;
     var quarterWidth = width / 4;
 
-    for (var i = 0; i < 7; i++) {
+    for (var i = 0; i < 8; i++) {
       switch(i) {
         case 0:
           children.add(new BlueBox());
@@ -122,6 +129,9 @@ class ExpandedBlueBox extends StatelessWidget {
           break;
         case 6:
           children.add(new BlueBox6());
+          break;
+        case 7:
+          children.add(new BlueBox7());
           break;
       }
     }
@@ -172,4 +182,17 @@ class SettingsRoute extends StatelessWidget {
       ),
     );
   }
+}
+
+class Asset{
+  String fileName;
+  String fileType;
+
+  // String get newName{
+  //
+  //   return fixedName;
+  // }
+
+
+
 }
