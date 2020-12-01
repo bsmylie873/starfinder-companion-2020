@@ -1,0 +1,1 @@
+This entry lists the creature’s ranged attacks in the same format the Melee entry uses for melee attacks.
