@@ -154,7 +154,7 @@ class _AnimatedSplashScreenState extends State<AnimatedSplashScreen>
 
     _animationController = new AnimationController(
         duration: w.animationDuration ?? Duration(milliseconds: 800),
-        TickerProvider: this);
+        vsync: this);
 
     Animatable animation = w.customAnimation ??
             () {
