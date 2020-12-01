@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:testflutter/WidgetScreens.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:page_transition/page_transition.dart';
@@ -8,6 +9,7 @@ import 'package:csv/csv.dart';
 import 'package:flutter/services.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:path/path.dart';
+import 'package:http/http.dart';
 import 'dart:async' show Future;
 import 'dart:io';
 import 'dart:convert';
@@ -17,15 +19,16 @@ import 'thememanager.dart';
 import 'wiki.dart';
 import 'table.dart';
 import 'BlueBoxes.dart';
+import 'spell.dart';
 
 ThemeData myThemeLight = lightTheme;
 ThemeData myThemeDark = darkTheme;
 const double constNumOfButtons = 6;
 const double constContainerHeight = 1;
 
-String gmpath = 'data/Game Mastering';
+/*String gmpath = 'data/Game Mastering';
 Directory gmdir = Directory(gmpath);
-var gmList = gmdir.list(recursive: false).toList();
+var gmList = gmdir.list(recursive: false).toList();*/
 
 void main() {
   return runApp(
@@ -36,18 +39,61 @@ void main() {
   );
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget{
+  @override
+  MyAppState createState() => MyAppState();
+}
+
+class MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     SystemChrome.setPreferredOrientations([
       DeviceOrientation.portraitUp,
       DeviceOrientation.portraitDown,
     ]);
+
+    /*List<String> dataArray = [];
+    var concatenate = StringBuffer();
     Future<String> assetLoad() async {
-        final manifestJson = await DefaultAssetBundle.of(context).loadString('AssetManifest.json');
-        final images = jsonDecode(manifestJson).keys.where((String key) => key.startsWith('assets/data'));
+        final manifestJson2 = await DefaultAssetBundle.of(context).loadString('AssetManifest.json');
+        print(manifestJson2);
+        final List<String>data = jsonDecode(manifestJson2).keys.where((String key) {
+            return key.contains('data');
+        }).toList();
+        //print(data);
+        dataArray = data;
+        String tempdata="";
+        return tempdata;
       }
-      assetLoad();
+
+    assetLoad();
+    String resultJson="Gib";
+    DefaultAssetBundle.of(context).loadString('AssetManifest.json').then((String manifestJson){
+      resultJson = manifestJson;
+    });
+    print("JSON Manifest:");
+    dataArray.forEach((element) {
+      concatenate.write(element);
+    });
+    print(assetLoad());
+    print(concatenate);*/
+
+    List<Spell> _spells = List<Spell>();
+
+    Future<String> _loadFromSpellJson() async {
+      return await rootBundle.loadString("data/starfinderMagicAndSpells.json");
+    }
+
+    Future <List<Spell>> spellJson() async {
+      String jsonString = await _loadFromSpellJson();
+      var jsonResponse = jsonDecode(jsonString);
+      for (jsonResponse in jsonResponse) {
+        _spells.add(Spell.fromJson(jsonResponse));
+      }
+      return _spells;
+    }
+
+
     return MaterialApp(
         title: 'Splash Screen',
         home: AnimatedSplashScreen(
@@ -65,7 +111,8 @@ class MainScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Consumer<ThemeManager>(
-        builder: (context, theme, child) => MaterialApp(
+        builder: (context, theme, child) =>
+            MaterialApp(
               theme: theme.getTheme(),
               home: Scaffold(
                   appBar: AppBar(
@@ -80,7 +127,8 @@ class MainScreen extends StatelessWidget {
                                   builder: (context) => SettingsRoute()),
                             );
                           },
-                          tooltip: MaterialLocalizations.of(context)
+                          tooltip: MaterialLocalizations
+                              .of(context)
                               .openAppDrawerTooltip,
                         );
                       },
@@ -103,12 +151,14 @@ class ExpandedBlueBox extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final children = <Widget>[];
-    var screenSize = MediaQuery.of(context).size;
+    var screenSize = MediaQuery
+        .of(context)
+        .size;
     var width = screenSize.width;
     var quarterWidth = width / 4;
 
     for (var i = 0; i < 8; i++) {
-      switch(i) {
+      switch (i) {
         case 0:
           children.add(new BlueBox());
           break;
@@ -149,7 +199,9 @@ class ExpandedBlueBox extends StatelessWidget {
   }
 
   Size screenSize(BuildContext context) {
-    return MediaQuery.of(context).size;
+    return MediaQuery
+        .of(context)
+        .size;
   }
 
   double containerHeight(BuildContext context,
@@ -184,15 +236,6 @@ class SettingsRoute extends StatelessWidget {
   }
 }
 
-class Asset{
-  String fileName;
-  String fileType;
-
-  // String get newName{
-  //
-  //   return fixedName;
-  // }
 
 
 
-}

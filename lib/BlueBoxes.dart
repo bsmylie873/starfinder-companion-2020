@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:testflutter/main.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:page_transition/page_transition.dart';
@@ -180,7 +181,7 @@ class BlueBox4 extends StatelessWidget {
             onTap: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => MagicIndex()),
+                MaterialPageRoute(builder: (context) => SpellList()),
               );
             }));
   }
