@@ -112,8 +112,6 @@ class SpellList extends StatefulWidget {
 }
 
 class SpellListState extends State<SpellList> {
-  List<String> _spells = List<String>();
-
   Future<String> _loadFromSpellJson() async {
     return await rootBundle.loadString("data/starfinderMagicAndSpells.json");
   }
@@ -122,19 +120,151 @@ class SpellListState extends State<SpellList> {
     String jsonString = await _loadFromSpellJson();
     Map<String, dynamic> jsonResponses = jsonDecode(jsonString);
     List<String> spells = jsonResponses.keys.toList();
-    print("Test");
-    print(jsonResponses.length);
-    print(spells[0]);
-    print(spells[10]);
-    print(spells[100]);
     return spells;
   }
 
-  void spellGrabber() async {
-    _spells = await fetchSpells();
+  Future<List<String>> fetchASpell(String spellName) async {
+    String jsonString = await _loadFromSpellJson();
+    Spell newSpell = new Spell();
+    Map<String, dynamic> jsonResponses = jsonDecode(jsonString);
+    newSpell = Spell.fromJson(jsonResponses[spellName]);
+    newSpell.name = spellName;
+    List<String> spellDetails = List<String>();
+    spellDetails = newSpell.spellDetails(newSpell);
+    return spellDetails;
   }
 
-  Widget createListView(BuildContext context, AsyncSnapshot snapshot) {
+  Widget selectedSpell(BuildContext context, String spell) {
+    return FutureBuilder(
+        future: fetchASpell(spell),
+        //future: fetchSpells(),
+        builder: (context, AsyncSnapshot snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return Center(child: CircularProgressIndicator());
+          } else {
+            return createSpellSelectedView(context, snapshot);
+          }
+        });
+  }
+
+  Widget createSpellSelectedView(BuildContext context, AsyncSnapshot snapshot) {
+    List<String> values1 = snapshot.data;
+    return new ListView.builder(
+      itemCount: values1.length,
+      itemBuilder: (BuildContext context, int index) {
+        return new Column(
+          children: <Widget>[
+            new ListTile(
+              title: new Text(values1[index]),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  /*Widget createSpellListView(BuildContext context, AsyncSnapshot snapshot) {
+    List<String> values = snapshot.data;
+    return new ListView.builder(
+      itemCount: values.length,
+      itemBuilder: (BuildContext context, int index) {
+        return new Column(
+          children: <Widget>[
+            new ListTile(
+              title: new Text(values[index]),
+              onTap: () => {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) =>
+                          SpellInfoPageBuilder(spellTitle: values[index])),
+                )
+              },
+            ),
+            new Divider(
+              height: 2.0,
+            ),
+          ],
+        );
+      },
+    );
+  }*/
+
+  Widget createSpellListView(BuildContext context, AsyncSnapshot snapshot) {
+    List<String> values = snapshot.data;
+    return new ListView.builder(
+      itemCount: values.length,
+      itemBuilder: (BuildContext context, int index) {
+        return new Column(
+          children: <Widget>[
+            new ListTile(
+              title: new Text(values[index]),
+              onTap: () => {selectedSpell(context, values[index])},
+            ),
+            new Divider(
+              height: 2.0,
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+        appBar: AppBar(
+          title: Text("Spells"),
+        ),
+        body: FutureBuilder(
+            future: fetchSpells(),
+            builder: (context, AsyncSnapshot snapshot) {
+              if (!snapshot.hasData) {
+                return Center(child: CircularProgressIndicator());
+              } else {
+                // return selectedSpell(context, snapshot.data.toString());
+                return createSpellListView(context, snapshot);
+              }
+            }));
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+class SpellInfoPageBuilder extends StatelessWidget {
+  final String spellTitle;
+
+  SpellInfoPageBuilder({Key key, this.spellTitle}) : super(key: key);
+
+  Widget createSpellDetailsView(BuildContext context, AsyncSnapshot snapshot) {
     List<String> values = snapshot.data;
     return new ListView.builder(
       itemCount: values.length,
@@ -144,48 +274,51 @@ class SpellListState extends State<SpellList> {
             new ListTile(
               title: new Text(values[index]),
             ),
-            new Divider(height: 2.0,),
           ],
         );
       },
     );
   }
 
-  //https://stackoverflow.com/questions/56694731/flutter-listview-builder-using-futurebuilder-not-working
-  Widget listWidget() {
-    FutureBuilder(
-        future: fetchSpells(),
-        builder: (context, AsyncSnapshot snapshot) {
-          if (!snapshot.hasData) {
-            return Center(child: CircularProgressIndicator());
-          } else {
-            return createListView(context, snapshot);
-          }
-        }
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Many Spells"),
-      ),
-      body: FutureBuilder(
-          future: fetchSpells(),
-          builder: (context, AsyncSnapshot snapshot) {
-            if (!snapshot.hasData) {
-              return Center(child: CircularProgressIndicator());
-            } else {
-              return createListView(context, snapshot);
-            }
-          }
-      )
-    );
+        appBar: AppBar(
+          title: Text(spellTitle),
+        ),
+        body: FutureBuilder(
+            future: fetchASpell(spellTitle),
+            builder: (context, AsyncSnapshot snapshot) {
+              if (!snapshot.hasData) {
+                return Center(child: CircularProgressIndicator());
+              } else {
+                // return selectedSpell(context, snapshot.data.toString());
+                return createSpellDetailsView(context, snapshot);
+              }
+            }));
+  }
+
+
+  Future<String> _loadFromSpellJson() async {
+    return await rootBundle.loadString("data/starfinderMagicAndSpells.json");
+  }
+
+  Future<List<String>> fetchASpell(String spellName) async {
+    String jsonString = await _loadFromSpellJson();
+    Spell newSpell = new Spell();
+    Map<String, dynamic> jsonResponses = jsonDecode(jsonString);
+    newSpell = Spell.fromJson(jsonResponses[spellName]);
+    newSpell.name = spellName;
+    List<String> spellDetails = newSpell.spellDetails(newSpell);
+    return spellDetails;
+    // return newSpell;
+  }
+
+  Future<List<String>> parseSpell(Spell spell) async {
+    List<String> spellDetails = spell.spellDetails(spell);
+    return spellDetails;
   }
 }
-
-
 
 class GMRules extends StatelessWidget {
   @override
