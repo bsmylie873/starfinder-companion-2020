@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:animated_splash_screen/animated_splash_screen.dart';
@@ -17,6 +18,10 @@ ThemeData myThemeLight = lightTheme;
 ThemeData myThemeDark = darkTheme;
 const double constNumOfButtons = 7;
 const double constContainerHeight = 1;
+
+String gmpath = 'data/Game Mastering';
+Directory gmdir = Directory(gmpath);
+var gmList = gmdir.list(recursive: false).toList();
 
 void main() {
   return runApp(
