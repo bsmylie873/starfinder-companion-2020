@@ -1,0 +1,1 @@
+If the creature can make multiple melee attacks with a full action (usually with different weapons), the attacks and attack roll modifiers are listed in this entry, followed by the attack’s damage, damage type, and critical effects in parentheses.

@@ -1,10 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:provider/provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:webview_flutter/webview_flutter.dart';
-import 'package:animated_splash_screen/animated_splash_screen.dart';
-import 'package:page_transition/page_transition.dart';
 import 'dart:convert';
 import 'spell.dart';
 
@@ -324,19 +320,41 @@ class GMRules extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Game Mastering Info."),
+        title: Text("Trying to read JSON files"),
       ),
-      body: Center(
-        child: ElevatedButton(
-          onPressed: () {
-            // Navigate back to first route when tapped.
-          },
-          child: Text('Game mastering rules go here'),
-        ),
-      ),
+      body: Container(
+        child: Center(
+          child: FutureBuilder(
+            future: DefaultAssetBundle.of(context).loadString('AssetManifest.json'),
+            builder: (context, snapshot) {
+              List<String> files = getFileData(snapshot.data);
+              return files.isNotEmpty ? new DataPageBuilder(fileData: files) : new Center(child: CircularProgressIndicator());
+            }),
+          )
+        )
+        //children: assembleData(context),
+          //child: Text('Spells go here'),
     );
   }
-}
+
+  List<String> getFileData(String data) {
+    if(data == null){
+      return [];
+    }
+    List<String> parsedData = [];
+    Map<String, dynamic> mapData = json.decode(data);
+    // parsedData = json.decode(data).keys.where((String key) {
+    //   return key.startsWith('/assets/GameMastering');
+    // }).toList();
+    parsedData = mapData.keys.where((String key) {
+      return key.startsWith('assets/GameMastering/');
+    }).toList();
+    for(int i = 0; i< parsedData.length; i++){
+    parsedData[i] = parsedData[i].replaceAll("%20", " ");
+    }
+    return parsedData;
+    }
+  }
 
 class CharacterSheetAttempt extends StatelessWidget {
   WebViewController _controller;
@@ -346,11 +364,12 @@ class CharacterSheetAttempt extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(title: Text('Character Sheet')),
       body: WebView(
-          initialUrl: '',
-          onWebViewCreated: (WebViewController webViewController) async {
-            _controller = webViewController;
-            await loadHtmlFromAssets('data/characterSheet.html', _controller);
-          }),
+        initialUrl: '',
+        onWebViewCreated: (WebViewController webViewController) async {
+          _controller = webViewController;
+          await loadHtmlFromAssets('assets/characterSheet.html', _controller);
+        }
+      ),
     );
   }
 
@@ -359,5 +378,69 @@ class CharacterSheetAttempt extends StatelessWidget {
     controller.loadUrl(Uri.dataFromString(fileText,
             mimeType: 'text/html', encoding: Encoding.getByName('utf-8'))
         .toString());
+  }
+}
+
+class DataPageBuilder extends StatelessWidget{
+  final List<String> fileData;
+  DataPageBuilder({Key key, this.fileData}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+
+    return ListView.builder(
+        itemCount: fileData == null ? 0: fileData.length,
+        itemBuilder: (BuildContext context, int index) {
+          return new Card(
+            child: Container(
+              child: ListTile(
+                title: Text(
+                  fileData[index],
+                ),
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => InfoPageBuilder(fileText: fileData[index])),
+                  );
+                },
+              ),
+              padding: const EdgeInsets.all(15.0),
+            ),
+
+          );
+        }
+    );
+  }
+}
+
+
+
+class InfoPageBuilder extends StatelessWidget {
+  final String fileText;
+  InfoPageBuilder({Key key, this.fileText}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+        appBar: AppBar(
+          title: Text(fileText),
+        ),
+        body: FutureBuilder(
+      future: getFileText(context, fileText),
+      builder: (context, snapshot){
+        return SingleChildScrollView(
+          child: Text(
+            snapshot.data.toString(),
+            style: TextStyle(fontSize: 16),
+        )
+        );
+      }
+    )
+    );
+  }
+
+  Future<String> getFileText(BuildContext context, String filePath) async {
+    String fileText = await DefaultAssetBundle.of(context).loadString(filePath);
+    return fileText;
   }
 }

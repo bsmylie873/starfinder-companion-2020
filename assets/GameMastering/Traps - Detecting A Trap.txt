@@ -1,0 +1,1 @@
+A character can search for traps using the search task of the Perception skill. Compare the searching character’s Perception check result to the trap’s Perception DC. On a success, the character detects the trap.

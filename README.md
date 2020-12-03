@@ -1,4 +1,4 @@
-# testflutter
+# Starfinder Companion 2020
 
 A new Flutter application.
 

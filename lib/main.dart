@@ -1,18 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:testflutter/WidgetScreens.dart';
-import 'package:webview_flutter/webview_flutter.dart';
 import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:csv/csv.dart';
-import 'package:flutter/services.dart';
-import 'package:path_provider/path_provider.dart';
-import 'package:path/path.dart';
-import 'package:http/http.dart';
 import 'dart:async' show Future;
-import 'dart:io';
-import 'dart:convert';
+import 'package:flutter/services.dart';
 import 'theme.dart';
 import 'darktheme.dart';
 import 'thememanager.dart';
@@ -23,7 +17,7 @@ import 'spell.dart';
 
 ThemeData myThemeLight = lightTheme;
 ThemeData myThemeDark = darkTheme;
-const double constNumOfButtons = 6;
+const double constNumOfButtons = 7;
 const double constContainerHeight = 1;
 
 /*String gmpath = 'data/Game Mastering';
@@ -147,6 +141,7 @@ class MainScreen extends StatelessWidget {
   }
 }
 
+
 class ExpandedBlueBox extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -157,8 +152,8 @@ class ExpandedBlueBox extends StatelessWidget {
     var width = screenSize.width;
     var quarterWidth = width / 4;
 
-    for (var i = 0; i < 8; i++) {
-      switch (i) {
+    for (var i = 0; i < constNumOfButtons; i++) {
+      switch(i) {
         case 0:
           children.add(new BlueBox());
           break;
@@ -185,16 +180,28 @@ class ExpandedBlueBox extends StatelessWidget {
           break;
       }
     }
-    return new SingleChildScrollView(
-      child: Container(
-        width: width,
-        height: containerHeightWithToolbar(context),
-        padding: EdgeInsets.only(left: quarterWidth, right: quarterWidth),
-        child: ListView(
-          scrollDirection: Axis.vertical,
-          children: children,
-        ),
-      ),
+    // return new SingleChildScrollView(
+    //   child: Container(
+    //     width: width,
+    //     height: containerHeightWithToolbar(context),
+    //     padding: EdgeInsets.only(left: quarterWidth, right: quarterWidth),
+    //     child: GridView.count(
+    //       primary: false,
+    //       padding: const EdgeInsets.all(20),
+    //       crossAxisSpacing: 10,
+    //       mainAxisSpacing: 10,
+    //       crossAxisCount: 2,
+    //       children: children,
+    //     ),
+    //   ),
+    // );
+    return new GridView.count(
+      primary: false,
+      padding: const EdgeInsets.all(20),
+      crossAxisSpacing: 10,
+      mainAxisSpacing: 10,
+      crossAxisCount: 2,
+      children: children,
     );
   }
 
@@ -217,6 +224,7 @@ class ExpandedBlueBox extends StatelessWidget {
   }
 }
 
+
 class SettingsRoute extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -235,7 +243,3 @@ class SettingsRoute extends StatelessWidget {
     );
   }
 }
-
-
-
-
