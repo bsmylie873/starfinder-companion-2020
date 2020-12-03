@@ -161,22 +161,6 @@ class ExpandedBlueBox extends StatelessWidget {
   }
 }
 
-/*class IconState extends State<StatefulWidget> {
-  @override
-  Widget build(BuildContext context) {
-    return ListTile(
-        leading: new IconButton(
-          icon: Icon(Icons.brightness_7),
-          onPressed: () => _notifier.value = ThemeNotifier(
-        themeMode == ThemeMode.light
-            ? ThemeMode.dark
-            : ThemeMode.light),
-
-    ),,
-        )
-    )
-  }
-}*/
 
 class SettingsRoute extends StatelessWidget {
   @override
