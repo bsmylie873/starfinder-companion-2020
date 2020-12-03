@@ -35,18 +35,36 @@ class Spell {
   List<String> spellDetails(Spell spellToParse) {
     List<String> spellProperties = new List();
     spellProperties.add("Name: " + spellToParse.name);
-    spellProperties.add("Casting Time: " + spellToParse.castingTime);
-    spellProperties.add("Classes: " + spellToParse.classes);
-    spellProperties.add("Spell List Description: " + spellToParse.spellListDescription);
-    spellProperties.add("Duration: " + spellToParse.duration);
-    spellProperties.add("Level: " + spellToParse.level);
-    spellProperties.add("Range: " + spellToParse.range);
+    if (spellToParse.savingThrow != null) {
+      spellProperties.add("Casting Time: " + spellToParse.castingTime);
+    }
+    if (spellToParse.savingThrow != null) {
+      spellProperties.add("Classes: " + spellToParse.classes);
+    }
+    if (spellToParse.savingThrow != null) {
+      spellProperties.add("Spell List Description: " + spellToParse.spellListDescription);
+    }
+    if (spellToParse.savingThrow != null) {
+      spellProperties.add("Duration: " + spellToParse.duration);
+    }
+    if (spellToParse.savingThrow != null) {
+      spellProperties.add("Level: " + spellToParse.level);
+    }
+    if (spellToParse.savingThrow != null) {
+      spellProperties.add("Range: " + spellToParse.range);
+    }
     if (spellToParse.savingThrow != null) {
       spellProperties.add("Saving Throw: " + spellToParse.savingThrow);
     }
-    spellProperties.add("School: " + spellToParse.school);
-    spellProperties.add("Source: " + spellToParse.source);
-    spellProperties.add("Page Number: " + spellToParse.pageNo);
+    if (spellToParse.savingThrow != null) {
+      spellProperties.add("School: " + spellToParse.school);
+    }
+    if (spellToParse.savingThrow != null) {
+      spellProperties.add("Source: " + spellToParse.source);
+    }
+    if (spellToParse.savingThrow != null) {
+      spellProperties.add("Page Number: " + spellToParse.pageNo);
+    }
     if (spellToParse.spellResistance != null) {
       spellProperties.add("Spell Resistance: " + spellToParse.spellResistance);
     }
