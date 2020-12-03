@@ -3,10 +3,7 @@ import 'WidgetScreens.dart';
 const double constNumOfButtons = 7;
 const double constContainerHeight = 1;
 
-
-
 class BlueBox extends StatelessWidget {
-
   @override
   Widget build(BuildContext context) {
 
@@ -28,7 +25,6 @@ class BlueBox extends StatelessWidget {
 }
 
 class BlueBox1 extends StatelessWidget {
-
   @override
   Widget build(BuildContext context) {
 
@@ -49,7 +45,6 @@ class BlueBox1 extends StatelessWidget {
 }
 
 class BlueBox2 extends StatelessWidget {
-
   @override
   Widget build(BuildContext context) {
 
@@ -71,7 +66,6 @@ class BlueBox2 extends StatelessWidget {
 }
 
 class BlueBox3 extends StatelessWidget {
-
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -91,9 +85,11 @@ class BlueBox3 extends StatelessWidget {
 }
 
 class BlueBox4 extends StatelessWidget {
-
   @override
   Widget build(BuildContext context) {
+    var screenSize = MediaQuery.of(context).size;
+    var width = screenSize.width;
+
     return Card(
         margin: EdgeInsets.only(top: 50.0, bottom: 50.0),
         //color: Colors.amber,
@@ -104,14 +100,13 @@ class BlueBox4 extends StatelessWidget {
             onTap: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => MagicIndex()),
+                MaterialPageRoute(builder: (context) => SpellList()),
               );
             }));
   }
 }
 
 class BlueBox5 extends StatelessWidget {
-
   @override
   Widget build(BuildContext context) {
 
@@ -146,9 +141,7 @@ class BlueBox5 extends StatelessWidget {
   }
 }
 
-
 class BlueBox6 extends StatelessWidget {
-
   @override
   Widget build(BuildContext context) {
 
@@ -162,7 +155,8 @@ class BlueBox6 extends StatelessWidget {
             onTap: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => CharacterSheetAttempt()),
+                MaterialPageRoute(
+                    builder: (context) => TableLayout()),
               );
             }));
   }

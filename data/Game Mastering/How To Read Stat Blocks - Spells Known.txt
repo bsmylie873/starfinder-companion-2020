@@ -1,0 +1,1 @@
+If the creature can cast spells (usually from a mystic or technomancer class graft), its caster level is shown in this entry, followed by the spells it knows (with the associated saving DCs, where applicable) and how many times per day it can cast them. Often, only the creature’s most powerful spells are listed here.

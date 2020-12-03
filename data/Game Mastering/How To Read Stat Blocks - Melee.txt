@@ -1,0 +1,1 @@
+The creature’s melee attacks are listed here, each starting on a separate line. The attack roll modifier appears after the attack’s name, followed by the attack’s damage, damage type, and critical effects in parentheses.

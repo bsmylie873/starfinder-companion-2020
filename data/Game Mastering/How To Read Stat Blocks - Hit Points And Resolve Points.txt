@@ -1,0 +1,1 @@
+These entries list the creature’s Hit Points and Resolve Points (if it has use of them).

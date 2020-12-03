@@ -1,0 +1,1 @@
+Curses are magical afflictions and usually have a single effect, though some curses use tracks like diseases and poisons do. Removing a curse requires either using remove affliction or fulfilling a special condition that varies by curse (and sometimes differs between individual applications of the same curse).

@@ -13,15 +13,16 @@ import 'thememanager.dart';
 import 'wiki.dart';
 import 'table.dart';
 import 'BlueBoxes.dart';
+import 'spell.dart';
 
 ThemeData myThemeLight = lightTheme;
 ThemeData myThemeDark = darkTheme;
 const double constNumOfButtons = 7;
 const double constContainerHeight = 1;
 
-String gmpath = 'data/Game Mastering';
+/*String gmpath = 'data/Game Mastering';
 Directory gmdir = Directory(gmpath);
-var gmList = gmdir.list(recursive: false).toList();
+var gmList = gmdir.list(recursive: false).toList();*/
 
 void main() {
   return runApp(
@@ -32,13 +33,61 @@ void main() {
   );
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget{
+  @override
+  MyAppState createState() => MyAppState();
+}
+
+class MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     SystemChrome.setPreferredOrientations([
       DeviceOrientation.portraitUp,
       DeviceOrientation.portraitDown,
     ]);
+
+    /*List<String> dataArray = [];
+    var concatenate = StringBuffer();
+    Future<String> assetLoad() async {
+        final manifestJson2 = await DefaultAssetBundle.of(context).loadString('AssetManifest.json');
+        print(manifestJson2);
+        final List<String>data = jsonDecode(manifestJson2).keys.where((String key) {
+            return key.contains('data');
+        }).toList();
+        //print(data);
+        dataArray = data;
+        String tempdata="";
+        return tempdata;
+      }
+
+    assetLoad();
+    String resultJson="Gib";
+    DefaultAssetBundle.of(context).loadString('AssetManifest.json').then((String manifestJson){
+      resultJson = manifestJson;
+    });
+    print("JSON Manifest:");
+    dataArray.forEach((element) {
+      concatenate.write(element);
+    });
+    print(assetLoad());
+    print(concatenate);*/
+
+    List<Spell> _spells = List<Spell>();
+
+    Future<String> _loadFromSpellJson() async {
+      return await rootBundle.loadString("data/starfinderMagicAndSpells.json");
+    }
+
+    Future <List<Spell>> spellJson() async {
+      String jsonString = await _loadFromSpellJson();
+      var jsonResponse = jsonDecode(jsonString);
+      for (jsonResponse in jsonResponse) {
+        _spells.add(Spell.fromJson(jsonResponse));
+      }
+      return _spells;
+    }
+
+
     return MaterialApp(
         title: 'Splash Screen',
         home: AnimatedSplashScreen(
@@ -56,7 +105,8 @@ class MainScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Consumer<ThemeManager>(
-        builder: (context, theme, child) => MaterialApp(
+        builder: (context, theme, child) =>
+            MaterialApp(
               theme: theme.getTheme(),
               home: Scaffold(
                   appBar: AppBar(
@@ -71,7 +121,8 @@ class MainScreen extends StatelessWidget {
                                   builder: (context) => SettingsRoute()),
                             );
                           },
-                          tooltip: MaterialLocalizations.of(context)
+                          tooltip: MaterialLocalizations
+                              .of(context)
                               .openAppDrawerTooltip,
                         );
                       },
@@ -95,7 +146,9 @@ class ExpandedBlueBox extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final children = <Widget>[];
-    var screenSize = MediaQuery.of(context).size;
+    var screenSize = MediaQuery
+        .of(context)
+        .size;
     var width = screenSize.width;
     var quarterWidth = width / 4;
 
@@ -121,6 +174,9 @@ class ExpandedBlueBox extends StatelessWidget {
           break;
         case 6:
           children.add(new BlueBox6());
+          break;
+        case 7:
+          children.add(new BlueBox7());
           break;
       }
     }
@@ -150,7 +206,9 @@ class ExpandedBlueBox extends StatelessWidget {
   }
 
   Size screenSize(BuildContext context) {
-    return MediaQuery.of(context).size;
+    return MediaQuery
+        .of(context)
+        .size;
   }
 
   double containerHeight(BuildContext context,
