@@ -34,7 +34,7 @@ class Spell {
   }
 
   List<String> spellDetails(Spell spellToParse) {
-    List<String> spellProperties;
+    List<String> spellProperties = new List();
     spellProperties.add("Name: " + spellToParse.name);
     spellProperties.add("Casting Time: " + spellToParse.castingTime);
     spellProperties.add("Classes: " + spellToParse.classes);

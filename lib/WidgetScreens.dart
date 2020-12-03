@@ -129,16 +129,15 @@ class SpellListState extends State<SpellList> {
     Map<String, dynamic> jsonResponses = jsonDecode(jsonString);
     newSpell = Spell.fromJson(jsonResponses[spellName]);
     newSpell.name = spellName;
-    List<String> spellDetails = List<String>();
+    List<String> spellDetails = new List();
     spellDetails = newSpell.spellDetails(newSpell);
-    return spellDetails;
+    return await spellDetails;
   }
 
   Widget selectedSpell(BuildContext context, String spell) {
     return FutureBuilder(
         future: fetchASpell(spell),
-        //future: fetchSpells(),
-        builder: (context, AsyncSnapshot snapshot) {
+        builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return Center(child: CircularProgressIndicator());
           } else {
