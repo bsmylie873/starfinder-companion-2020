@@ -131,15 +131,37 @@ class SpellListState extends State<SpellList> {
   }
 
   Widget selectedSpell(BuildContext context, String spell) {
-    return FutureBuilder(
-        future: fetchASpell(spell),
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(child: CircularProgressIndicator());
-          } else {
-            return createSpellSelectedView(context, snapshot);
+    /*return Scaffold(
+        appBar: AppBar(
+          title: Text(fileText),
+        ),
+        body: FutureBuilder(
+            future: getFileText(context, fileText),
+            builder: (context, snapshot){
+              return SingleChildScrollView(
+                  child: Text(
+                    snapshot.data.toString(),
+                    style: TextStyle(fontSize: 16),
+                  )
+              );
+            }
+        )
+    );*/
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(spell),
+      ),
+      body: FutureBuilder(
+          future: fetchASpell(spell),
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return Center(child: CircularProgressIndicator());
+            } else {
+              return createSpellSelectedView(context, snapshot);
+            }
           }
-        });
+          )
+    );
   }
 
   Widget createSpellSelectedView(BuildContext context, AsyncSnapshot snapshot) {
@@ -150,7 +172,7 @@ class SpellListState extends State<SpellList> {
         return new Column(
           children: <Widget>[
             new ListTile(
-              title: new Text(values1[index]),
+              subtitle: new Text(values1[index]),
             ),
           ],
         );
@@ -194,7 +216,12 @@ class SpellListState extends State<SpellList> {
           children: <Widget>[
             new ListTile(
               title: new Text(values[index]),
-              onTap: () => {selectedSpell(context, values[index])},
+              onTap: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => selectedSpell(context, values[index]))
+                );
+              },
             ),
             new Divider(
               height: 2.0,
