@@ -1,0 +1,1 @@
+All creatures have a race entry. Some creatures are also built with class or template grafts, giving them more abilities (see the Alien Archive for more information).

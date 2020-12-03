@@ -50,6 +50,20 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.15.0-nullsafety.3"
+  convert:
+    dependency: transitive
+    description:
+      name: convert
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.1.1"
+  crypto:
+    dependency: transitive
+    description:
+      name: crypto
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.1.5"
   csv:
     dependency: "direct main"
     description:
@@ -114,6 +128,13 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  hive:
+    dependency: "direct main"
+    description:
+      name: hive
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.4.4+1"
   intl:
     dependency: transitive
     description:
@@ -142,13 +163,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.0.4"
-  open_file:
-    dependency: "direct main"
-    description:
-      name: open_file
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "3.0.3"
   page_transition:
     dependency: "direct main"
     description:

@@ -1,0 +1,1 @@
+After noting the caster level of the creature’s spell-like abilities, this section lists the creature’s spell-like abilities (and the associated saving throw DCs, where relevant), organized by the number of times per day it can use each ability.
