@@ -134,7 +134,6 @@ class GMRules extends StatelessWidget {
     // parsedData = json.decode(data).keys.where((String key) {
     //   return key.startsWith('/assets/GameMastering');
     // }).toList();
-
     parsedData = mapData.keys.where((String key) {
       return key.startsWith('assets/GameMastering/');
     }).toList();
@@ -144,14 +143,6 @@ class GMRules extends StatelessWidget {
     return parsedData;
     }
   }
-
-
-  // Future<String> getFileData(BuildContext context) async {
-  //   final String manifestJson = await DefaultAssetBundle.of(context).loadString('AssetManifest.json');
-  //   final gameMasteringData = json.decode(manifestJson).keys.where((String key) => key.startsWith('assets/GameMastering'));
-  //   return gameMasteringData;
-  // }
-
 
 
 class CharacterSheetAttempt extends StatelessWidget {
@@ -214,7 +205,6 @@ class DataPageBuilder extends StatelessWidget{
 class InfoPageBuilder extends StatelessWidget {
   final String fileText;
   InfoPageBuilder({Key key, this.fileText}) : super(key: key);
-
 
   @override
   Widget build(BuildContext context) {
