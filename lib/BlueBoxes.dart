@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:testflutter/table.dart';
 import 'WidgetScreens.dart';
 const double constNumOfButtons = 7;
 const double constContainerHeight = 1;
@@ -142,6 +143,42 @@ class BlueBox5 extends StatelessWidget {
 }
 
 class BlueBox6 extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+
+    return Card(
+        margin: EdgeInsets.only(top: 50.0, bottom: 50.0),
+        //color: Colors.amber,
+        child: ListTile(
+            leading: Icon(Icons.audiotrack_rounded),
+            title: Text('Character Sheet'),
+            //contentPadding: EdgeInsets.only(bottom: 50.0),
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => CharacterSheetAttempt()),
+              );
+            }));
+  }
+
+  Size screenSize(BuildContext context) {
+    return MediaQuery.of(context).size;
+  }
+
+  double buttonHeight(BuildContext context,
+      {double numOfButtons = constNumOfButtons, double sizeReduction = 0.0}) {
+    return (screenSize(context).height - sizeReduction) / numOfButtons;
+  }
+
+  double buttonHeightWithToolbar(BuildContext context,
+      {double numOfButtons = constNumOfButtons}) {
+    return buttonHeight(context,
+        numOfButtons: numOfButtons, sizeReduction: kToolbarHeight);
+  }
+}
+
+class BlueBox7 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
