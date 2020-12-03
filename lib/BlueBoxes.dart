@@ -187,7 +187,7 @@ class BlueBox7 extends StatelessWidget {
         //color: Colors.amber,
         child: ListTile(
             leading: Icon(Icons.audiotrack_rounded),
-            title: Text('Character Sheet'),
+            title: Text('Table Example'),
             //contentPadding: EdgeInsets.only(bottom: 50.0),
             onTap: () {
               Navigator.push(

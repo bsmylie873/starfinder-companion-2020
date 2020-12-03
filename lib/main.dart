@@ -17,7 +17,7 @@ import 'spell.dart';
 
 ThemeData myThemeLight = lightTheme;
 ThemeData myThemeDark = darkTheme;
-const double constNumOfButtons = 7;
+const double constNumOfButtons = 8;
 const double constContainerHeight = 1;
 
 /*String gmpath = 'data/Game Mastering';
