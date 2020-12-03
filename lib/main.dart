@@ -46,48 +46,6 @@ class MyAppState extends State<MyApp> {
       DeviceOrientation.portraitDown,
     ]);
 
-    /*List<String> dataArray = [];
-    var concatenate = StringBuffer();
-    Future<String> assetLoad() async {
-        final manifestJson2 = await DefaultAssetBundle.of(context).loadString('AssetManifest.json');
-        print(manifestJson2);
-        final List<String>data = jsonDecode(manifestJson2).keys.where((String key) {
-            return key.contains('data');
-        }).toList();
-        //print(data);
-        dataArray = data;
-        String tempdata="";
-        return tempdata;
-      }
-
-    assetLoad();
-    String resultJson="Gib";
-    DefaultAssetBundle.of(context).loadString('AssetManifest.json').then((String manifestJson){
-      resultJson = manifestJson;
-    });
-    print("JSON Manifest:");
-    dataArray.forEach((element) {
-      concatenate.write(element);
-    });
-    print(assetLoad());
-    print(concatenate);*/
-
-    List<Spell> _spells = List<Spell>();
-
-    Future<String> _loadFromSpellJson() async {
-      return await rootBundle.loadString("data/starfinderMagicAndSpells.json");
-    }
-
-    Future <List<Spell>> spellJson() async {
-      String jsonString = await _loadFromSpellJson();
-      var jsonResponse = jsonDecode(jsonString);
-      for (jsonResponse in jsonResponse) {
-        _spells.add(Spell.fromJson(jsonResponse));
-      }
-      return _spells;
-    }
-
-
     return MaterialApp(
         title: 'Splash Screen',
         home: AnimatedSplashScreen(
