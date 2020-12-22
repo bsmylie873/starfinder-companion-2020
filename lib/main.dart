@@ -95,7 +95,8 @@ class MainScreen extends StatelessWidget {
                     ),
                   ),
                   body: ExpandedBlueBox()),
-            ));
+            )
+    );
   }
 }
 
@@ -121,7 +122,7 @@ class ExpandedBlueBox extends StatelessWidget {
         case 2:
           children.add(new BlueBox2());
           break;
-        case 3:
+        case 3:  
           children.add(new BlueBox3());
           break;
         case 4:

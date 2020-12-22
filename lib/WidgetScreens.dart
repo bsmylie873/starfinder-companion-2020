@@ -166,17 +166,20 @@ class SpellListState extends State<SpellList> {
 
   Widget createSpellSelectedView(BuildContext context, AsyncSnapshot snapshot) {
     List<String> values1 = snapshot.data;
-    return new ListView.builder(
+    return new ListView.separated(
       itemCount: values1.length,
       itemBuilder: (BuildContext context, int index) {
         return new Column(
           children: <Widget>[
             new ListTile(
-              subtitle: new Text(values1[index]),
+              title: new Text(values1[index]),
             ),
           ],
         );
       },
+      separatorBuilder: (context, index) {
+        return Divider();
+      }
     );
   }
 
