@@ -23,15 +23,16 @@ const double constContainerHeight = 1;
 /*String gmpath = 'data/Game Mastering';
 Directory gmdir = Directory(gmpath);
 var gmList = gmdir.list(recursive: false).toList();*/
-
 void main() {
-  return runApp(
+return runApp(
+
     ChangeNotifierProvider<ThemeManager>(
       create: (_) => new ThemeManager(),
       child: MyApp(),
     ),
   );
 }
+
 
 class MyApp extends StatefulWidget{
   @override

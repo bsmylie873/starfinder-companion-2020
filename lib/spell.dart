@@ -19,7 +19,7 @@ class Spell {
   final String source;
   final String pageNo;
   final String spellResistance;
-  final String targetEffectArea;
+  final String targetsEffectArea;
 
   Future<String> _loadFromAsset() async {
     return await rootBundle.loadString("data/starfinderMagicAndSpells.json");
@@ -35,41 +35,41 @@ class Spell {
   List<String> spellDetails(Spell spellToParse) {
     List<String> spellProperties = new List();
     spellProperties.add("Name: " + spellToParse.name);
-    if (spellToParse.savingThrow != null) {
+    if (spellToParse.castingTime != null) {
       spellProperties.add("Casting Time: " + spellToParse.castingTime);
     }
-    if (spellToParse.savingThrow != null) {
+    if (spellToParse.classes != null) {
       spellProperties.add("Classes: " + spellToParse.classes);
     }
-    if (spellToParse.savingThrow != null) {
+    if (spellToParse.spellListDescription != null) {
       spellProperties.add("Spell List Description: " + spellToParse.spellListDescription);
     }
-    if (spellToParse.savingThrow != null) {
+    if (spellToParse.duration != null) {
       spellProperties.add("Duration: " + spellToParse.duration);
     }
-    if (spellToParse.savingThrow != null) {
+    if (spellToParse.level != null) {
       spellProperties.add("Level: " + spellToParse.level);
     }
-    if (spellToParse.savingThrow != null) {
+    if (spellToParse.range != null) {
       spellProperties.add("Range: " + spellToParse.range);
     }
     if (spellToParse.savingThrow != null) {
       spellProperties.add("Saving Throw: " + spellToParse.savingThrow);
     }
-    if (spellToParse.savingThrow != null) {
+    if (spellToParse.school != null) {
       spellProperties.add("School: " + spellToParse.school);
     }
-    if (spellToParse.savingThrow != null) {
+    if (spellToParse.source != null) {
       spellProperties.add("Source: " + spellToParse.source);
     }
-    if (spellToParse.savingThrow != null) {
+    if (spellToParse.pageNo != null) {
       spellProperties.add("Page Number: " + spellToParse.pageNo);
     }
     if (spellToParse.spellResistance != null) {
       spellProperties.add("Spell Resistance: " + spellToParse.spellResistance);
     }
-    if (spellToParse.targetEffectArea != null) {
-      spellProperties.add("Target Effect Area: " + spellToParse.targetEffectArea);
+    if (spellToParse.targetsEffectArea != null) {
+      spellProperties.add("Target Effect Area: " + spellToParse.targetsEffectArea);
     }
     return spellProperties;
   }
@@ -77,7 +77,7 @@ class Spell {
 
   Spell({this.name, this.castingTime, this.classes, this.spellListDescription,
     this.duration, this.level, this.description, this.range, this.savingThrow, this.school,
-    this.source, this.pageNo, this.spellResistance, this.targetEffectArea});
+    this.source, this.pageNo, this.spellResistance, this.targetsEffectArea});
 
   factory Spell.fromJson(Map<String, dynamic> json) {
     return Spell(
@@ -94,7 +94,7 @@ class Spell {
       source: json['Source'],
       pageNo: json['PageNumber'],
       spellResistance: json['SpellResistance'],
-      targetEffectArea: json['TargetEffectArea']
+      targetsEffectArea: json['TargetsEffectArea']
     );
   }
 

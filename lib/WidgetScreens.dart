@@ -252,35 +252,6 @@ class SpellListState extends State<SpellList> {
 }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 class SpellInfoPageBuilder extends StatelessWidget {
   final String spellTitle;
 
@@ -391,11 +362,12 @@ class CharacterSheetAttempt extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(title: Text('Character Sheet')),
       body: WebView(
+        javascriptMode: JavascriptMode.unrestricted,
         initialUrl: '',
         onWebViewCreated: (WebViewController webViewController) async {
           _controller = webViewController;
           await loadHtmlFromAssets('assets/characterSheet.html', _controller);
-        }
+        },
       ),
     );
   }
