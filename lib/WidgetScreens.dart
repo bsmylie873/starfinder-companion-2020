@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 import 'dart:convert';
+import 'class.dart';
+import 'race.dart';
 import 'spell.dart';
 
 class CharacterGeneration extends StatelessWidget {
@@ -26,41 +28,220 @@ class CharacterGeneration extends StatelessWidget {
   }
 }
 
-class RaceIndex extends StatelessWidget {
+class ClassIndex extends StatefulWidget {
+  ClassIndexState createState() => ClassIndexState();
+}
+
+class ClassIndexState extends State<ClassIndex> {
+  Future<String> _loadFromClassJson() async {
+    return await rootBundle.loadString("data/sfrpg_classes.json");
+  }
+
+  Future<List<String>> fetchClasses() async {
+    String jsonString = await _loadFromClassJson();
+    Map<String, dynamic> jsonResponses = jsonDecode(jsonString);
+    List<String> classes = jsonResponses.keys.toList();
+    return classes;
+  }
+
+  Future<List<String>> fetchAClass(String className) async {
+    String jsonString = await _loadFromClassJson();
+    Class newClass = new Class();
+    Map<String, dynamic> jsonResponses = jsonDecode(jsonString);
+    newClass = Class.fromJson(jsonResponses[className]);
+    newClass.name = className;
+    List<String> classDetails = new List();
+    classDetails = newClass.classDetails(newClass);
+    print(classDetails);
+    return await classDetails;
+  }
+
+  Widget selectedClass(BuildContext context, String class1) {
+    return Scaffold(
+        appBar: AppBar(
+          title: Text(class1),
+        ),
+        body: FutureBuilder(
+            future: fetchAClass(class1),
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return Center(child: CircularProgressIndicator());
+              } else {
+                return createClassSelectedView(context, snapshot);
+              }
+            }
+        )
+    );
+  }
+
+  Widget createClassSelectedView(BuildContext context, AsyncSnapshot snapshot) {
+    List<String> values1 = snapshot.data;
+    return new ListView.separated(
+        itemCount: values1.length,
+        itemBuilder: (BuildContext context, int index) {
+          return new Column(
+            children: <Widget>[
+              new ListTile(
+                title: new Text(values1[index]),
+              ),
+            ],
+          );
+        },
+        separatorBuilder: (context, index) {
+          return Divider();
+        }
+    );
+  }
+
+  Widget createClassListView(BuildContext context, AsyncSnapshot snapshot) {
+    List<String> values = snapshot.data;
+    return new ListView.builder(
+      itemCount: values.length,
+      itemBuilder: (BuildContext context, int index) {
+        return new Column(
+          children: <Widget>[
+            new ListTile(
+              title: new Text(values[index]),
+              onTap: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => selectedClass(context, values[index]))
+                );
+              },
+            ),
+            new Divider(
+              height: 2.0,
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Character Races"),
-      ),
-      body: Center(
-        child: ElevatedButton(
-          onPressed: () {
-            // Navigate back to first route when tapped.
-          },
-          child: Text('Testing'),
+        appBar: AppBar(
+          title: Text("Races"),
         ),
-      ),
-    );
+        body: FutureBuilder(
+            future: fetchClasses(),
+            builder: (context, AsyncSnapshot snapshot) {
+              if (!snapshot.hasData) {
+                return Center(child: CircularProgressIndicator());
+              } else {
+                return createClassListView(context, snapshot);
+              }
+            }));
   }
 }
 
-class ClassIndex extends StatelessWidget {
+class RaceIndex extends StatefulWidget {
+  @override
+  RaceIndexState createState() => RaceIndexState();
+}
+
+class RaceIndexState extends State<RaceIndex> {
+  Future<String> _loadFromRaceJson() async {
+    return await rootBundle.loadString("data/sfrpg_races.json");
+  }
+
+  Future<List<String>> fetchRaces() async {
+    String jsonString = await _loadFromRaceJson();
+    Map<String, dynamic> jsonResponses = jsonDecode(jsonString);
+    List<String> races = jsonResponses.keys.toList();
+    return races;
+  }
+
+  Future<List<String>> fetchARace(String raceName) async {
+    String jsonString = await _loadFromRaceJson();
+    Race newRace = new Race();
+    Map<String, dynamic> jsonResponses = jsonDecode(jsonString);
+    newRace = Race.fromJson(jsonResponses[raceName]);
+    newRace.name = raceName;
+    List<String> raceDetails = new List();
+    raceDetails = newRace.raceDetails(newRace);
+    print(raceDetails);
+    return await raceDetails;
+  }
+
+  Widget selectedRace(BuildContext context, String race) {
+    return Scaffold(
+        appBar: AppBar(
+          title: Text(race),
+        ),
+        body: FutureBuilder(
+            future: fetchARace(race),
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return Center(child: CircularProgressIndicator());
+              } else {
+                return createRaceSelectedView(context, snapshot);
+              }
+            }
+        )
+    );
+  }
+
+  Widget createRaceSelectedView(BuildContext context, AsyncSnapshot snapshot) {
+    List<String> values1 = snapshot.data;
+    return new ListView.separated(
+        itemCount: values1.length,
+        itemBuilder: (BuildContext context, int index) {
+          return new Column(
+            children: <Widget>[
+              new ListTile(
+                title: new Text(values1[index]),
+              ),
+            ],
+          );
+        },
+        separatorBuilder: (context, index) {
+          return Divider();
+        }
+    );
+  }
+
+  Widget createRaceListView(BuildContext context, AsyncSnapshot snapshot) {
+    List<String> values = snapshot.data;
+    return new ListView.builder(
+      itemCount: values.length,
+      itemBuilder: (BuildContext context, int index) {
+        return new Column(
+          children: <Widget>[
+            new ListTile(
+              title: new Text(values[index]),
+              onTap: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => selectedRace(context, values[index]))
+                );
+              },
+            ),
+            new Divider(
+              height: 2.0,
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Character Classes"),
-      ),
-      body: Center(
-        child: ElevatedButton(
-          onPressed: () {
-            // Navigate back to first route when tapped.
-          },
-          child: Text('Classes go here'),
+        appBar: AppBar(
+          title: Text("Races"),
         ),
-      ),
-    );
+        body: FutureBuilder(
+            future: fetchRaces(),
+            builder: (context, AsyncSnapshot snapshot) {
+              if (!snapshot.hasData) {
+                return Center(child: CircularProgressIndicator());
+              } else {
+                return createRaceListView(context, snapshot);
+              }
+            }));
   }
 }
 
@@ -77,25 +258,6 @@ class SkillIndex extends StatelessWidget {
             // Navigate back to first route when tapped.
           },
           child: Text('Skills go here'),
-        ),
-      ),
-    );
-  }
-}
-
-class MagicIndex extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text("Spells and Magic"),
-      ),
-      body: Center(
-        child: ElevatedButton(
-          onPressed: () {
-            // Navigate back to first route when tapped.
-          },
-          child: Text('Spells go here'),
         ),
       ),
     );
@@ -131,22 +293,6 @@ class SpellListState extends State<SpellList> {
   }
 
   Widget selectedSpell(BuildContext context, String spell) {
-    /*return Scaffold(
-        appBar: AppBar(
-          title: Text(fileText),
-        ),
-        body: FutureBuilder(
-            future: getFileText(context, fileText),
-            builder: (context, snapshot){
-              return SingleChildScrollView(
-                  child: Text(
-                    snapshot.data.toString(),
-                    style: TextStyle(fontSize: 16),
-                  )
-              );
-            }
-        )
-    );*/
     return Scaffold(
       appBar: AppBar(
         title: Text(spell),
@@ -166,46 +312,22 @@ class SpellListState extends State<SpellList> {
 
   Widget createSpellSelectedView(BuildContext context, AsyncSnapshot snapshot) {
     List<String> values1 = snapshot.data;
-    return new ListView.builder(
+    return new ListView.separated(
       itemCount: values1.length,
       itemBuilder: (BuildContext context, int index) {
         return new Column(
           children: <Widget>[
             new ListTile(
-              subtitle: new Text(values1[index]),
+              title: new Text(values1[index]),
             ),
           ],
         );
       },
+      separatorBuilder: (context, index) {
+        return Divider();
+      }
     );
   }
-
-  /*Widget createSpellListView(BuildContext context, AsyncSnapshot snapshot) {
-    List<String> values = snapshot.data;
-    return new ListView.builder(
-      itemCount: values.length,
-      itemBuilder: (BuildContext context, int index) {
-        return new Column(
-          children: <Widget>[
-            new ListTile(
-              title: new Text(values[index]),
-              onTap: () => {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) =>
-                          SpellInfoPageBuilder(spellTitle: values[index])),
-                )
-              },
-            ),
-            new Divider(
-              height: 2.0,
-            ),
-          ],
-        );
-      },
-    );
-  }*/
 
   Widget createSpellListView(BuildContext context, AsyncSnapshot snapshot) {
     List<String> values = snapshot.data;
