@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:testflutter/table.dart';
 import 'WidgetScreens.dart';
+import 'classScreen.dart';
+import 'raceScreen.dart';
+import 'spellScreen.dart';
 const double constNumOfButtons = 7;
 const double constContainerHeight = 1;
 
