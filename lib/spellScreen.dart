@@ -2,6 +2,7 @@ import 'spell.dart';
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flappy_search_bar/flappy_search_bar.dart';
 
 class SpellList extends StatefulWidget {
   @override
@@ -9,6 +10,35 @@ class SpellList extends StatefulWidget {
 }
 
 class SpellListState extends State<SpellList> {
+  /*SearchBar searchBar;
+  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+
+  AppBar buildAppBar(BuildContext context) {
+    return new AppBar(
+        title: new Text('Spells'),
+        actions: [searchBar.getSearchAction(context)]);
+  }
+
+  void onSubmitted(String value) {
+    setState(() => _scaffoldKey.currentState
+        .showSnackBar(new SnackBar(content: new Text('You wrote $value!'))));
+  }
+
+  SpellListState() {
+    searchBar = new SearchBar(
+        inBar: false,
+        buildDefaultAppBar: buildAppBar,
+        setState: setState,
+        onSubmitted: onSubmitted,
+        onCleared: () {
+          print("cleared");
+        },
+        onClosed: () {
+          print("closed");
+        });
+  }*/
+
+
   Future<String> _loadFromSpellJson() async {
     return await rootBundle.loadString("data/starfinderMagicAndSpells.json");
   }
@@ -93,11 +123,36 @@ class SpellListState extends State<SpellList> {
     );
   }
 
+  Icon cusIcon = Icon(Icons.search);
+  Widget cusSearchBar = Text("Spells");
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text("Spells"),
+          actions: <Widget>[
+            IconButton(
+              onPressed: (){
+                setState(() {
+                  if(this.cusIcon.icon == Icons.search){
+                    this.cusIcon = Icon(Icons.cancel);
+                    this.cusSearchBar = TextField(
+                    textInputAction: TextInputAction.go,
+                      decoration: InputDecoration(
+                        border: InputBorder.none,
+                        hintText: "Search a spell..."
+                      ),
+                    );
+                  } else{
+                    this.cusIcon = Icon(Icons.search);
+                    this.cusSearchBar = Text("Spells");
+                  }
+                });
+              },
+              icon: cusIcon,
+            )
+          ],
+          title: cusSearchBar,
         ),
         body: FutureBuilder(
             future: fetchSpells(),
@@ -105,9 +160,10 @@ class SpellListState extends State<SpellList> {
               if (!snapshot.hasData) {
                 return Center(child: CircularProgressIndicator());
               } else {
-                // return selectedSpell(context, snapshot.data.toString());
                 return createSpellListView(context, snapshot);
               }
-            }));
+            }
+            )
+    );
   }
 }
