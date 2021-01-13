@@ -1,8 +1,10 @@
+import 'package:flutter_search_bar/flutter_search_bar.dart';
+
 import 'spell.dart';
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flappy_search_bar/flappy_search_bar.dart';
+import 'spellSearchDelegate.dart';
 
 class SpellList extends StatefulWidget {
   @override
@@ -10,34 +12,11 @@ class SpellList extends StatefulWidget {
 }
 
 class SpellListState extends State<SpellList> {
-  /*SearchBar searchBar;
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+  String searchSpell = "";
 
-  AppBar buildAppBar(BuildContext context) {
-    return new AppBar(
-        title: new Text('Spells'),
-        actions: [searchBar.getSearchAction(context)]);
-  }
-
-  void onSubmitted(String value) {
-    setState(() => _scaffoldKey.currentState
-        .showSnackBar(new SnackBar(content: new Text('You wrote $value!'))));
-  }
-
-  SpellListState() {
-    searchBar = new SearchBar(
-        inBar: false,
-        buildDefaultAppBar: buildAppBar,
-        setState: setState,
-        onSubmitted: onSubmitted,
-        onCleared: () {
-          print("cleared");
-        },
-        onClosed: () {
-          print("closed");
-        });
-  }*/
-
+  List<String> listOfSpellNames = new List();
+  List<String> spellDetails = new List();
 
   Future<String> _loadFromSpellJson() async {
     return await rootBundle.loadString("data/starfinderMagicAndSpells.json");
@@ -46,8 +25,8 @@ class SpellListState extends State<SpellList> {
   Future<List<String>> fetchSpells() async {
     String jsonString = await _loadFromSpellJson();
     Map<String, dynamic> jsonResponses = jsonDecode(jsonString);
-    List<String> spells = jsonResponses.keys.toList();
-    return spells;
+    listOfSpellNames = jsonResponses.keys.toList();
+    return listOfSpellNames;
   }
 
   Future<List<String>> fetchASpell(String spellName) async {
@@ -56,9 +35,19 @@ class SpellListState extends State<SpellList> {
     Map<String, dynamic> jsonResponses = jsonDecode(jsonString);
     newSpell = Spell.fromJson(jsonResponses[spellName]);
     newSpell.name = spellName;
-    List<String> spellDetails = new List();
     spellDetails = newSpell.spellDetails(newSpell);
-    return await spellDetails;
+    return spellDetails;
+  }
+
+  Future<List<String>> fetchSearched(String searchQuery) async {
+    List<String> searchValues = new List();
+    for (var i = 0; i < listOfSpellNames.length; i++) {
+      if (listOfSpellNames[i].contains(searchQuery)) {
+        searchValues.add(listOfSpellNames[i]);
+        print(searchValues[0]);
+      }
+    }
+    return searchValues;
   }
 
   Widget selectedSpell(BuildContext context, String spell) {
@@ -74,10 +63,27 @@ class SpellListState extends State<SpellList> {
               } else {
                 return createSpellSelectedView(context, snapshot);
               }
+            }));
+  }
+
+  Widget searchedSpell(BuildContext context, String searchQuery) {
+    return Scaffold(
+        appBar: AppBar(
+          title: Text("Results"),
+        ),
+        body: FutureBuilder(
+            future: fetchSearched(searchQuery),
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return Center(child: CircularProgressIndicator());
+              } else {
+                return createSpellListView(context, snapshot);
+              }
             }
-        )
+            )
     );
   }
+
 
   Widget createSpellSelectedView(BuildContext context, AsyncSnapshot snapshot) {
     List<String> values1 = snapshot.data;
@@ -94,8 +100,7 @@ class SpellListState extends State<SpellList> {
         },
         separatorBuilder: (context, index) {
           return Divider();
-        }
-    );
+        });
   }
 
   Widget createSpellListView(BuildContext context, AsyncSnapshot snapshot) {
@@ -110,8 +115,9 @@ class SpellListState extends State<SpellList> {
               onTap: () {
                 Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => selectedSpell(context, values[index]))
-                );
+                    MaterialPageRoute(
+                        builder: (context) =>
+                            selectedSpell(context, values[index])));
               },
             ),
             new Divider(
@@ -123,38 +129,48 @@ class SpellListState extends State<SpellList> {
     );
   }
 
+  SearchBar searchBar;
+
+  AppBar buildAppBar(BuildContext context) {
+    return new AppBar(
+        title: new Text('Spells'),
+        actions: [searchBar.getSearchAction(context)]);
+  }
+
+  Future<void> onSubmitted(String value) async {
+    setState(() => _scaffoldKey.currentState
+        .showSnackBar(new SnackBar(content: new Text('You wrote $value!'))));
+    setState(() {
+      searchedSpell(context, value);
+    }
+    );
+  }
+
+  SpellListState() {
+    searchBar = new SearchBar(
+        inBar: false,
+        buildDefaultAppBar: buildAppBar,
+        setState: setState,
+        onSubmitted: onSubmitted,
+        onCleared: () {
+          print("cleared");
+        },
+        onClosed: () {
+          print("closed");
+        });
+  }
+
   Icon cusIcon = Icon(Icons.search);
   Widget cusSearchBar = Text("Spells");
+  String spellValue = "";
 
-  @override
+@override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          actions: <Widget>[
-            IconButton(
-              onPressed: (){
-                setState(() {
-                  if(this.cusIcon.icon == Icons.search){
-                    this.cusIcon = Icon(Icons.cancel);
-                    this.cusSearchBar = TextField(
-                    textInputAction: TextInputAction.go,
-                      decoration: InputDecoration(
-                        border: InputBorder.none,
-                        hintText: "Search a spell..."
-                      ),
-                    );
-                  } else{
-                    this.cusIcon = Icon(Icons.search);
-                    this.cusSearchBar = Text("Spells");
-                  }
-                });
-              },
-              icon: cusIcon,
-            )
-          ],
-          title: cusSearchBar,
-        ),
-        body: FutureBuilder(
+      appBar: searchBar.build(context),
+      key: _scaffoldKey,
+        body:
+        FutureBuilder(
             future: fetchSpells(),
             builder: (context, AsyncSnapshot snapshot) {
               if (!snapshot.hasData) {
