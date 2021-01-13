@@ -42,7 +42,7 @@ class BlueBox1 extends StatelessWidget {
             onTap: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => RaceIndex()),
+                MaterialPageRoute(builder: (context) => RaceList()),
               );
             }));
   }
@@ -82,7 +82,7 @@ class BlueBox3 extends StatelessWidget {
             onTap: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => ClassIndex()),
+                MaterialPageRoute(builder: (context) => ClassList()),
               );
             }));
   }

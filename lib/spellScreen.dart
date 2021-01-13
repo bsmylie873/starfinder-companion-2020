@@ -1,10 +1,10 @@
 import 'package:flutter_search_bar/flutter_search_bar.dart';
 
 import 'spell.dart';
+import 'utilities.dart';
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'spellSearchDelegate.dart';
 
 class SpellList extends StatefulWidget {
   @override
@@ -41,11 +41,17 @@ class SpellListState extends State<SpellList> {
 
   Future<List<String>> fetchSearched(String searchQuery) async {
     List<String> searchValues = new List();
+    searchQuery.toLowerCase();
+    List<String> tempList = listOfSpellNames;
+    tempList = tempList.map((e) => e.toLowerCase()).toList();
     for (var i = 0; i < listOfSpellNames.length; i++) {
-      if (listOfSpellNames[i].contains(searchQuery)) {
+      if (tempList[i].contains(searchQuery)) {
         searchValues.add(listOfSpellNames[i]);
         print(searchValues[0]);
       }
+    }
+    if (searchValues.isEmpty){
+      searchValues.add("No results found!");
     }
     return searchValues;
   }
@@ -69,7 +75,7 @@ class SpellListState extends State<SpellList> {
   Widget searchedSpell(BuildContext context, String searchQuery) {
     return Scaffold(
         appBar: AppBar(
-          title: Text("Results"),
+          title: Text(searchQuery),
         ),
         body: FutureBuilder(
             future: fetchSearched(searchQuery),
@@ -79,11 +85,8 @@ class SpellListState extends State<SpellList> {
               } else {
                 return createSpellListView(context, snapshot);
               }
-            }
-            )
-    );
+            }));
   }
-
 
   Widget createSpellSelectedView(BuildContext context, AsyncSnapshot snapshot) {
     List<String> values1 = snapshot.data;
@@ -137,13 +140,14 @@ class SpellListState extends State<SpellList> {
         actions: [searchBar.getSearchAction(context)]);
   }
 
-  Future<void> onSubmitted(String value) async {
-    setState(() => _scaffoldKey.currentState
-        .showSnackBar(new SnackBar(content: new Text('You wrote $value!'))));
-    setState(() {
-      searchedSpell(context, value);
-    }
-    );
+  onSubmitted(String value) {
+    /*setState(() => _scaffoldKey.currentState
+        .showSnackBar(new SnackBar(content: new Text('You wrote $value!'))));*/
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) =>
+                searchedSpell(context, value)));
   }
 
   SpellListState() {
@@ -160,17 +164,12 @@ class SpellListState extends State<SpellList> {
         });
   }
 
-  Icon cusIcon = Icon(Icons.search);
-  Widget cusSearchBar = Text("Spells");
-  String spellValue = "";
-
-@override
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: searchBar.build(context),
-      key: _scaffoldKey,
-        body:
-        FutureBuilder(
+        appBar: searchBar.build(context),
+        key: _scaffoldKey,
+        body: FutureBuilder(
             future: fetchSpells(),
             builder: (context, AsyncSnapshot snapshot) {
               if (!snapshot.hasData) {
@@ -178,8 +177,6 @@ class SpellListState extends State<SpellList> {
               } else {
                 return createSpellListView(context, snapshot);
               }
-            }
-            )
-    );
+            }));
   }
 }

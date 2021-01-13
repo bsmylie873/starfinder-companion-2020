@@ -1,14 +1,22 @@
+import 'package:flutter_search_bar/flutter_search_bar.dart';
+
 import 'race.dart';
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-class RaceIndex extends StatefulWidget {
+class RaceList extends StatefulWidget {
   @override
-  RaceIndexState createState() => RaceIndexState();
+  RaceListState createState() => RaceListState();
 }
 
-class RaceIndexState extends State<RaceIndex> {
+class RaceListState extends State<RaceList> {
+  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+  String searchRace = "";
+
+  List<String> listOfRaceNames = new List();
+  List<String> raceDetails = new List();
+
   Future<String> _loadFromRaceJson() async {
     return await rootBundle.loadString("data/sfrpg_races.json");
   }
@@ -16,38 +24,67 @@ class RaceIndexState extends State<RaceIndex> {
   Future<List<String>> fetchRaces() async {
     String jsonString = await _loadFromRaceJson();
     Map<String, dynamic> jsonResponses = jsonDecode(jsonString);
-    List<String> races = jsonResponses.keys.toList();
-    return races;
+    listOfRaceNames = jsonResponses.keys.toList();
+    return listOfRaceNames;
   }
 
-  Future<List<String>> fetchARace(String raceName) async {
+  Future<List<String>> fetchARace(String RaceName) async {
     String jsonString = await _loadFromRaceJson();
     Race newRace = new Race();
     Map<String, dynamic> jsonResponses = jsonDecode(jsonString);
-    newRace = Race.fromJson(jsonResponses[raceName]);
-    newRace.name = raceName;
-    List<String> raceDetails = new List();
+    newRace = Race.fromJson(jsonResponses[RaceName]);
+    newRace.name = RaceName;
     raceDetails = newRace.raceDetails(newRace);
-    print(raceDetails);
-    return await raceDetails;
+    return raceDetails;
   }
 
-  Widget selectedRace(BuildContext context, String race) {
+  Future<List<String>> fetchSearched(String searchQuery) async {
+    List<String> searchValues = new List();
+    searchQuery.toLowerCase();
+    List<String> tempList = listOfRaceNames;
+    tempList = tempList.map((e) => e.toLowerCase()).toList();
+    for (var i = 0; i < listOfRaceNames.length; i++) {
+      if (tempList[i].contains(searchQuery)) {
+        searchValues.add(listOfRaceNames[i]);
+        print(searchValues[0]);
+      }
+    }
+    if (searchValues.isEmpty){
+      searchValues.add("No results found!");
+    }
+    return searchValues;
+  }
+
+  Widget selectedRace(BuildContext context, String Race) {
     return Scaffold(
         appBar: AppBar(
-          title: Text(race),
+          title: Text(Race),
         ),
         body: FutureBuilder(
-            future: fetchARace(race),
+            future: fetchARace(Race),
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting) {
                 return Center(child: CircularProgressIndicator());
               } else {
                 return createRaceSelectedView(context, snapshot);
               }
-            }
-        )
-    );
+            }));
+  }
+
+  Widget searchedRace(BuildContext context, String searchQuery) {
+    return Scaffold(
+        appBar: AppBar(
+          title: Text(searchQuery),
+        ),
+        body: FutureBuilder(
+            future: fetchSearched(searchQuery),
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return Center(child: CircularProgressIndicator());
+              } else {
+                return createRaceListView(context, snapshot);
+              }
+            }));
   }
 
   Widget createRaceSelectedView(BuildContext context, AsyncSnapshot snapshot) {
@@ -65,8 +102,7 @@ class RaceIndexState extends State<RaceIndex> {
         },
         separatorBuilder: (context, index) {
           return Divider();
-        }
-    );
+        });
   }
 
   Widget createRaceListView(BuildContext context, AsyncSnapshot snapshot) {
@@ -81,8 +117,9 @@ class RaceIndexState extends State<RaceIndex> {
               onTap: () {
                 Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => selectedRace(context, values[index]))
-                );
+                    MaterialPageRoute(
+                        builder: (context) =>
+                            selectedRace(context, values[index])));
               },
             ),
             new Divider(
@@ -94,12 +131,43 @@ class RaceIndexState extends State<RaceIndex> {
     );
   }
 
+  SearchBar searchBar;
+
+  AppBar buildAppBar(BuildContext context) {
+    return new AppBar(
+        title: new Text('Races'),
+        actions: [searchBar.getSearchAction(context)]);
+  }
+
+  onSubmitted(String value) {
+    /*setState(() => _scaffoldKey.currentState
+        .showSnackBar(new SnackBar(content: new Text('You wrote $value!'))));*/
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) =>
+                searchedRace(context, value)));
+  }
+
+  RaceListState() {
+    searchBar = new SearchBar(
+        inBar: false,
+        buildDefaultAppBar: buildAppBar,
+        setState: setState,
+        onSubmitted: onSubmitted,
+        onCleared: () {
+          print("cleared");
+        },
+        onClosed: () {
+          print("closed");
+        });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: Text("Races"),
-        ),
+        appBar: searchBar.build(context),
+        key: _scaffoldKey,
         body: FutureBuilder(
             future: fetchRaces(),
             builder: (context, AsyncSnapshot snapshot) {
