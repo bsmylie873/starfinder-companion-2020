@@ -101,7 +101,8 @@ class MainScreen extends StatelessWidget {
                         );
                       },
                     ),
-                    actions: <Widget>[
+                    actions:
+                    <Widget>[
                       IconButton(
                           icon: Icon(Icons.brightness_4_outlined),
                           onPressed: () => {theme.toggleMode()}),
@@ -111,7 +112,8 @@ class MainScreen extends StatelessWidget {
                     ),
                   ),
                   body: ExpandedBlueBox()),
-            ));
+            )
+    );
   }
 }
 

@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:testflutter/table.dart';
 import 'WidgetScreens.dart';
+import 'classScreen.dart';
+import 'raceScreen.dart';
+import 'spellScreen.dart';
 const double constNumOfButtons = 7;
 const double constContainerHeight = 1;
 
@@ -40,7 +43,7 @@ class BlueBox1 extends StatelessWidget {
             onTap: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => RaceIndex()),
+                MaterialPageRoute(builder: (context) => RaceList()),
               );
             }));
   }
@@ -80,7 +83,7 @@ class BlueBox3 extends StatelessWidget {
             onTap: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => ClassIndex()),
+                MaterialPageRoute(builder: (context) => ClassList()),
               );
             }));
   }

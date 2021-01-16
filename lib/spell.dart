@@ -10,6 +10,7 @@ class Spell {
   final String castingTime;
   final String classes;
   final String spellListDescription;
+  final String descriptor;
   final String duration;
   final String level;
   final String description;
@@ -34,7 +35,7 @@ class Spell {
 
   List<String> spellDetails(Spell spellToParse) {
     List<String> spellProperties = new List();
-    spellProperties.add("Name: " + spellToParse.name);
+    //spellProperties.add("Name: " + spellToParse.name);
     if (spellToParse.castingTime != null) {
       spellProperties.add("Casting Time: " + spellToParse.castingTime);
     }
@@ -44,11 +45,17 @@ class Spell {
     if (spellToParse.spellListDescription != null) {
       spellProperties.add("Spell List Description: " + spellToParse.spellListDescription);
     }
+    if (spellToParse.descriptor != null) {
+      spellProperties.add("Descriptor: " + spellToParse.descriptor);
+    }
     if (spellToParse.duration != null) {
       spellProperties.add("Duration: " + spellToParse.duration);
     }
     if (spellToParse.level != null) {
       spellProperties.add("Level: " + spellToParse.level);
+    }
+    if (spellToParse.description != null) {
+      spellProperties.add("Description: " + spellToParse.description);
     }
     if (spellToParse.range != null) {
       spellProperties.add("Range: " + spellToParse.range);
@@ -75,7 +82,7 @@ class Spell {
   }
 
 
-  Spell({this.name, this.castingTime, this.classes, this.spellListDescription,
+  Spell({this.name, this.castingTime, this.classes, this.spellListDescription, this.descriptor,
     this.duration, this.level, this.description, this.range, this.savingThrow, this.school,
     this.source, this.pageNo, this.spellResistance, this.targetsEffectArea});
 
@@ -85,6 +92,7 @@ class Spell {
       castingTime: json['CastingTime'],
       classes: json['Classes'],
       spellListDescription: json['SpellListDescription'],
+      descriptor: json['Descriptor'],
       duration: json['Duration'],
       level: json['Level'],
       description: json['Description'],
