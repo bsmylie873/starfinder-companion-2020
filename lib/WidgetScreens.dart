@@ -6,6 +6,10 @@ import 'package:webview_flutter/webview_flutter.dart';
 import 'dart:convert';
 import 'race.dart';
 import 'spell.dart';
+import 'package:webview_flutter_plus/webview_flutter_plus.dart';
+import 'package:path_provider/path_provider.dart';
+import 'dart:io';
+import 'package:path/path.dart';
 
 class CharacterGeneration extends StatelessWidget {
   static const routeName = 'character';
@@ -97,14 +101,56 @@ class CharacterSheetAttempt extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(title: Text('Character Sheet')),
       body: WebView(
+        javascriptMode: JavascriptMode.unrestricted,
+        javascriptChannels: <JavascriptChannel>[
+          _extractDataJSChannel(context),
+        ].toSet(),
+
         initialUrl: '',
         onWebViewCreated: (WebViewController webViewController) async {
           _controller = webViewController;
-          await loadHtmlFromAssets('assets/characterSheet.html', _controller);
-        }
+          await loadHtmlFromAssets('data/characterSheet.html', _controller);
+        },
       ),
     );
   }
+
+  JavascriptChannel _extractDataJSChannel(BuildContext context) {
+    return JavascriptChannel(
+      name: 'Flutter',
+      onMessageReceived: (JavascriptMessage message) {
+        String pageBody = message.message;
+        print('page body: $pageBody');
+        writeContent(pageBody);
+      },
+    );
+  }
+
+  Future<String> get _localPath async {
+
+    Directory appDocDirectory = await getApplicationDocumentsDirectory();
+
+    Directory directory = await new Directory(appDocDirectory.path+'/'+'CharacterSheets').create(recursive: true).then(
+            (Directory directory) {
+      print('Path of New Dir: '+directory.path);
+      return directory;
+    });
+    return directory.path;
+
+  }
+
+  Future<File> get _localFile async {
+    final path = await _localPath;
+    print('$path'+ '/savedCharacterSheet.json');
+    return File('$path'+ '/savedCharacterSheet.json');
+  }
+
+  Future<File> writeContent(String content) async {
+    final file = await _localFile;
+    // Write the file
+    return file.writeAsString(content);
+  }
+
 
   Future<void> loadHtmlFromAssets(String filename, controller) async {
     String fileText = await rootBundle.loadString(filename);
@@ -176,4 +222,165 @@ class InfoPageBuilder extends StatelessWidget {
     String fileText = await DefaultAssetBundle.of(context).loadString(filePath);
     return fileText;
   }
+}
+
+class DirectoryTest extends StatefulWidget{
+  const DirectoryTest({Key key}): super(key: key);
+  @override
+  _DirectoryTestState createState() => _DirectoryTestState();
+}
+
+
+class _DirectoryTestState extends State<DirectoryTest> {
+  WebViewController _controller;
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("Spells and Magic"),
+      ),
+      body: Center(
+                child: WebView(
+                  javascriptMode: JavascriptMode.unrestricted,
+                  javascriptChannels: <JavascriptChannel>[
+                    _extractDataJSChannel(context),
+                    _loadDataJSChannel(context, _controller)
+                  ].toSet(),
+                  initialUrl: '',
+                  onWebViewCreated: (WebViewController webViewController) async {
+                    String data = await localContent();
+                    _controller = webViewController;
+
+                    await loadHtmlFromAssets(data, _controller);
+                  },
+                ),
+              ),
+            );
+  }
+
+  Future<void> loadHtmlFromAssets(String fileName, controller) async {
+    controller.loadUrl(Uri.dataFromString(fileName,
+        mimeType: 'text/html', encoding: Encoding.getByName('utf-8'))
+        .toString());
+  }
+
+  JavascriptChannel _extractDataJSChannel(BuildContext context) {
+    return JavascriptChannel(
+      name: 'Flutter',
+      onMessageReceived: (JavascriptMessage message) {
+        String pageBody = message.message;
+        print('page body: $pageBody');
+        writeContent(pageBody);
+      },
+    );
+  }
+  JavascriptChannel _loadDataJSChannel(BuildContext context, WebViewController webviewController) {
+    return JavascriptChannel(
+      name: 'loadJson',
+      onMessageReceived: (JavascriptMessage message) async {
+        final result = await Navigator.push(
+          context, MaterialPageRoute(
+            builder: (context) => CharacterSheetDirectory(),
+          ),
+        );
+        webviewController.evaluateJavascript('LoadJSON($result)');
+      },
+    );
+  }
+
+  Future<String> get _localPath async {
+
+    Directory appDocDirectory = await getApplicationDocumentsDirectory();
+
+    Directory directory = await new Directory(appDocDirectory.path+'/'+'CharacterSheets').create(recursive: true).then(
+            (Directory directory) {
+          print('Path of New Dir: '+directory.path);
+          return directory;
+        });
+    return directory.path;
+
+  }
+
+  Future<File> get _localFile async {
+    final path = await _localPath;
+    print('$path'+ '/savedCharacterSheet.json');
+    return File('$path'+ '/savedCharacterSheet.json');
+  }
+
+  Future<File> writeContent(String content) async {
+    final file = await _localFile;
+    // Write the file
+    print(file.writeAsString(content));
+    return file.writeAsString(content);
+  }
+
+  Future<String> localContent() async {
+    final file = await _localFile;
+    String localContent = await file.readAsString();
+    return localContent;
+  }
+
+
+}
+
+class CharacterSheetDirectory extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("Saved Character Sheets"),
+      ),
+      body: FutureBuilder(
+        future: _localPath,
+        builder: (context, snapshot){
+          List<String> values = fetchSavedFiles(snapshot.toString());
+          return ListView.builder(
+              itemCount: values == null ? 0: values.length,
+              itemBuilder: (BuildContext context, int index){
+              return new ListTile(
+                title: new Text(values[index]),
+                onTap: (){
+                  Navigator.pop(context, values[index]);
+                },
+              );
+
+        });
+        }
+      )
+    );
+  }
+
+  List<String> fetchSavedFiles(String snapshot) {
+    List<String> savedFiles;
+    Stream<FileSystemEntity> testing;
+    Directory savedFileDirectory = Directory('$snapshot');
+      testing = savedFileDirectory.list(recursive: true, followLinks: false);
+      savedFiles[0] = testing.toString();
+      return savedFiles;
+  }
+
+  Future<String> get _localPath async {
+
+    Directory appDocDirectory = await getApplicationDocumentsDirectory();
+
+    Directory directory = await new Directory(appDocDirectory.path+'/'+'CharacterSheets').create(recursive: true).then(
+            (Directory directory) {
+          print('Path of New Dir: '+directory.path);
+          return directory;
+        });
+    return directory.path;
+  }
+
+  Future<File> get _localFile async {
+    final path = await _localPath;
+    print('$path'+ '/savedCharacterSheet.json');
+    return File('$path'+ '/savedCharacterSheet.json');
+  }
+
+  Future<String> localContent() async {
+    final file = await _localFile;
+    String localContent = await file.readAsString();
+    return localContent;
+  }
+
 }
