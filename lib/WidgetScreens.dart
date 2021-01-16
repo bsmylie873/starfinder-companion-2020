@@ -6,7 +6,7 @@ import 'package:webview_flutter/webview_flutter.dart';
 import 'dart:convert';
 import 'race.dart';
 import 'spell.dart';
-import 'package:webview_flutter_plus/webview_flutter_plus.dart';
+//import 'package:webview_flutter_plus/webview_flutter_plus.dart';
 import 'package:path_provider/path_provider.dart';
 import 'dart:io';
 import 'package:path/path.dart';
