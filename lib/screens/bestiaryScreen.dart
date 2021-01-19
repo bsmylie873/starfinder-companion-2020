@@ -1,51 +1,50 @@
 import 'package:flutter_search_bar/flutter_search_bar.dart';
 
-import 'race.dart';
+import '../objects/spell.dart';
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-class RaceList extends StatefulWidget {
+class BestiaryList extends StatefulWidget {
   @override
-  RaceListState createState() => RaceListState();
+  BestiaryListState createState() => BestiaryListState();
 }
 
-class RaceListState extends State<RaceList> {
+class BestiaryListState extends State<BestiaryList> {
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
-  String searchRace = "";
 
-  List<String> listOfRaceNames = new List();
-  List<String> raceDetails = new List();
+  /*List<String> listOfActionNames = new List();
+  List<String> actionDetails = new List();
 
-  Future<String> _loadFromRaceJson() async {
-    return await rootBundle.loadString("data/sfrpg_races.json");
+  Future<String> _loadFromActionJson() async {
+    return await rootBundle.loadString("data/sfrpg_spells.json");
   }
 
-  Future<List<String>> fetchRaces() async {
-    String jsonString = await _loadFromRaceJson();
+  Future<List<String>> fetchActions() async {
+    String jsonString = await _loadFromActionJson();
     Map<String, dynamic> jsonResponses = jsonDecode(jsonString);
-    listOfRaceNames = jsonResponses.keys.toList();
-    return listOfRaceNames;
+    listOfActionNames = jsonResponses.keys.toList();
+    return listOfActionNames;
   }
 
-  Future<List<String>> fetchARace(String RaceName) async {
-    String jsonString = await _loadFromRaceJson();
-    Race newRace = new Race();
+  Future<List<String>> fetchAnAction(String actionName) async {
+    String jsonString = await _loadFromActionJson();
+    Action newAction = new Action();
     Map<String, dynamic> jsonResponses = jsonDecode(jsonString);
-    newRace = Race.fromJson(jsonResponses[RaceName]);
-    newRace.name = RaceName;
-    raceDetails = newRace.raceDetails(newRace);
-    return raceDetails;
+    newAction = Action.fromJson(jsonResponses[actionName]);
+    newAction.name = actionName;
+    actionDetails = newAction.spellDetails(newAction);
+    return actionDetails;
   }
 
   Future<List<String>> fetchSearched(String searchQuery) async {
     List<String> searchValues = new List();
     searchQuery.toLowerCase();
-    List<String> tempList = listOfRaceNames;
+    List<String> tempList = listOfActionNames;
     tempList = tempList.map((e) => e.toLowerCase()).toList();
-    for (var i = 0; i < listOfRaceNames.length; i++) {
+    for (var i = 0; i < listOfActionNames.length; i++) {
       if (tempList[i].contains(searchQuery)) {
-        searchValues.add(listOfRaceNames[i]);
+        searchValues.add(listOfActionNames[i]);
         print(searchValues[0]);
       }
     }
@@ -55,23 +54,23 @@ class RaceListState extends State<RaceList> {
     return searchValues;
   }
 
-  Widget selectedRace(BuildContext context, String Race) {
+  Widget selectedAction(BuildContext context, String action) {
     return Scaffold(
         appBar: AppBar(
-          title: Text(Race),
+          title: Text(action),
         ),
         body: FutureBuilder(
-            future: fetchARace(Race),
+            future: fetchAnAction(action),
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting) {
                 return Center(child: CircularProgressIndicator());
               } else {
-                return createRaceSelectedView(context, snapshot);
+                return createActionSelectedView(context, snapshot);
               }
             }));
   }
 
-  Widget searchedRace(BuildContext context, String searchQuery) {
+  Widget searchedAction(BuildContext context, String searchQuery) {
     return Scaffold(
         appBar: AppBar(
           title: Text(searchQuery),
@@ -82,12 +81,12 @@ class RaceListState extends State<RaceList> {
               if (snapshot.connectionState == ConnectionState.waiting) {
                 return Center(child: CircularProgressIndicator());
               } else {
-                return createRaceListView(context, snapshot);
+                return createActionListView(context, snapshot);
               }
             }));
   }
 
-  Widget createRaceSelectedView(BuildContext context, AsyncSnapshot snapshot) {
+  Widget createActionSelectedView(BuildContext context, AsyncSnapshot snapshot) {
     List<String> values1 = snapshot.data;
     return new ListView.separated(
         itemCount: values1.length,
@@ -105,7 +104,7 @@ class RaceListState extends State<RaceList> {
         });
   }
 
-  Widget createRaceListView(BuildContext context, AsyncSnapshot snapshot) {
+  Widget createActionListView(BuildContext context, AsyncSnapshot snapshot) {
     List<String> values = snapshot.data;
     return new ListView.builder(
       itemCount: values.length,
@@ -119,7 +118,7 @@ class RaceListState extends State<RaceList> {
                     context,
                     MaterialPageRoute(
                         builder: (context) =>
-                            selectedRace(context, values[index])));
+                            selectedAction(context, values[index])));
               },
             ),
             new Divider(
@@ -131,30 +130,32 @@ class RaceListState extends State<RaceList> {
     );
   }
 
+  */
+
   SearchBar searchBar;
 
   AppBar buildAppBar(BuildContext context) {
     return new AppBar(
-        title: new Text('Races'),
+        title: new Text('Bestiary(To be implemented!)'),
         actions: [searchBar.getSearchAction(context)]);
   }
 
-  onSubmitted(String value) {
-    /*setState(() => _scaffoldKey.currentState
-        .showSnackBar(new SnackBar(content: new Text('You wrote $value!'))));*/
+  /*onSubmitted(String value) {
+    */ /*setState(() => _scaffoldKey.currentState
+        .showSnackBar(new SnackBar(content: new Text('You wrote $value!'))));*/ /*
     Navigator.push(
         context,
         MaterialPageRoute(
             builder: (context) =>
-                searchedRace(context, value)));
-  }
+                searchedAction(context, value)));
+  }*/
 
-  RaceListState() {
+  BestiaryListState() {
     searchBar = new SearchBar(
         inBar: false,
         buildDefaultAppBar: buildAppBar,
         setState: setState,
-        onSubmitted: onSubmitted,
+        //onSubmitted: onSubmitted,
         onCleared: () {
           print("cleared");
         },
@@ -165,17 +166,23 @@ class RaceListState extends State<RaceList> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    /*return Scaffold(
         appBar: searchBar.build(context),
         key: _scaffoldKey,
         body: FutureBuilder(
-            future: fetchRaces(),
+            future: fetchActions(),
             builder: (context, AsyncSnapshot snapshot) {
               if (!snapshot.hasData) {
                 return Center(child: CircularProgressIndicator());
               } else {
-                return createRaceListView(context, snapshot);
+                return createActionListView(context, snapshot);
               }
             }));
+  }*/
+
+    return Scaffold(
+      appBar: searchBar.build(context),
+      key: _scaffoldKey,
+    );
   }
 }

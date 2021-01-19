@@ -12,12 +12,12 @@ import 'darktheme.dart';
 import 'thememanager.dart';
 import 'wiki.dart';
 import 'table.dart';
-import 'BlueBoxes.dart';
-import 'spell.dart';
+import 'screens/mainBoxes.dart';
+import 'objects/spell.dart';
 
 ThemeData myThemeLight = lightTheme;
 ThemeData myThemeDark = darkTheme;
-const double constNumOfButtons = 8;
+const double constNumOfButtons = 4;
 const double constContainerHeight = 1;
 
 /*String gmpath = 'data/Game Mastering';
@@ -125,18 +125,6 @@ class ExpandedBlueBox extends StatelessWidget {
           break;
         case 3:
           children.add(new BlueBox3());
-          break;
-        case 4:
-          children.add(new BlueBox4());
-          break;
-        case 5:
-          children.add(new BlueBox5());
-          break;
-        case 6:
-          children.add(new BlueBox6());
-          break;
-        case 7:
-          children.add(new BlueBox7());
           break;
       }
     }

@@ -23,7 +23,7 @@ class Spell {
   final String targetsEffectArea;
 
   Future<String> _loadFromAsset() async {
-    return await rootBundle.loadString("data/starfinderMagicAndSpells.json");
+    return await rootBundle.loadString("data/sfrpg_spells.json");
   }
 
   Future parseJson() async {

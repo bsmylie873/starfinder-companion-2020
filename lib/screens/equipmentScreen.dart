@@ -1,52 +1,50 @@
 import 'package:flutter_search_bar/flutter_search_bar.dart';
 
-import 'spell.dart';
-import 'utilities.dart';
+import '../objects/spell.dart';
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-class SpellList extends StatefulWidget {
+class EquipmentList extends StatefulWidget {
   @override
-  SpellListState createState() => SpellListState();
+  EquipmentListState createState() => EquipmentListState();
 }
 
-class SpellListState extends State<SpellList> {
+class EquipmentListState extends State<EquipmentList> {
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
-  String searchSpell = "";
 
-  List<String> listOfSpellNames = new List();
-  List<String> spellDetails = new List();
+  /*List<String> listOfActionNames = new List();
+  List<String> actionDetails = new List();
 
-  Future<String> _loadFromSpellJson() async {
-    return await rootBundle.loadString("data/starfinderMagicAndSpells.json");
+  Future<String> _loadFromActionJson() async {
+    return await rootBundle.loadString("data/sfrpg_spells.json");
   }
 
-  Future<List<String>> fetchSpells() async {
-    String jsonString = await _loadFromSpellJson();
+  Future<List<String>> fetchActions() async {
+    String jsonString = await _loadFromActionJson();
     Map<String, dynamic> jsonResponses = jsonDecode(jsonString);
-    listOfSpellNames = jsonResponses.keys.toList();
-    return listOfSpellNames;
+    listOfActionNames = jsonResponses.keys.toList();
+    return listOfActionNames;
   }
 
-  Future<List<String>> fetchASpell(String spellName) async {
-    String jsonString = await _loadFromSpellJson();
-    Spell newSpell = new Spell();
+  Future<List<String>> fetchAnAction(String actionName) async {
+    String jsonString = await _loadFromActionJson();
+    Action newAction = new Action();
     Map<String, dynamic> jsonResponses = jsonDecode(jsonString);
-    newSpell = Spell.fromJson(jsonResponses[spellName]);
-    newSpell.name = spellName;
-    spellDetails = newSpell.spellDetails(newSpell);
-    return spellDetails;
+    newAction = Action.fromJson(jsonResponses[actionName]);
+    newAction.name = actionName;
+    actionDetails = newAction.spellDetails(newAction);
+    return actionDetails;
   }
 
   Future<List<String>> fetchSearched(String searchQuery) async {
     List<String> searchValues = new List();
     searchQuery.toLowerCase();
-    List<String> tempList = listOfSpellNames;
+    List<String> tempList = listOfActionNames;
     tempList = tempList.map((e) => e.toLowerCase()).toList();
-    for (var i = 0; i < listOfSpellNames.length; i++) {
+    for (var i = 0; i < listOfActionNames.length; i++) {
       if (tempList[i].contains(searchQuery)) {
-        searchValues.add(listOfSpellNames[i]);
+        searchValues.add(listOfActionNames[i]);
         print(searchValues[0]);
       }
     }
@@ -56,23 +54,23 @@ class SpellListState extends State<SpellList> {
     return searchValues;
   }
 
-  Widget selectedSpell(BuildContext context, String spell) {
+  Widget selectedAction(BuildContext context, String action) {
     return Scaffold(
         appBar: AppBar(
-          title: Text(spell),
+          title: Text(action),
         ),
         body: FutureBuilder(
-            future: fetchASpell(spell),
+            future: fetchAnAction(action),
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting) {
                 return Center(child: CircularProgressIndicator());
               } else {
-                return createSpellSelectedView(context, snapshot);
+                return createActionSelectedView(context, snapshot);
               }
             }));
   }
 
-  Widget searchedSpell(BuildContext context, String searchQuery) {
+  Widget searchedAction(BuildContext context, String searchQuery) {
     return Scaffold(
         appBar: AppBar(
           title: Text(searchQuery),
@@ -83,12 +81,12 @@ class SpellListState extends State<SpellList> {
               if (snapshot.connectionState == ConnectionState.waiting) {
                 return Center(child: CircularProgressIndicator());
               } else {
-                return createSpellListView(context, snapshot);
+                return createActionListView(context, snapshot);
               }
             }));
   }
 
-  Widget createSpellSelectedView(BuildContext context, AsyncSnapshot snapshot) {
+  Widget createActionSelectedView(BuildContext context, AsyncSnapshot snapshot) {
     List<String> values1 = snapshot.data;
     return new ListView.separated(
         itemCount: values1.length,
@@ -106,7 +104,7 @@ class SpellListState extends State<SpellList> {
         });
   }
 
-  Widget createSpellListView(BuildContext context, AsyncSnapshot snapshot) {
+  Widget createActionListView(BuildContext context, AsyncSnapshot snapshot) {
     List<String> values = snapshot.data;
     return new ListView.builder(
       itemCount: values.length,
@@ -120,7 +118,7 @@ class SpellListState extends State<SpellList> {
                     context,
                     MaterialPageRoute(
                         builder: (context) =>
-                            selectedSpell(context, values[index])));
+                            selectedAction(context, values[index])));
               },
             ),
             new Divider(
@@ -132,30 +130,32 @@ class SpellListState extends State<SpellList> {
     );
   }
 
+  */
+
   SearchBar searchBar;
 
   AppBar buildAppBar(BuildContext context) {
     return new AppBar(
-        title: new Text('Spells'),
+        title: new Text('Equipment (To be implemented!)'),
         actions: [searchBar.getSearchAction(context)]);
   }
 
-  onSubmitted(String value) {
-    /*setState(() => _scaffoldKey.currentState
-        .showSnackBar(new SnackBar(content: new Text('You wrote $value!'))));*/
+  /*onSubmitted(String value) {
+    */ /*setState(() => _scaffoldKey.currentState
+        .showSnackBar(new SnackBar(content: new Text('You wrote $value!'))));*/ /*
     Navigator.push(
         context,
         MaterialPageRoute(
             builder: (context) =>
-                searchedSpell(context, value)));
-  }
+                searchedAction(context, value)));
+  }*/
 
-  SpellListState() {
+  EquipmentListState() {
     searchBar = new SearchBar(
         inBar: false,
         buildDefaultAppBar: buildAppBar,
         setState: setState,
-        onSubmitted: onSubmitted,
+        //onSubmitted: onSubmitted,
         onCleared: () {
           print("cleared");
         },
@@ -166,17 +166,23 @@ class SpellListState extends State<SpellList> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    /*return Scaffold(
         appBar: searchBar.build(context),
         key: _scaffoldKey,
         body: FutureBuilder(
-            future: fetchSpells(),
+            future: fetchActions(),
             builder: (context, AsyncSnapshot snapshot) {
               if (!snapshot.hasData) {
                 return Center(child: CircularProgressIndicator());
               } else {
-                return createSpellListView(context, snapshot);
+                return createActionListView(context, snapshot);
               }
             }));
+  }*/
+
+    return Scaffold(
+      appBar: searchBar.build(context),
+      key: _scaffoldKey,
+    );
   }
 }
