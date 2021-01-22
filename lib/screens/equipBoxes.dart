@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:testflutter/screens/weaponScreen.dart';
-import 'file:///C:/Users/Brandon/AndroidStudioProjects/StarfinderCompanion20200/lib/screens/actionsScreen.dart';
+import 'file:///C:/Users/Brandon/AndroidStudioProjects/StarfinderCompanion20200/lib/screens/actionScreen.dart';
 import 'file:///C:/Users/Brandon/AndroidStudioProjects/StarfinderCompanion20200/lib/screens/bestiaryScreen.dart';
 import 'package:testflutter/table.dart';
 import 'WidgetScreens.dart';

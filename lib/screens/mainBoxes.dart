@@ -58,14 +58,16 @@ class BlueBox2 extends StatelessWidget {
         //color: Colors.amber,
         child: ListTile(
             leading: Icon(Icons.star),
-            title: Text('Rule Portal'),
+            title: Text('Sheet Portal'),
             //contentPadding: EdgeInsets.only(bottom: 50.0),
-            onTap: () {
+            /*onTap: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => SkillList()),
+                MaterialPageRoute(builder: (context) => SheetList()),
               );
-            }));
+            }*/
+            )
+    );
   }
 
 }

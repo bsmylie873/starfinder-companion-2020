@@ -136,7 +136,7 @@ class DeitiesListState extends State<DeitiesList> {
 
   AppBar buildAppBar(BuildContext context) {
     return new AppBar(
-        title: new Text('Deities (To be implemented!)'),
+        title: new Text('Deities(To be implemented!)'),
         actions: [searchBar.getSearchAction(context)]);
   }
 
