@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:testflutter/table.dart';
 import 'WidgetScreens.dart';
 import 'classScreen.dart';
+import 'featScreen.dart';
 import 'raceScreen.dart';
+import 'skillScreen.dart';
 import 'spellScreen.dart';
 const double pConstNumOfButtons = 4;
 const double constContainerHeight = 1;
@@ -36,13 +38,13 @@ class PlayerBox1 extends StatelessWidget {
         margin: EdgeInsets.only(top: 50.0, bottom: 50.0),
         //color: Colors.amber,
         child: ListTile(
-            leading: Icon(Icons.accessibility_sharp),
-            title: Text('Races'),
+            leading: Icon(Icons.lightbulb_outline_sharp),
+            title: Text('Feats'),
             //contentPadding: EdgeInsets.only(bottom: 50.0),
             onTap: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => RaceList()),
+                MaterialPageRoute(builder: (context) => FeatList()),
               );
             }));
   }
@@ -55,13 +57,13 @@ class PlayerBox2 extends StatelessWidget {
         margin: EdgeInsets.only(top: 50.0, bottom: 50.0),
         //color: Colors.amber,
         child: ListTile(
-            leading: Icon(Icons.star),
-            title: Text('Skills'),
+            leading: Icon(Icons.accessibility_sharp),
+            title: Text('Races'),
             //contentPadding: EdgeInsets.only(bottom: 50.0),
             onTap: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => SkillIndex()),
+                MaterialPageRoute(builder: (context) => RaceList()),
               );
             }));
   }
@@ -75,13 +77,13 @@ class PlayerBox3 extends StatelessWidget {
         margin: EdgeInsets.only(top: 50.0, bottom: 50.0),
         //color: Colors.amber,
         child: ListTile(
-            leading: Icon(Icons.lightbulb_outline_sharp),
-            title: Text('Feats'),
+            leading: Icon(Icons.star),
+            title: Text('Skills'),
             //contentPadding: EdgeInsets.only(bottom: 50.0),
             onTap: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => SkillIndex()),
+                MaterialPageRoute(builder: (context) => SkillList()),
               );
             }));
   }

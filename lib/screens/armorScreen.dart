@@ -5,12 +5,12 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-class ActionList extends StatefulWidget {
+class ArmorList extends StatefulWidget {
   @override
-  ActionListState createState() => ActionListState();
+  ArmorListState createState() => ArmorListState();
 }
 
-class ActionListState extends State<ActionList> {
+class ArmorListState extends State<ArmorList> {
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
 
   /*List<String> listOfActionNames = new List();
@@ -136,7 +136,7 @@ class ActionListState extends State<ActionList> {
 
   AppBar buildAppBar(BuildContext context) {
     return new AppBar(
-        title: new Text('Actions(To be implemented!)'),
+        title: new Text('Armors(To be implemented!)'),
         actions: [searchBar.getSearchAction(context)]);
   }
 
@@ -150,7 +150,7 @@ class ActionListState extends State<ActionList> {
                 searchedAction(context, value)));
   }*/
 
-  ActionListState() {
+  ArmorListState() {
     searchBar = new SearchBar(
         inBar: false,
         buildDefaultAppBar: buildAppBar,

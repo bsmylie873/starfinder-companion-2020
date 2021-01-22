@@ -5,12 +5,12 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-class ActionList extends StatefulWidget {
+class OtherList extends StatefulWidget {
   @override
-  ActionListState createState() => ActionListState();
+  OtherListState createState() => OtherListState();
 }
 
-class ActionListState extends State<ActionList> {
+class OtherListState extends State<OtherList> {
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
 
   /*List<String> listOfActionNames = new List();
@@ -136,7 +136,7 @@ class ActionListState extends State<ActionList> {
 
   AppBar buildAppBar(BuildContext context) {
     return new AppBar(
-        title: new Text('Actions(To be implemented!)'),
+        title: new Text('Other Items(To be implemented!)'),
         actions: [searchBar.getSearchAction(context)]);
   }
 
@@ -150,7 +150,7 @@ class ActionListState extends State<ActionList> {
                 searchedAction(context, value)));
   }*/
 
-  ActionListState() {
+  OtherListState() {
     searchBar = new SearchBar(
         inBar: false,
         buildDefaultAppBar: buildAppBar,

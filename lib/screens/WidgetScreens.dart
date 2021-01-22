@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 import 'dart:convert';
+import 'equipBoxes.dart';
 import 'refBoxes.dart';
 import 'playerBoxes.dart';
 
@@ -182,25 +183,101 @@ class RefScreen extends StatelessWidget {
   }
 }
 
+class ExpandedEquipBox extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    final children = <Widget>[];
+    var screenSize = MediaQuery
+        .of(context)
+        .size;
+    var width = screenSize.width;
+    var quarterWidth = width / 4;
 
-class SkillIndex extends StatelessWidget {
+    for (var i = 0; i < equipConstNumOfButtons; i++) {
+      switch(i) {
+        case 0:
+          children.add(new EquipBox());
+          break;
+        case 1:
+          children.add(new EquipBox1());
+          break;
+        case 2:
+          children.add(new EquipBox2());
+          break;
+        case 3:
+          children.add(new EquipBox3());
+          break;
+        case 4:
+          children.add(new EquipBox4());
+          break;
+        case 5:
+          children.add(new EquipBox5());
+          break;
+        case 6:
+          children.add(new EquipBox6());
+          break;
+        case 7:
+          children.add(new EquipBox7());
+          break;
+      }
+    }
+    // return new SingleChildScrollView(
+    //   child: Container(
+    //     width: width,
+    //     height: containerHeightWithToolbar(context),
+    //     padding: EdgeInsets.only(left: quarterWidth, right: quarterWidth),
+    //     child: GridView.count(
+    //       primary: false,
+    //       padding: const EdgeInsets.all(20),
+    //       crossAxisSpacing: 10,
+    //       mainAxisSpacing: 10,
+    //       crossAxisCount: 2,
+    //       children: children,
+    //     ),
+    //   ),
+    // );
+    return new GridView.count(
+      primary: false,
+      padding: const EdgeInsets.all(20),
+      crossAxisSpacing: 10,
+      mainAxisSpacing: 10,
+      crossAxisCount: 2,
+      children: children,
+    );
+  }
+
+  Size screenSize(BuildContext context) {
+    return MediaQuery
+        .of(context)
+        .size;
+  }
+
+  double containerHeight(BuildContext context,
+      {double containerHeight = constContainerHeight,
+        double sizeReduction = 0.0}) {
+    return (screenSize(context).height - sizeReduction) / containerHeight;
+  }
+
+  double containerHeightWithToolbar(BuildContext context,
+      {double newContainerHeight = constContainerHeight}) {
+    return containerHeight(context,
+        containerHeight: newContainerHeight, sizeReduction: kToolbarHeight);
+  }
+}
+
+class EquipScreen extends StatelessWidget {
+  static const routeName = 'equipScreen';
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Character skills"),
-      ),
-      body: Center(
-        child: ElevatedButton(
-          onPressed: () {
-            // Navigate back to first route when tapped.
-          },
-          child: Text('Skills go here'),
+        appBar: AppBar(
+          title: Text("Equipment"),
         ),
-      ),
-    );
+        body: ExpandedEquipBox());
   }
 }
+
 
 class GMRules extends StatelessWidget {
   @override

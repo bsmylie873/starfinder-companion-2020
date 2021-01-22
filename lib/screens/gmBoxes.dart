@@ -4,6 +4,7 @@ import 'WidgetScreens.dart';
 import 'classScreen.dart';
 import 'raceScreen.dart';
 import 'spellScreen.dart';
+import 'skillScreen.dart';
 const double gmConstNumOfButtons = 3;
 const double gmConstContainerHeight = 1;
 
@@ -62,7 +63,7 @@ class GMBox2 extends StatelessWidget {
             onTap: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => SkillIndex()),
+                MaterialPageRoute(builder: (context) => SkillList()),
               );
             }));
   }

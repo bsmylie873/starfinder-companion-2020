@@ -95,7 +95,8 @@ class MainScreen extends StatelessWidget {
                       child: Text('Starfinder Companion'),
                     ),
                   ),
-                  body: ExpandedBlueBox()),
+                  body: ExpandedBlueBox(
+                  )),
             )
     );
   }
@@ -143,13 +144,14 @@ class ExpandedBlueBox extends StatelessWidget {
     //     ),
     //   ),
     // );
-    return new GridView.count(
+    return GridView.count(
       primary: false,
       padding: const EdgeInsets.all(20),
       crossAxisSpacing: 10,
       mainAxisSpacing: 10,
       crossAxisCount: 2,
       children: children,
+      shrinkWrap: true,
     );
   }
 

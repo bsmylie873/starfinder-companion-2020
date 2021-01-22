@@ -5,12 +5,12 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-class ActionList extends StatefulWidget {
+class HybridList extends StatefulWidget {
   @override
-  ActionListState createState() => ActionListState();
+  HybridListState createState() => HybridListState();
 }
 
-class ActionListState extends State<ActionList> {
+class HybridListState extends State<HybridList> {
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
 
   /*List<String> listOfActionNames = new List();
@@ -136,7 +136,7 @@ class ActionListState extends State<ActionList> {
 
   AppBar buildAppBar(BuildContext context) {
     return new AppBar(
-        title: new Text('Actions(To be implemented!)'),
+        title: new Text('Hybrid Items(To be implemented!)'),
         actions: [searchBar.getSearchAction(context)]);
   }
 
@@ -150,7 +150,7 @@ class ActionListState extends State<ActionList> {
                 searchedAction(context, value)));
   }*/
 
-  ActionListState() {
+  HybridListState() {
     searchBar = new SearchBar(
         inBar: false,
         buildDefaultAppBar: buildAppBar,

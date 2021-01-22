@@ -3,6 +3,7 @@ import 'package:testflutter/table.dart';
 import 'WidgetScreens.dart';
 import 'classScreen.dart';
 import 'raceScreen.dart';
+import 'skillScreen.dart';
 import 'spellScreen.dart';
 const double constNumOfButtons = 4;
 const double constContainerHeight = 1;
@@ -62,7 +63,7 @@ class BlueBox2 extends StatelessWidget {
             onTap: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => SkillIndex()),
+                MaterialPageRoute(builder: (context) => SkillList()),
               );
             }));
   }
