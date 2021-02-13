@@ -1,1 +1,0 @@
-Any feats that give the creature a static bonus (such as Improved Initiative) are already factored into the creature’s statistics. Only feats that give situational bonuses or allow for special combat tactics are listed here.

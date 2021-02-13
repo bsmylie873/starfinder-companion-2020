@@ -1,1 +1,0 @@
-The creature’s name is presented along with its Challenge Rating (CR), a numerical representation of the creature’s relative power. Challenge Ratings are explained in detail on page 389.

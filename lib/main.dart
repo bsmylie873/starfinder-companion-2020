@@ -14,6 +14,7 @@ import 'wiki.dart';
 import 'table.dart';
 import 'screens/mainBoxes.dart';
 import 'objects/spell.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 ThemeData myThemeLight = lightTheme;
 ThemeData myThemeDark = darkTheme;
@@ -41,6 +42,7 @@ class MyApp extends StatefulWidget{
 class MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
+    requestPermissions();
     SystemChrome.setPreferredOrientations([
       DeviceOrientation.portraitUp,
       DeviceOrientation.portraitDown,
@@ -56,6 +58,17 @@ class MyAppState extends State<MyApp> {
             splashTransition: SplashTransition.rotationTransition,
             pageTransitionType: PageTransitionType.scale,
             backgroundColor: Colors.black));
+  }
+}
+
+void requestPermissions() async {
+  var status = await Permission.storage.status;
+  if (status.isUndetermined) {
+    // You can request multiple permissions at once.
+    Map<Permission, PermissionStatus> statuses = await [
+      Permission.storage,
+    ].request();
+    print(statuses[Permission.storage]); // it should print PermissionStatus.granted
   }
 }
 

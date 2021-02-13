@@ -1,1 +1,0 @@
-This is the total number of experience points the PCs earn for defeating the creature.

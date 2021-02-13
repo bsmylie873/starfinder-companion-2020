@@ -1,1 +1,0 @@
-If the creature has a magical or exceptional aura, it is listed here along with its radius from the creature and the save DC to resist the aura’s effects, where applicable.

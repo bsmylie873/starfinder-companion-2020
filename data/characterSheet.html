@@ -309,6 +309,7 @@
 		ModCapacity(4);
 		ModCapacity(5);		
 	}
+
 	
 	function CrashRecovery(){
 		var jstring = localStorage.getItem("SFSheetCrashRecovery");
@@ -391,8 +392,33 @@
 	var charvars = document.querySelectorAll("input[type=text]");
 	var longvars = document.getElementsByTagName("textarea");
 	var boolvars = document.querySelectorAll("input[type=checkbox]");
+	if(charname==""){
+			charname = "Unnamed Character";
+			}
 
+	for(var i=0; i < charvars.length; i++)
+		{
+			cjson[charvars[i].id]=charvars[i].value;
+		}
 
+		for(var i=0; i < longvars.length; i++)
+		{
+			cjson[longvars[i].id]=longvars[i].value;
+		}
+
+		for(var i=0; i < boolvars.length; i++)
+		{
+			if(boolvars[i].checked)
+			{
+				cjson[boolvars[i].id]=true;
+			}
+		}
+
+		cjson['BackPack'] = document.getElementById("BackPack").value;
+
+		var cstring=JSON.stringify(cjson);
+
+		Flutter.postMessage(cstring);
 
 
 	}
@@ -571,8 +597,10 @@
 
 	function sendBackDocument() {
 	var s = new XMLSerializer();
- 	var d = document;
+ 	var d = window.document;
  	var str = s.serializeToString(d);
+
+
 
     Flutter.postMessage(str);
 
@@ -585,13 +613,13 @@
 			Load:<input type="file" id="inputfile" onchange="LoadFile()">
 			<span id="DownloadLink"></span>
 			<button onclick="CrashRecovery()" title="Load last auto-saved character.">Crash Recovery</button>
-			<button onclick="sendBackDocument()" title="Attempting to send back information">Save Char</button>
+			<button onclick="saveSheet()" title="Attempting to send back information">Save Char</button>
 		</span>
 
 		<table class="fullwidth">
 			<tr>
 				<td><h2>Starfinder</h2></td>
-				<td><input type="text" id="Charname" class="input_ubig" onchange="PopulateNameAndID()"><br />Character Name</td>
+				<td>    <input type="text" id="Charname" class="input_ubig" onchange="PopulateNameAndID()">   <br />Character Name</td>
 				<td><input type="text" id="SFSID" class="input_ubig" onchange="PopulateNameAndID()"><br />Starfinder Society #</td>
 				<td class="right-aligned"><h2>Page 1</h2></td>
 			</tr>

@@ -1,1 +1,0 @@
-This entry provides the creature’s Fortitude, Reflex, and Will saving throw modifiers, followed by situational modifiers to those rolls.

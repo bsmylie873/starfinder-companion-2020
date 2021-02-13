@@ -1,1 +1,0 @@
-Characters gain experience points (XP) for overcoming a trap, whether they disable it, detect and then avoid it, or simply endure its effects. The XP for a trap is equal to the XP for a monster of the same CR (see Table 11–3: Experience Point Awards on page 390).

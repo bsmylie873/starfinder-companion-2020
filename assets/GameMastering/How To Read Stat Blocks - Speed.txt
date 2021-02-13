@@ -1,1 +1,0 @@
-This notes the creature’s speed followed by any additional speeds and types of movement the creature has.

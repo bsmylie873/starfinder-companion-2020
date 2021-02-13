@@ -1,1 +1,0 @@
-This lists the creature’s initiative modifier followed by its special senses (this entry is omitted if it doesn’t have any). Its Perception modifier is listed here instead of in its Skills entry (see below).
