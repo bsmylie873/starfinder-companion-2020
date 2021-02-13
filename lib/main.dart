@@ -180,14 +180,14 @@ class SettingsRoute extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Settings Screen"),
+        title: Text("Settings"),
       ),
       body: Center(
         child: ElevatedButton(
           onPressed: () {
             // Navigate back to first route when tapped.
           },
-          child: Text('Go back!'),
+          child: Text('To be implemented!'),
         ),
       ),
     );
