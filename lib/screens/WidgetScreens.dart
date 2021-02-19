@@ -318,7 +318,7 @@ class GMRules extends StatelessWidget {
     //   return key.startsWith('/assets/GameMastering');
     // }).toList();
     parsedData = mapData.keys.where((String key) {
-      return key.startsWith('data/GameMastering/');
+      return key.startsWith('data/GameMastering');
     }).toList();
     for (int i = 0; i < parsedData.length; i++) {
       parsedData[i] = parsedData[i].replaceAll("%20", " ");
@@ -355,7 +355,6 @@ class DataPageBuilder extends StatelessWidget {
               ),
               padding: const EdgeInsets.all(15.0),
             ),
-
           );
         }
     );
