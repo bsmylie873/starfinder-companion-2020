@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:testflutter/table.dart';
 import 'WidgetScreens.dart';
+import 'sheetScreen.dart';
 import 'classScreen.dart';
 import 'raceScreen.dart';
 import 'skillScreen.dart';
@@ -60,12 +61,12 @@ class BlueBox2 extends StatelessWidget {
             leading: Icon(Icons.star),
             title: Text('Sheet Portal'),
             //contentPadding: EdgeInsets.only(bottom: 50.0),
-            /*onTap: () {
+            onTap: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => SheetList()),
+                MaterialPageRoute(builder: (context) => FileGridView()),
               );
-            }*/
+            }
             )
     );
   }
