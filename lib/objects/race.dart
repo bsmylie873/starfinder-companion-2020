@@ -59,121 +59,121 @@ class Race {
   List<String> raceDetails(Race raceToParse) {
     List<String> raceProperties = new List();
     //raceProperties.add("Name: " + spellToParse.name);
-    if (raceToParse.source != null) {
+    if (raceToParse.source.isNotEmpty) {
       raceProperties.add("Source: " + raceToParse.source);
     }
-    if (raceToParse.size != null) {
+    if (raceToParse.size.isNotEmpty) {
       raceProperties.add("Sizes: " + raceToParse.size);
     }
-    if (raceToParse.type != null) {
+    if (raceToParse.type.isNotEmpty) {
       raceProperties.add("Type: " + raceToParse.type);
     }
-    if (raceToParse.subtype != null) {
+    if (raceToParse.subtype.isNotEmpty) {
       raceProperties.add("Subtype: " + raceToParse.subtype);
     }
-    if (raceToParse.hp != null) {
+    if (!raceToParse.hp.isNaN) {
       raceProperties.add("HP: " + raceToParse.hp.toString());
     }
-    if (raceToParse.speed != null) {
+    if (!raceToParse.speed.isNaN) {
       raceProperties.add("Speed: " + raceToParse.speed.toString());
     }
-    if (raceToParse.abilityModifiers != null) {
+    if (raceToParse.abilityModifiers.isNotEmpty) {
       raceProperties.add("Ability Modifiers: " + raceToParse.abilityModifiers);
     }
-    if (raceToParse.averageHeight != null) {
+    if (raceToParse.averageHeight.isNotEmpty) {
       raceProperties.add("Average Height: " + raceToParse.averageHeight);
     }
-    if (raceToParse.averageWeight != null) {
+    if (raceToParse.averageWeight.isNotEmpty) {
       raceProperties.add("Average Weight: " + raceToParse.averageWeight);
     }
-    if (raceToParse.ageOfMaturity != null) {
+    if (raceToParse.ageOfMaturity.isNotEmpty) {
       raceProperties.add("Age Of Maturity: " + raceToParse.ageOfMaturity);
     }
-    if (raceToParse.maximumAge != null) {
+    if (raceToParse.maximumAge.isNotEmpty) {
       raceProperties.add("Maximum Age: " + raceToParse.maximumAge);
     }
-    if (raceToParse.strMod != null) {
+    if (!raceToParse.strMod.isNaN) {
       raceProperties.add("Strength Modifier: " + raceToParse.strMod.toString());
     }
-    if (raceToParse.dexMod != null) {
+    if (!raceToParse.dexMod.isNaN) {
       raceProperties.add("Dexterity Modifier: " + raceToParse.dexMod.toString());
     }
-    if (raceToParse.conMod != null) {
+    if (!raceToParse.conMod.isNaN) {
       raceProperties.add("Constitution Modifier: " + raceToParse.conMod.toString());
     }
-    if (raceToParse.intMod != null) {
+    if (!raceToParse.intMod.isNaN) {
       raceProperties.add("Intelligence Modifier: " + raceToParse.intMod.toString());
     }
-    if (raceToParse.wisMod != null) {
+    if (!raceToParse.wisMod.isNaN) {
       raceProperties.add("Wisdom Modifier: " + raceToParse.wisMod.toString());
     }
-    if (raceToParse.chaMod != null) {
+    if (!raceToParse.chaMod.isNaN) {
       raceProperties.add("Charisma Modifier: " + raceToParse.chaMod.toString());
     }
-    if (raceToParse.reflexMod != null) {
+    if (!raceToParse.reflexMod.isNaN) {
       raceProperties.add("Reflex Modifier: " + raceToParse.reflexMod.toString());
     }
-    if (raceToParse.fortMod != null) {
+    if (!raceToParse.fortMod.isNaN) {
       raceProperties.add("Fortitude Modifier: " + raceToParse.fortMod.toString());
     }
-    if (raceToParse.willMod != null) {
+    if (!raceToParse.willMod.isNaN) {
       raceProperties.add("Willpower Modifier: " + raceToParse.willMod.toString());
     }
-    if (raceToParse.acrobaticsMod != null) {
+    if (!raceToParse.acrobaticsMod.isNaN) {
       raceProperties.add("Acrobatics Modifier: " + raceToParse.acrobaticsMod.toString());
     }
-    if (raceToParse.athleticsMod != null) {
+    if (!raceToParse.athleticsMod.isNaN) {
       raceProperties.add("Athletics Modifier: " + raceToParse.acrobaticsMod.toString());
     }
-    if (raceToParse.bluffMod != null) {
+    if (!raceToParse.bluffMod.isNaN) {
       raceProperties.add("Bluff Modifier: " + raceToParse.bluffMod.toString());
     }
-    if (raceToParse.cultureMod != null) {
+    if (!raceToParse.cultureMod.isNaN) {
       raceProperties.add("Culture Modifier: " + raceToParse.cultureMod.toString());
     }
-    if (raceToParse.diplomacyMod != null) {
+    if (!raceToParse.diplomacyMod.isNaN) {
       raceProperties.add("Diplomacy Modifier: " + raceToParse.diplomacyMod.toString());
     }
-    if (raceToParse.disguiseMod != null) {
+    if (!raceToParse.disguiseMod.isNaN) {
       raceProperties.add("Disguise Modifier: " + raceToParse.disguiseMod.toString());
     }
-    if (raceToParse.engineeringMod != null) {
+    if (!raceToParse.engineeringMod.isNaN) {
       raceProperties.add("Engineering Modifier: " + raceToParse.engineeringMod.toString());
     }
-    if (raceToParse.intimidateMod != null) {
+    if (!raceToParse.intimidateMod.isNaN) {
       raceProperties.add("Intimidate Modifier: " + raceToParse.intimidateMod.toString());
     }
-    if (raceToParse.lifeScienceMod != null) {
+    if (!raceToParse.lifeScienceMod.isNaN) {
       raceProperties.add("Life Science Modifier: " + raceToParse.lifeScienceMod.toString());
     }
-    if (raceToParse.mysticismMod != null) {
+    if (!raceToParse.mysticismMod.isNaN) {
       raceProperties.add("Mysticism Modifier: " + raceToParse.mysticismMod.toString());
     }
-    if (raceToParse.medicineMod != null) {
+    if (!raceToParse.medicineMod.isNaN) {
       raceProperties.add("Medicine Modifier: " + raceToParse.medicineMod.toString());
     }
-    if (raceToParse.perceptionMod != null) {
+    if (!raceToParse.perceptionMod.isNaN) {
       raceProperties.add("Perception Modifier: " + raceToParse.perceptionMod.toString());
     }
-    if (raceToParse.physicalScienceMod != null) {
+    if (!raceToParse.physicalScienceMod.isNaN) {
       raceProperties.add("Physical Science Modifier: " + raceToParse.physicalScienceMod.toString());
     }
-    if (raceToParse.senseMotiveMod != null) {
+    if (!raceToParse.senseMotiveMod.isNaN) {
       raceProperties.add("Sense Motive Modifier: " + raceToParse.senseMotiveMod.toString());
     }
-    if (raceToParse.stealthMod != null) {
+    if (!raceToParse.stealthMod.isNaN) {
       raceProperties.add("Stealth Modifier: " + raceToParse.senseMotiveMod.toString());
     }
-    if (raceToParse.survivalMod != null) {
+    if (!raceToParse.survivalMod.isNaN) {
       raceProperties.add("Survival Modifier: " + raceToParse.survivalMod.toString());
     }
-    if (raceToParse.acMod != null) {
+    if (!raceToParse.acMod.isNaN) {
       raceProperties.add("AC Modifier: " + raceToParse.acMod.toString());
     }
-    if (raceToParse.abilityPicks != null) {
+    if (!raceToParse.abilityPicks.isNaN) {
       raceProperties.add("Ability Picks: " + raceToParse.abilityPicks.toString());
     }
-    if (raceToParse.skillPicks != null) {
+    if (raceToParse.skillPicks.isNaN) {
       raceProperties.add("Skill Picks: " + raceToParse.skillPicks.toString());
     }
     return raceProperties;
@@ -220,7 +220,7 @@ class Race {
       diplomacyMod: json['DiplomacyMod'],
       disguiseMod: json['DisguiseMod'],
       engineeringMod: json['EngineeringMod'],
-      intimidateMod: json['IntimidationMod'],
+      intimidateMod: json['IntimidateMod'],
       lifeScienceMod: json['LifeScienceMod'],
       mysticismMod: json['MysticismMod'],
       medicineMod: json['MedicineMod'],

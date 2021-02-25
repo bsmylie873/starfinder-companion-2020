@@ -49,25 +49,25 @@ class Class {
   List<String> classDetails(Class classToParse) {
     List<String> classProperties = new List();
     //classProperties.add("Name: " + spellToParse.name);
-    if (classToParse.source != null) {
+    if (classToParse.source.isNotEmpty) {
       classProperties.add("Source: " + classToParse.source);
     }
-    if (classToParse.hp != null) {
+    if (!classToParse.hp.isNaN) {
       classProperties.add("HP: " + classToParse.hp.toString());
     }
-    if (classToParse.stamina != null) {
+    if (!classToParse.stamina.isNaN) {
       classProperties.add("Stamina: " + classToParse.stamina.toString());
     }
-    if (classToParse.levelPoints != null) {
+    if (!classToParse.levelPoints.isNaN) {
       classProperties.add("Level Points: " + classToParse.levelPoints.toString());
     }
-    if (classToParse.armorProficiencies != null) {
+    if (classToParse.armorProficiencies.isNotEmpty) {
       classProperties.add("Armor Proficiencies: " + classToParse.armorProficiencies);
     }
-    if (classToParse.weaponProficiencies != null) {
+    if (classToParse.weaponProficiencies.isNotEmpty) {
       classProperties.add("Weapon Proficiencies: " + classToParse.weaponProficiencies);
     }
-    if (classToParse.keyAbility != null) {
+    if (classToParse.keyAbility.isNotEmpty) {
       classProperties.add("Key Ability: " + classToParse.keyAbility);
     }
     classProperties.add("Proficiencies:");
