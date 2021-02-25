@@ -303,8 +303,6 @@ class GMRules extends StatelessWidget {
                   }),
             )
         )
-      //children: assembleData(context),
-      //child: Text('Spells go here'),
     );
   }
 
@@ -314,9 +312,6 @@ class GMRules extends StatelessWidget {
     }
     List<String> parsedData = [];
     Map<String, dynamic> mapData = json.decode(data);
-    // parsedData = json.decode(data).keys.where((String key) {
-    //   return key.startsWith('/assets/GameMastering');
-    // }).toList();
     parsedData = mapData.keys.where((String key) {
       return key.startsWith('data/GameMastering/');
     }).toList();
@@ -331,9 +326,7 @@ class GMRules extends StatelessWidget {
 
 class DataPageBuilder extends StatelessWidget {
   final List<String> fileData;
-
   DataPageBuilder({Key key, this.fileData}) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
@@ -355,7 +348,6 @@ class DataPageBuilder extends StatelessWidget {
               ),
               padding: const EdgeInsets.all(15.0),
             ),
-
           );
         }
     );

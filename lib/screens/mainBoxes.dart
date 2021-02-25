@@ -64,13 +64,12 @@ class BlueBox2 extends StatelessWidget {
             onTap: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => FileGridView()),
+                MaterialPageRoute(builder: (context) => FileListView()),
               );
             }
             )
     );
   }
-
 }
 
 class BlueBox3 extends StatelessWidget {

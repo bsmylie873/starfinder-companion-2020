@@ -373,13 +373,13 @@
 		var cstring=JSON.stringify(cjson);
 		var charblob = new Blob([cstring], {type: "application/json"});
 		var url = URL.createObjectURL(charblob);
-		
+
 		var a = document.createElement('a');
 		a.download    = charname+".json";
 		a.href        = url;
 		a.textContent = "Save";
-			
-		document.getElementById('DownloadLink').innerHTML=""
+
+		document.getElementById('DownloadLink').innerHTML="";
 		document.getElementById('DownloadLink').appendChild(a);
 
 
@@ -593,6 +593,12 @@
 		
 		SumUp('TotalSkillSpent',['AcrobaticsRanks','AthleticsRanks','BluffRanks','ComputersRanks','CultureRanks','DiplomacyRanks','DisguiseRanks','EngineeringRanks','IntimidateRanks','LifeSciRanks','MedicineRanks','MysticismRanks','PerceptionRanks','PhysSciRanks','PilotRanks','Profession1Ranks','Profession2Ranks','SenseRanks','SleightRanks','StealthRanks','SurvivalRanks'])
 	}
+	function loadSheetAttempt() {
+	var str = "test";
+	loadJson.postMessage(str);
+	}
+
+
 
 	</script>
 	<title>Starfinder Character Sheet</title>
