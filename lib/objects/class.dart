@@ -1,8 +1,6 @@
-import 'dart:async';
-import 'dart:convert';
-import 'package:flutter/services.dart';
-
+//This object is used in the Classes index.
 class Class {
+  //These parameters match the sfrpg_classes json fields.
   String name;
   final String source;
   final int hp;
@@ -34,24 +32,15 @@ class Class {
   final bool stealth;
   final bool survival;
 
-
-  Future<String> _loadFromAsset() async {
-    return await rootBundle.loadString("data/sfrpg_classes.json");
-  }
-
-  Future parseJson() async {
-    String jsonString = await _loadFromAsset();
-    final jsonResponse = jsonDecode(jsonString);
-    print(jsonString);
-    print(jsonResponse);
-  }
-
+  //This list parses the Class index data in list strings.
   List<String> classDetails(Class classToParse) {
+    //This populates a list of strings for each Class.
     List<String> classProperties = new List();
-    //classProperties.add("Name: " + spellToParse.name);
+    //Strings use the isNotEmpty method to skip null values.
     if (classToParse.source.isNotEmpty) {
       classProperties.add("Source: " + classToParse.source);
     }
+    //Integers use the isNaN method with reverse logic to skip null values.
     if (!classToParse.hp.isNaN) {
       classProperties.add("HP: " + classToParse.hp.toString());
     }
@@ -71,6 +60,8 @@ class Class {
       classProperties.add("Key Ability: " + classToParse.keyAbility);
     }
     classProperties.add("Proficiencies:");
+    //Booleans use != null to skip null values. This doesn't comply with Dart
+    //rules and should be improved.
     if (classToParse.acrobatics != null) {
       classProperties.add("Acrobatics: " + classToParse.acrobatics.toString());
     }
@@ -137,10 +128,11 @@ class Class {
     if (classToParse.survival != null) {
       classProperties.add("Survival: " + classToParse.survival.toString());
     }
+    //This returns the newly made list string to the list.
     return classProperties;
   }
 
-
+  //This is the constructor for the Class object.
   Class({this.name, this.source, this.hp, this.stamina, this.levelPoints,
     this.armorProficiencies, this.weaponProficiencies, this.keyAbility, this.acrobatics,
     this.athletics, this.bluff, this.computers, this.culture, this.diplomacy, this.disguise,
@@ -149,6 +141,7 @@ class Class {
     this.professionIntelligence, this.professionWisdom, this.senseMotive, this.sleightOfHand,
     this.stealth, this.survival,});
 
+  //This parses the json into the Class object.
   factory Class.fromJson(Map<String, dynamic> json) {
     return Class(
       name: json['Name'],

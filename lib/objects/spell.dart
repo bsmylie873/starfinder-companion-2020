@@ -1,8 +1,6 @@
-import 'dart:async';
-import 'dart:convert';
-import 'package:flutter/services.dart';
-
+//This object is used in the Spell index.
 class Spell {
+  //These parameters match the sfrpg_spells json fields.
   String name;
   final String castingTime;
   final String classes;
@@ -19,20 +17,14 @@ class Spell {
   final String spellResistance;
   final String targetsEffectArea;
 
-  Future<String> _loadFromAsset() async {
-    return await rootBundle.loadString("data/sfrpg_spells.json");
-  }
-
-  Future parseJson() async {
-    String jsonString = await _loadFromAsset();
-    final jsonResponse = jsonDecode(jsonString);
-    print(jsonString);
-    print(jsonResponse);
-  }
-
+  //This list parses the Spell index data in list strings.
   List<String> spellDetails(Spell spellToParse) {
+    //This populates a list of strings for each Spell.
     List<String> spellProperties = new List();
-    //spellProperties.add("Name: " + spellToParse.name);
+    //Strings use != null to skip null values. This is due to the flexible
+    //approach taken in the sfrpg_spell json file, having all fields as strings
+    //and not including certain fields. In the future, this data set would be
+    //improved with a more rigid structure with appropriate variable types.
     if (spellToParse.castingTime != null) {
       spellProperties.add("Casting Time: " + spellToParse.castingTime);
     }
@@ -75,14 +67,16 @@ class Spell {
     if (spellToParse.targetsEffectArea != null) {
       spellProperties.add("Target Effect Area: " + spellToParse.targetsEffectArea);
     }
+    //This returns the newly made list string to the list.
     return spellProperties;
   }
 
-
+  //This is the constructor for the Spell object.
   Spell({this.name, this.castingTime, this.classes, this.spellListDescription, this.descriptor,
     this.duration, this.level, this.description, this.range, this.savingThrow, this.school,
     this.source, this.pageNo, this.spellResistance, this.targetsEffectArea});
 
+  //This parses the json into the Spell object.
   factory Spell.fromJson(Map<String, dynamic> json) {
     return Spell(
       name: json['name'],

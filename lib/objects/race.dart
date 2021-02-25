@@ -1,8 +1,6 @@
-import 'dart:async';
-import 'dart:convert';
-import 'package:flutter/services.dart';
-
+//This object is used in the Races index.
 class Race {
+  //These parameters match the sfrpg_races json fields.
   String name;
   final String source;
   final String size;
@@ -44,21 +42,11 @@ class Race {
   final int abilityPicks;
   final int skillPicks;
 
-
-  Future<String> _loadFromAsset() async {
-    return await rootBundle.loadString("data/sfrpg_races.json");
-  }
-
-  Future parseJson() async {
-    String jsonString = await _loadFromAsset();
-    final jsonResponse = jsonDecode(jsonString);
-    print(jsonString);
-    print(jsonResponse);
-  }
-
+  //This list parses the Race index data in list strings.
   List<String> raceDetails(Race raceToParse) {
+    //This populates a list of strings for each Race.
     List<String> raceProperties = new List();
-    //raceProperties.add("Name: " + spellToParse.name);
+    //Strings use the isNotEmpty method to skip null values.
     if (raceToParse.source.isNotEmpty) {
       raceProperties.add("Source: " + raceToParse.source);
     }
@@ -71,6 +59,7 @@ class Race {
     if (raceToParse.subtype.isNotEmpty) {
       raceProperties.add("Subtype: " + raceToParse.subtype);
     }
+    //Integers use the isNaN method with reverse logic to skip null values.
     if (!raceToParse.hp.isNaN) {
       raceProperties.add("HP: " + raceToParse.hp.toString());
     }
@@ -176,10 +165,11 @@ class Race {
     if (raceToParse.skillPicks.isNaN) {
       raceProperties.add("Skill Picks: " + raceToParse.skillPicks.toString());
     }
+    //This returns the newly made list string to the list.
     return raceProperties;
   }
 
-
+  //This is the constructor for the Race object.
   Race({this.name, this.source, this.size, this.type, this.subtype,
     this.hp, this.speed, this.abilityModifiers, this.averageHeight, this.averageWeight,
     this.ageOfMaturity, this.maximumAge, this.strMod, this.dexMod, this.conMod,
@@ -190,6 +180,7 @@ class Race {
     this.senseMotiveMod, this.stealthMod, this.survivalMod, this.acMod, this.abilityPicks,
     this.skillPicks});
 
+  //This parses the json into the Race object.
   factory Race.fromJson(Map<String, dynamic> json) {
     return Race(
       name: json['Name'],

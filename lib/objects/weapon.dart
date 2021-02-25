@@ -1,8 +1,6 @@
-import 'dart:async';
-import 'dart:convert';
-import 'package:flutter/services.dart';
-
+//This object is used in the Weapon index.
 class Weapon {
+  //These parameters match the sfrpg_weapons json fields.
   String name;
   final String source;
   final String type;
@@ -95,20 +93,11 @@ class Weapon {
   final bool isRanged;
   final int units;
 
-  Future<String> _loadFromAsset() async {
-    return await rootBundle.loadString("data/sfrpg_weapons.json");
-  }
-
-  Future parseJson() async {
-    String jsonString = await _loadFromAsset();
-    final jsonResponse = jsonDecode(jsonString);
-    print(jsonString);
-    print(jsonResponse);
-  }
-
+  //This list parses the Weapon index data in list strings.
   List<String> weaponDetails(Weapon weaponToParse) {
+    //This populates a list of strings for each Weapon.
     List<String> weaponProperties = new List();
-    //weaponProperties.add("Name: " + spellToParse.name);
+    //Strings use the isNotEmpty method to skip null values.
     if (weaponToParse.source.isNotEmpty) {
       weaponProperties.add("Source: " + weaponToParse.source);
     }
@@ -121,6 +110,7 @@ class Weapon {
     if (weaponToParse.category.isNotEmpty) {
       weaponProperties.add("Categories: " + weaponToParse.category);
     }
+    //Integers use the isNaN method with reverse logic to skip null values.
     if (!weaponToParse.level.isNaN) {
       weaponProperties.add("Level: " + weaponToParse.level.toString());
     }
@@ -151,6 +141,8 @@ class Weapon {
     if (weaponToParse.special.isNotEmpty) {
       weaponProperties.add("Special: " + weaponToParse.special);
     }
+    //Booleans use != null to skip null values. This doesn't comply with Dart
+    //rules and should be improved.
     if (weaponToParse.analog != null) {
       weaponProperties.add("Analog: " + weaponToParse.analog.toString());
     }
@@ -388,9 +380,11 @@ class Weapon {
     if (!weaponToParse.units.isNaN) {
       weaponProperties.add("Units: " + weaponToParse.units.toString());
     }
+    //This returns the newly made list string to the list.
     return weaponProperties;
   }
 
+  //This is the constructor for the Weapon object.
   Weapon({this.name, this.source, this.type, this.handed, this.category, this.level,
     this.price, this.damage, this.range, this.critical, this.ammo, this.capacity,
     this.usage, this.bulk, this.special, this.analog, this.antibiological, this.archaic,
@@ -409,6 +403,7 @@ class Weapon {
     this.weaponTier, this.criticalType, this.criticalDuration, this.criticalValue,
     this.isMelee, this.isRanged, this.units});
 
+  //This parses the json into the Weapon object.
   factory Weapon.fromJson(Map<String, dynamic> json) {
     return Weapon(
         name: json['Name'],
