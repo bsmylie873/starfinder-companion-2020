@@ -1,10 +1,8 @@
-import 'package:flutter/material.dart';
-import 'package:testflutter/table.dart';
-import 'WidgetScreens.dart';
 import 'classScreen.dart';
+import 'package:flutter/material.dart';
 import 'raceScreen.dart';
-import 'spellScreen.dart';
 import 'skillScreen.dart';
+
 const double gmConstNumOfButtons = 3;
 const double gmConstContainerHeight = 1;
 

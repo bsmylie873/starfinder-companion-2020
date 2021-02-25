@@ -1,22 +1,22 @@
   import 'package:flutter/material.dart';
   final ThemeData lightTheme = ThemeData(
-    primarySwatch: MaterialColor(4283804135,{50: Color( 0xffe9f4fc )
-		, 100: Color( 0xffd2e8f9 )
-		, 200: Color( 0xffa6d2f2 )
-		, 300: Color( 0xff79bbec )
-		, 400: Color( 0xff4ca5e6 )
-		, 500: Color( 0xff208edf )
-		, 600: Color( 0xff1972b3 )
-		, 700: Color( 0xff135586 )
-		, 800: Color( 0xff0d3959 )
-		, 900: Color( 0xff061c2d )
+    primarySwatch: MaterialColor(4278602109,{50: Color( 0xffe7f4fe )
+		, 100: Color( 0xffcee8fd )
+		, 200: Color( 0xff9ed2fa )
+		, 300: Color( 0xff6dbbf8 )
+		, 400: Color( 0xff3ca5f6 )
+		, 500: Color( 0xff0c8ef3 )
+		, 600: Color( 0xff0972c3 )
+		, 700: Color( 0xff075592 )
+		, 800: Color( 0xff053961 )
+		, 900: Color( 0xff021c31 )
 		}),
     brightness: Brightness.light,
-    primaryColor: Color( 0xff55a9e7 ),
-    primaryColorBrightness: Brightness.light,
-    primaryColorLight: Color( 0xffd2e8f9 ),
-    primaryColorDark: Color( 0xff135586 ),
-    accentColor: Color( 0xff208edf ),
+    primaryColor: Color( 0xff06497d ),
+    primaryColorBrightness: Brightness.dark,
+    primaryColorLight: Color( 0xffcee8fd ),
+    primaryColorDark: Color( 0xff075592 ),
+    accentColor: Color( 0xff0c8ef3 ),
     accentColorBrightness: Brightness.dark,
     canvasColor: Color( 0xfffafafa ),
     scaffoldBackgroundColor: Color( 0xfffafafa ),
@@ -29,14 +29,14 @@
     unselectedWidgetColor: Color( 0x8a000000 ),
     disabledColor: Color( 0x61000000 ),
     buttonColor: Color( 0xffe0e0e0 ),
-    toggleableActiveColor: Color( 0xff1972b3 ),
-    secondaryHeaderColor: Color( 0xffe9f4fc ),
-    textSelectionColor: Color( 0xffa6d2f2 ),
+    toggleableActiveColor: Color( 0xff0972c3 ),
+    secondaryHeaderColor: Color( 0xffe7f4fe ),
+    textSelectionColor: Color( 0xff9ed2fa ),
     cursorColor: Color( 0xff4285f4 ),
-    textSelectionHandleColor: Color( 0xff79bbec ),
-    backgroundColor: Color( 0xffa6d2f2 ),
+    textSelectionHandleColor: Color( 0xff6dbbf8 ),
+    backgroundColor: Color( 0xff9ed2fa ),
     dialogBackgroundColor: Color( 0xffffffff ),
-    indicatorColor: Color( 0xff208edf ),
+    indicatorColor: Color( 0xff0c8ef3 ),
     hintColor: Color( 0x8a000000 ),
     errorColor: Color( 0xffd32f2f ),
     buttonTheme: ButtonThemeData(
@@ -57,17 +57,17 @@
       focusColor: Color( 0x1f000000 ),
       hoverColor: Color( 0x0a000000 ),
       colorScheme: ColorScheme(
-        primary: Color( 0xff55a9e7 ),
-        primaryVariant: Color( 0xff135586 ),
-        secondary: Color( 0xff208edf ),
-        secondaryVariant: Color( 0xff135586 ),
+        primary: Color( 0xff06497d ),
+        primaryVariant: Color( 0xff075592 ),
+        secondary: Color( 0xff0c8ef3 ),
+        secondaryVariant: Color( 0xff075592 ),
         surface: Color( 0xffffffff ),
-        background: Color( 0xffa6d2f2 ),
+        background: Color( 0xff9ed2fa ),
         error: Color( 0xffd32f2f ),
-        onPrimary: Color( 0xff000000 ),
+        onPrimary: Color( 0xffffffff ),
         onSecondary: Color( 0xffffffff ),
         onSurface: Color( 0xff000000 ),
-        onBackground: Color( 0xff000000 ),
+        onBackground: Color( 0xffffffff ),
         onError: Color( 0xffffffff ),
         brightness: Brightness.light,
       ),
@@ -154,79 +154,79 @@
     ),
     primaryTextTheme: TextTheme(
       display4: TextStyle(
-      color: Color( 0x8a000000 ),
+      color: Color( 0xb3ffffff ),
       fontSize: null,
       fontWeight: FontWeight.w400,
       fontStyle: FontStyle.normal,
     ),
       display3: TextStyle(
-      color: Color( 0x8a000000 ),
+      color: Color( 0xb3ffffff ),
       fontSize: null,
       fontWeight: FontWeight.w400,
       fontStyle: FontStyle.normal,
     ),
       display2: TextStyle(
-      color: Color( 0x8a000000 ),
+      color: Color( 0xb3ffffff ),
       fontSize: null,
       fontWeight: FontWeight.w400,
       fontStyle: FontStyle.normal,
     ),
       display1: TextStyle(
-      color: Color( 0x8a000000 ),
+      color: Color( 0xb3ffffff ),
       fontSize: null,
       fontWeight: FontWeight.w400,
       fontStyle: FontStyle.normal,
     ),
       headline: TextStyle(
-      color: Color( 0xdd000000 ),
+      color: Color( 0xffffffff ),
       fontSize: null,
       fontWeight: FontWeight.w400,
       fontStyle: FontStyle.normal,
     ),
       title: TextStyle(
-      color: Color( 0xdd000000 ),
+      color: Color( 0xffffffff ),
       fontSize: null,
       fontWeight: FontWeight.w400,
       fontStyle: FontStyle.normal,
     ),
       subhead: TextStyle(
-      color: Color( 0xdd000000 ),
+      color: Color( 0xffffffff ),
       fontSize: null,
       fontWeight: FontWeight.w400,
       fontStyle: FontStyle.normal,
     ),
       body2: TextStyle(
-      color: Color( 0xdd000000 ),
+      color: Color( 0xffffffff ),
       fontSize: null,
       fontWeight: FontWeight.w400,
       fontStyle: FontStyle.normal,
     ),
       body1: TextStyle(
-      color: Color( 0xdd000000 ),
+      color: Color( 0xffffffff ),
       fontSize: null,
       fontWeight: FontWeight.w400,
       fontStyle: FontStyle.normal,
     ),
       caption: TextStyle(
-      color: Color( 0x8a000000 ),
+      color: Color( 0xb3ffffff ),
       fontSize: null,
       fontWeight: FontWeight.w400,
       fontStyle: FontStyle.normal,
     ),
       button: TextStyle(
-      color: Color( 0xdd000000 ),
+      color: Color( 0xffffffff ),
       fontSize: null,
       fontWeight: FontWeight.w400,
       fontStyle: FontStyle.normal,
     ),
       subtitle: TextStyle(
-      color: Color( 0xff000000 ),
+      color: Color( 0xffffffff ),
       fontSize: null,
       fontWeight: FontWeight.w400,
       fontStyle: FontStyle.normal,
     ),
       overline: TextStyle(
-      color: Color( 0xff000000 ),
+      color: Color( 0xffffffff ),
       fontSize: null,
       fontWeight: FontWeight.w400,
       fontStyle: FontStyle.normal,
@@ -393,7 +393,7 @@
       size: 24,
     ),
     primaryIconTheme: IconThemeData(
-      color: Color( 0xff000000 ),
+      color: Color( 0xffffffff ),
       opacity: 1,
       size: 24,
     ),
@@ -413,10 +413,8 @@
       disabledInactiveTickMarkColor: null,
       thumbColor: null,
       disabledThumbColor: null,
-      thumbShape: null,
       overlayColor: null,
       valueIndicatorColor: null,
-      valueIndicatorShape: null,
       showValueIndicator: null,
       valueIndicatorTextStyle: TextStyle(
       color: Color( 0xffffffff ),
@@ -427,8 +425,8 @@
     ),
     tabBarTheme: TabBarTheme(
       indicatorSize: TabBarIndicatorSize.tab,
-      labelColor: Color( 0xdd000000 ),
-      unselectedLabelColor: Color( 0xb2000000 ),
+      labelColor: Color( 0xffffffff ),
+      unselectedLabelColor: Color( 0xb2ffffff ),
     ),
     chipTheme: ChipThemeData(
       backgroundColor: Color( 0x1f000000 ),
@@ -449,7 +447,7 @@
       fontWeight: FontWeight.w400,
       fontStyle: FontStyle.normal,
     ),
-      secondarySelectedColor: Color( 0x3d55a9e7 ),
+      secondarySelectedColor: Color( 0x3d06497d ),
       selectedColor: Color( 0x3d000000 ),
       shape: StadiumBorder( side: BorderSide(color: Color( 0xff000000 ), width: 0, style: BorderStyle.none, ) ),
     ),

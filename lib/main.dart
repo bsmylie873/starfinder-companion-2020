@@ -1,19 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:provider/provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:page_transition/page_transition.dart';
-import 'package:csv/csv.dart';
-import 'dart:async' show Future;
 import 'package:flutter/services.dart';
 import 'theme.dart';
-import 'darktheme.dart';
-import 'thememanager.dart';
-import 'wiki.dart';
-import 'table.dart';
+import 'darkTheme.dart';
+import 'themeManager.dart';
 import 'screens/mainBoxes.dart';
-import 'objects/spell.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 ThemeData myThemeLight = lightTheme;

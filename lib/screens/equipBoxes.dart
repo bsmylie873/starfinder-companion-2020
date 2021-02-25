@@ -1,15 +1,14 @@
-import 'package:flutter/material.dart';
-import 'package:testflutter/screens/weaponScreen.dart';
-import 'package:testflutter/table.dart';
-import 'WidgetScreens.dart';
+import '../screens/weaponScreen.dart';
 import 'armorScreen.dart';
 import 'augmentationScreen.dart';
 import 'computerScreen.dart';
 import 'hybridScreen.dart';
 import 'magicScreen.dart';
 import 'otherScreen.dart';
+import 'package:flutter/material.dart';
 import 'techScreen.dart';
 import 'weaponScreen.dart';
+
 const double equipConstNumOfButtons = 8;
 const double equipConstContainerHeight = 1;
 

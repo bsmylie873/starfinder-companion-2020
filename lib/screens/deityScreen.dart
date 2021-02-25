@@ -1,9 +1,5 @@
-import 'package:flutter_search_bar/flutter_search_bar.dart';
-
-import '../objects/spell.dart';
-import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+import 'package:flutter_search_bar/flutter_search_bar.dart';
 
 class DeitiesList extends StatefulWidget {
   @override

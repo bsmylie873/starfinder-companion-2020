@@ -1,9 +1,8 @@
-import 'package:flutter_search_bar/flutter_search_bar.dart';
-
 import '../objects/weapon.dart';
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_search_bar/flutter_search_bar.dart';
 
 class WeaponList extends StatefulWidget {
   @override
