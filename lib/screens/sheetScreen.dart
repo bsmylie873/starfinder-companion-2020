@@ -7,9 +7,6 @@ import 'package:path_provider/path_provider.dart';
 import 'dart:io';
 import 'package:path/path.dart';
 
-
-
-
 class CharacterSheetAttempt extends StatelessWidget {
   WebViewController _controller;
 
@@ -23,20 +20,10 @@ class CharacterSheetAttempt extends StatelessWidget {
           _extractDataJSChannel(context),
           _loadDataJSChannel(context, _controller),
         ].toSet(),
-
         initialUrl: '',
         onWebViewCreated: (WebViewController webViewController) async {
           _controller = webViewController;
           await loadHtmlFromAssets('data/characterSheet.html', _controller);
-        },
-
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () async {
-          final File file  = await _localFile;
-          String result = await file.readAsString();
-          _controller.evaluateJavascript("LoadJSON($result)");
-
         },
       ),
     );
@@ -53,35 +40,43 @@ class CharacterSheetAttempt extends StatelessWidget {
         parsedData.forEach((element) {
           print(element);
         });
-
         writeContent(pageBody);
       },
     );
   }
 
-  JavascriptChannel _loadDataJSChannel(BuildContext context,
-      WebViewController webviewController) {
+  JavascriptChannel _loadDataJSChannel(
+      BuildContext context, WebViewController webviewController) {
     return JavascriptChannel(
       name: 'loadJson',
       onMessageReceived: (JavascriptMessage message) async {
-        final File file  = await _localFile;
-        List<String> result = file.readAsLinesSync();
+        String filePath = await Navigator.push(context,
+            MaterialPageRoute(
+            builder: (context) => FileListView()
+            )
+        );
+        String result = await localContent(filePath);
+
         _controller.evaluateJavascript("LoadJSON($result)");
       },
     );
   }
 
+  Future<String> localContent(String path) async {
+    final file = new File(path);
+    String localContent = await file.readAsString();
+    return localContent;
+  }
+
   Future<String> get _localPath async {
     Directory appDocDirectory = await getApplicationDocumentsDirectory();
-
-    Directory directory = await new Directory(
-        appDocDirectory.path + '/' + 'CharacterSheets')
-        .create(recursive: true)
-        .then(
-            (Directory directory) {
-          print('Path of New Dir: ' + directory.path);
-          return directory;
-        });
+    Directory directory =
+        await new Directory(appDocDirectory.path + '/' + 'CharacterSheets')
+            .create(recursive: true)
+            .then((Directory directory) {
+      print('Path of New Dir: ' + directory.path);
+      return directory;
+    });
     return directory.path;
   }
 
@@ -89,46 +84,38 @@ class CharacterSheetAttempt extends StatelessWidget {
     final path = await _localPath;
     print('$path');
     return File('$path');
-    // print('$path' + '/savedCharacterSheet.json');
-    // return File('$path' + '/savedCharacterSheet.json');
   }
 
   Future<File> writeContent(String content) async {
     final file = await _localFile;
     Map<String, dynamic> tempMap = json.decode(content);
 
-    // String charName = tempMap.keys.where((String key) {
-    //   String value = key.endsWith("Charname");
-    // }).toString();
     String charName = tempMap["Charname"];
     RegExp noBadCharacters = RegExp(r'^[a-zA-Z0-9]+$');
     final cleanName = noBadCharacters.firstMatch(charName);
     charName = cleanName.group(0);
     // Write the file
-    if(charName.isNotEmpty) {
-      final writeFile = new File(file.path + '/'+ '$charName' + '.json');
+    if (charName.isNotEmpty) {
+      final writeFile = new File(file.path + '/' + '$charName' + '.json');
       print(writeFile.writeAsString(content));
       return writeFile.writeAsString(content);
-    }
-    else{
+    } else {
       final writeFile = new File(file.path + '/savedCharacterSheet.json');
       print(writeFile.writeAsString(content));
       return writeFile.writeAsString(content);
     }
   }
 
-
   Future<void> loadHtmlFromAssets(String filename, controller) async {
     String fileText = await rootBundle.loadString(filename);
     controller.loadUrl(Uri.dataFromString(fileText,
-        mimeType: 'text/html', encoding: Encoding.getByName('utf-8'))
+            mimeType: 'text/html', encoding: Encoding.getByName('utf-8'))
         .toString());
   }
 }
 
-
 class DirectoryTest extends StatelessWidget {
-  DirectoryTest({Key key,  this.path}) : super(key: key);
+  DirectoryTest({Key key, this.path}) : super(key: key);
   String path;
   WebViewController _controller;
 
@@ -143,15 +130,14 @@ class DirectoryTest extends StatelessWidget {
           javascriptMode: JavascriptMode.unrestricted,
           javascriptChannels: <JavascriptChannel>[
             _extractDataJSChannel(context),
-
           ].toSet(),
           initialUrl: '',
           onWebViewCreated: (WebViewController webViewController) async {
             _controller = webViewController;
             await loadHtmlFromAssets('data/characterSheet.html', _controller);
           },
-          onPageFinished: (String data) async{
-            String savedFile  = await localContent(path);
+          onPageFinished: (String data) async {
+            String savedFile = await localContent(path);
             _controller.evaluateJavascript("LoadJSON($savedFile)");
           },
         ),
@@ -162,7 +148,7 @@ class DirectoryTest extends StatelessWidget {
   Future<void> loadHtmlFromAssets(String fileName, controller) async {
     String fileText = await rootBundle.loadString(fileName);
     controller.loadUrl(Uri.dataFromString(fileText,
-        mimeType: 'text/html', encoding: Encoding.getByName('utf-8'))
+            mimeType: 'text/html', encoding: Encoding.getByName('utf-8'))
         .toString());
   }
 
@@ -180,14 +166,13 @@ class DirectoryTest extends StatelessWidget {
   Future<String> get _localPath async {
     Directory appDocDirectory = await getApplicationDocumentsDirectory();
 
-    Directory directory = await new Directory(
-        appDocDirectory.path + '/' + 'CharacterSheets')
-        .create(recursive: true)
-        .then(
-            (Directory directory) {
-          print('Path of New Dir: ' + directory.path);
-          return directory;
-        });
+    Directory directory =
+        await new Directory(appDocDirectory.path + '/' + 'CharacterSheets')
+            .create(recursive: true)
+            .then((Directory directory) {
+      print('Path of New Dir: ' + directory.path);
+      return directory;
+    });
     return directory.path;
   }
 
@@ -205,12 +190,11 @@ class DirectoryTest extends StatelessWidget {
     final cleanName = noBadCharacters.firstMatch(charName);
     charName = cleanName.group(0);
     // Write the file
-    if(charName.isNotEmpty) {
-      final writeFile = new File(file.path + '/'+ '$charName' + '.json');
+    if (charName.isNotEmpty) {
+      final writeFile = new File(file.path + '/' + '$charName' + '.json');
       print(writeFile.writeAsString(content));
       return writeFile.writeAsString(content);
-    }
-    else{
+    } else {
       final writeFile = new File(file.path + '/savedCharacterSheet.json');
       print(writeFile.writeAsString(content));
       return writeFile.writeAsString(content);
@@ -224,12 +208,12 @@ class DirectoryTest extends StatelessWidget {
   }
 }
 
-class FileGridView extends StatefulWidget{
+class FileListView extends StatefulWidget {
   @override
-  _FileGridViewState createState() => _FileGridViewState();
+  _FileListViewState createState() => _FileListViewState();
 }
 
-class _FileGridViewState extends State<FileGridView>{
+class _FileListViewState extends State<FileListView> {
   @override
   Widget build(BuildContext context) {
     return Center(
@@ -237,10 +221,11 @@ class _FileGridViewState extends State<FileGridView>{
         child: FutureBuilder(
           future: _localPath,
           builder: (context, snapshot) {
-            String path =  snapshot.data;
-            Directory directory = new Directory(path);
-            return directory.existsSync() ? new CharacterSheetDirectory(directory: directory): new Center(
-                child: CircularProgressIndicator());
+            //String path =  snapshot.data;
+            Directory directory = new Directory(snapshot.data);
+            return directory.existsSync()
+                ? new CharacterSheetDirectory(directory: directory)
+                : new Center(child: CircularProgressIndicator());
           },
         ),
       ),
@@ -249,26 +234,21 @@ class _FileGridViewState extends State<FileGridView>{
 
   Future<String> get _localPath async {
     Directory appDocDirectory = await getApplicationDocumentsDirectory();
-
-    Directory directory = await new Directory(
-        appDocDirectory.path + '/' + 'CharacterSheets')
-        .create(recursive: true)
-        .then(
-            (Directory directory) {
-          print('Path of New Dir: ' + directory.path);
-          return directory;
-        });
+    Directory directory =
+        await new Directory(appDocDirectory.path + '/' + 'CharacterSheets')
+            .create(recursive: true)
+            .then((Directory directory) {
+      print('Path of New Dir: ' + directory.path);
+      return directory;
+    });
     return directory.path;
   }
-
 }
-
 
 class CharacterSheetDirectory extends StatelessWidget {
   final Directory directory;
 
   const CharacterSheetDirectory({Key key, this.directory}) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
     var fileList = directory
@@ -282,13 +262,9 @@ class CharacterSheetDirectory extends StatelessWidget {
       ),
       body: ListView.builder(
           itemCount: fileList == null ? 0 : fileList.length,
-          // gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-          //     crossAxisCount: 2),
           itemBuilder: (BuildContext context, int index) {
             File file = new File(fileList[index]);
-            String name = file.path
-                .split('/')
-                .last;
+            String name = file.path.split('/').last;
             return new Card(
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(8.0),
@@ -297,53 +273,52 @@ class CharacterSheetDirectory extends StatelessWidget {
                   padding: const EdgeInsets.all(5.0),
                   child: ListTile(
                     title: Text(name),
-                    onTap: () =>
-                    {
-                      Navigator.push(
-                          context, MaterialPageRoute(builder: (context) {
-                        return DirectoryTest(path: file.path);
-                      },
-                      )
-                      )
+                    onTap: () => {
+                      Navigator.push(context, MaterialPageRoute(
+                        builder: (context) {
+                          return DirectoryTest(path: file.path);
+                        },
+                      ))
                     },
                     trailing: IconButton(
                       icon: Icon(CupertinoIcons.trash),
                       onPressed: () {
                         showAlertDialog(context, file);
                       },
-
-                     ),
-                  )
-              ),
+                    ),
+                  )),
             );
           }),
     );
   }
+
   showAlertDialog(BuildContext context, File file) {
     // set up the buttons
     Widget cancelButton = FlatButton(
       child: Text("Cancel"),
-      onPressed:  () {
+      onPressed: () {
+        Navigator.of(context, rootNavigator: true).pop('dialog');
       },
     );
     Widget deleteButton = FlatButton(
       child: Text("Delete"),
-      onPressed:  () {
-      file.deleteSync(recursive: false);
+      onPressed: () {
+        Navigator.of(context, rootNavigator: true).pop('dialog');
+        file.deleteSync(recursive: false);
       },
     );
 
     // set up the AlertDialog
     AlertDialog alert = AlertDialog(
       title: Text("AlertDialog"),
-      content: Text("If you wish to delete the associated sheet, press Delete. To dismiss this dialog, press Cancel"),
+      content: Text(
+          "If you wish to delete the associated sheet, press Delete. To dismiss this dialog, press Cancel"),
       actions: [
         cancelButton,
         deleteButton,
       ],
     );
 
-    // show the dialog
     showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -355,14 +330,13 @@ class CharacterSheetDirectory extends StatelessWidget {
   Future<String> get _localPath async {
     Directory appDocDirectory = await getApplicationDocumentsDirectory();
 
-    Directory directory = await new Directory(
-        appDocDirectory.path + '/' + 'CharacterSheets')
-        .create(recursive: true)
-        .then(
-            (Directory directory) {
-          print('Path of New Dir: ' + directory.path);
-          return directory;
-        });
+    Directory directory =
+        await new Directory(appDocDirectory.path + '/' + 'CharacterSheets')
+            .create(recursive: true)
+            .then((Directory directory) {
+      print('Path of New Dir: ' + directory.path);
+      return directory;
+    });
     return directory.path;
   }
 
@@ -377,5 +351,4 @@ class CharacterSheetDirectory extends StatelessWidget {
     String localContent = await file.readAsString();
     return localContent;
   }
-
 }
