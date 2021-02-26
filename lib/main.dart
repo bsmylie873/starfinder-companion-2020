@@ -1,14 +1,14 @@
+import 'darkTheme.dart';
+import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:provider/provider.dart';
-import 'package:animated_splash_screen/animated_splash_screen.dart';
-import 'package:page_transition/page_transition.dart';
 import 'package:flutter/services.dart';
-import 'theme.dart';
-import 'darkTheme.dart';
-import 'themeManager.dart';
-import 'screens/mainBoxes.dart';
+import 'package:page_transition/page_transition.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:provider/provider.dart';
+import 'screens/mainBoxes.dart';
+import 'theme.dart';
+import 'themeManager.dart';
 
 ThemeData myThemeLight = lightTheme;
 ThemeData myThemeDark = darkTheme;
