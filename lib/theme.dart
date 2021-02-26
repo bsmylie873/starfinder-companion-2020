@@ -1,4 +1,6 @@
-  import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
+  //This contains the light mode theme settings, which is imported into the main
+  //class.
   final ThemeData lightTheme = ThemeData(
     primarySwatch: MaterialColor(4278602109,{50: Color( 0xffe7f4fe )
 		, 100: Color( 0xffcee8fd )
