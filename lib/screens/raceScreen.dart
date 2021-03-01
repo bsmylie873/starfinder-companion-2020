@@ -4,91 +4,123 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_search_bar/flutter_search_bar.dart';
 
+//Stateful RaceList class.
 class RaceList extends StatefulWidget {
   @override
   RaceListState createState() => RaceListState();
 }
 
+//State of stateful RaceList class.
 class RaceListState extends State<RaceList> {
+  //Scaffold key used for SearchBar declared.
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
-  String searchRace = "";
 
+  //List of strings for different fetch methods initialised.
   List<String> listOfRaceNames = new List();
   List<String> raceDetails = new List();
 
+  //Json data loaded into a Future of type String.
   Future<String> _loadFromRaceJson() async {
     return await rootBundle.loadString("data/sfrpg_races.json");
   }
 
+  //This method creates a string list of all classes.
   Future<List<String>> fetchRaces() async {
     String jsonString = await _loadFromRaceJson();
+    //Future String parsed into a map.
     Map<String, dynamic> jsonResponses = jsonDecode(jsonString);
+    //Keys extracted from map (spell names).
     listOfRaceNames = jsonResponses.keys.toList();
     return listOfRaceNames;
   }
 
-  Future<List<String>> fetchARace(String RaceName) async {
+  //This method fetches the details of a single class.
+  Future<List<String>> fetchARace(String raceName) async {
+    //Class object created.
     String jsonString = await _loadFromRaceJson();
+    //Future of type string parsed into a map.
     Race newRace = new Race();
+    //NewRace takes values from matching entry in jsonResponses map.
     Map<String, dynamic> jsonResponses = jsonDecode(jsonString);
-    newRace = Race.fromJson(jsonResponses[RaceName]);
-    newRace.name = RaceName;
+    newRace = Race.fromJson(jsonResponses[raceName]);
+    newRace.name = raceName;
+    //List of strings takes values from newRace and then returned.
     raceDetails = newRace.raceDetails(newRace);
     return raceDetails;
   }
 
   Future<List<String>> fetchSearched(String searchQuery) async {
+    //List of strings created.
     List<String> searchValues = new List();
+    //Parameter converted to lower case.
     searchQuery.toLowerCase();
+    //Temporary list allowed to equal key list.
     List<String> tempList = listOfRaceNames;
+    //Temporary list set to lower case.
     tempList = tempList.map((e) => e.toLowerCase()).toList();
+    //Sequential search of temporary list with search query.
     for (var i = 0; i < listOfRaceNames.length; i++) {
       if (tempList[i].contains(searchQuery)) {
         searchValues.add(listOfRaceNames[i]);
         print(searchValues[0]);
       }
     }
+    //Some error handling in case search has no matches.
     if (searchValues.isEmpty){
       searchValues.add("No results found!");
     }
+    //Result returned.
     return searchValues;
   }
 
-  Widget selectedRace(BuildContext context, String Race) {
+  //Race detail display widget, with a race as a parameter.
+  Widget selectedRace(BuildContext context, String race) {
     return Scaffold(
         appBar: AppBar(
-          title: Text(Race),
+          title: Text(race),
         ),
         body: FutureBuilder(
-            future: fetchARace(Race),
+          //Future builder which calls the fetchARace method with parameter.
+            future: fetchARace(race),
             builder: (context, snapshot) {
+              //Some indication of activity for the user when delayed.
               if (snapshot.connectionState == ConnectionState.waiting) {
                 return Center(child: CircularProgressIndicator());
-              } else {
+              }
+              //Race detail display widget, for the body of selectedRace.
+              else {
                 return createRaceSelectedView(context, snapshot);
               }
             }));
   }
 
+  //Search result display widget, with query as a parameter.
   Widget searchedRace(BuildContext context, String searchQuery) {
     return Scaffold(
         appBar: AppBar(
           title: Text(searchQuery),
         ),
         body: FutureBuilder(
+          //Future builder which calls the fetchSearched method with parameter.
             future: fetchSearched(searchQuery),
             builder: (context, snapshot) {
+              //Some indication of activity for the user when delayed.
               if (snapshot.connectionState == ConnectionState.waiting) {
                 return Center(child: CircularProgressIndicator());
-              } else {
+              }
+              //Race search result displayed in body of searchedRace.
+              else {
                 return createRaceListView(context, snapshot);
               }
             }));
   }
 
+  //Race detail display widget, for the body of selectedRace.
   Widget createRaceSelectedView(BuildContext context, AsyncSnapshot snapshot) {
+    //Snapshot data converted to a list of strings.
     List<String> values1 = snapshot.data;
     return new ListView.separated(
+      //Items counted, and a list of tiles created with snapshot data.
         itemCount: values1.length,
         itemBuilder: (BuildContext context, int index) {
           return new Column(
@@ -99,20 +131,25 @@ class RaceListState extends State<RaceList> {
             ],
           );
         },
+        //Create some separation between tiles.
         separatorBuilder: (context, index) {
           return Divider();
         });
   }
 
+  //Race search result displayed in body of searchedRace.
   Widget createRaceListView(BuildContext context, AsyncSnapshot snapshot) {
+    //Snapshot data converted to a list of strings.
     List<String> values = snapshot.data;
     return new ListView.builder(
+      //Items counted, and a list of tiles created with snapshot data.
       itemCount: values.length,
       itemBuilder: (BuildContext context, int index) {
         return new Column(
           children: <Widget>[
             new ListTile(
               title: new Text(values[index]),
+              //When tapped, tile will load race details.
               onTap: () {
                 Navigator.push(
                     context,
@@ -121,6 +158,7 @@ class RaceListState extends State<RaceList> {
                             selectedRace(context, values[index])));
               },
             ),
+            //Create some separation between tiles.
             new Divider(
               height: 2.0,
             ),
@@ -130,17 +168,18 @@ class RaceListState extends State<RaceList> {
     );
   }
 
+  //SearchBar initialised.
   SearchBar searchBar;
 
+  //Build the AppBar with the search functionality.
   AppBar buildAppBar(BuildContext context) {
     return new AppBar(
         title: new Text('Races'),
         actions: [searchBar.getSearchAction(context)]);
   }
 
+  //When a search query is submitted, this method handles the input.
   onSubmitted(String value) {
-    /*setState(() => _scaffoldKey.currentState
-        .showSnackBar(new SnackBar(content: new Text('You wrote $value!'))));*/
     Navigator.push(
         context,
         MaterialPageRoute(
@@ -148,6 +187,7 @@ class RaceListState extends State<RaceList> {
                 searchedRace(context, value)));
   }
 
+  //SearchBar parameters set.
   RaceListState() {
     searchBar = new SearchBar(
         inBar: false,
@@ -162,17 +202,24 @@ class RaceListState extends State<RaceList> {
         });
   }
 
+  //Build method for raceListState.
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        //Custom AppBar used.
         appBar: searchBar.build(context),
+        //Private key used.
         key: _scaffoldKey,
         body: FutureBuilder(
+          //Future builder which calls the fetchSpells method.
             future: fetchRaces(),
             builder: (context, AsyncSnapshot snapshot) {
+              //Some indication of activity for the user when delayed.
               if (!snapshot.hasData) {
                 return Center(child: CircularProgressIndicator());
-              } else {
+              }
+              //Spell list displayed in body of build method.
+              else {
                 return createRaceListView(context, snapshot);
               }
             }));

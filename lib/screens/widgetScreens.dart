@@ -4,16 +4,15 @@ import 'package:flutter/material.dart';
 import 'playerBoxes.dart';
 import 'refBoxes.dart';
 
+//Boxes for the player screen.
 class ExpandedPlayerBox extends StatelessWidget {
+  //Build method.
   @override
   Widget build(BuildContext context) {
+    //Create list of widgets.
     final children = <Widget>[];
-    var screenSize = MediaQuery
-        .of(context)
-        .size;
-    var width = screenSize.width;
-    var quarterWidth = width / 4;
 
+    //Populate list of widgets.
     for (var i = 0; i < pConstNumOfButtons; i++) {
       switch (i) {
         case 0:
@@ -33,21 +32,8 @@ class ExpandedPlayerBox extends StatelessWidget {
           break;
       }
     }
-    // return new SingleChildScrollView(
-    //   child: Container(
-    //     width: width,
-    //     height: containerHeightWithToolbar(context),
-    //     padding: EdgeInsets.only(left: quarterWidth, right: quarterWidth),
-    //     child: GridView.count(
-    //       primary: false,
-    //       padding: const EdgeInsets.all(20),
-    //       crossAxisSpacing: 10,
-    //       mainAxisSpacing: 10,
-    //       crossAxisCount: 2,
-    //       children: children,
-    //     ),
-    //   ),
-    // );
+
+    //Return a grid of buttons using list of widgets.
     return new GridView.count(
       primary: false,
       padding: const EdgeInsets.all(20),
@@ -58,48 +44,33 @@ class ExpandedPlayerBox extends StatelessWidget {
     );
   }
 
-  Size screenSize(BuildContext context) {
-    return MediaQuery
-        .of(context)
-        .size;
-  }
-
-  double containerHeight(BuildContext context,
-      {double containerHeight = constContainerHeight,
-        double sizeReduction = 0.0}) {
-    return (screenSize(context).height - sizeReduction) / containerHeight;
-  }
-
-  double containerHeightWithToolbar(BuildContext context,
-      {double newContainerHeight = constContainerHeight}) {
-    return containerHeight(context,
-        containerHeight: newContainerHeight, sizeReduction: kToolbarHeight);
-  }
 }
 
+//PlayerScreen class.
 class PlayerScreen extends StatelessWidget {
+  //Create route name for navigation purposes.
   static const routeName = 'playerScreen';
 
+  //Build method.
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
           title: Text("Player Options"),
         ),
+        //Call method to display boxes in body.
         body: ExpandedPlayerBox());
   }
 }
 
+//Boxes for the references screen.
 class ExpandedRefBox extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    //Create list of widgets.
     final children = <Widget>[];
-    var screenSize = MediaQuery
-        .of(context)
-        .size;
-    var width = screenSize.width;
-    var quarterWidth = width / 4;
 
+    //Populate list of widgets.
     for (var i = 0; i < refConstNumOfButtons; i++) {
       switch (i) {
         case 0:
@@ -125,21 +96,8 @@ class ExpandedRefBox extends StatelessWidget {
           break;
       }
     }
-    // return new SingleChildScrollView(
-    //   child: Container(
-    //     width: width,
-    //     height: containerHeightWithToolbar(context),
-    //     padding: EdgeInsets.only(left: quarterWidth, right: quarterWidth),
-    //     child: GridView.count(
-    //       primary: false,
-    //       padding: const EdgeInsets.all(20),
-    //       crossAxisSpacing: 10,
-    //       mainAxisSpacing: 10,
-    //       crossAxisCount: 2,
-    //       children: children,
-    //     ),
-    //   ),
-    // );
+
+    //Return a grid of buttons using list of widgets.
     return new GridView.count(
       primary: false,
       padding: const EdgeInsets.all(20),
@@ -149,49 +107,33 @@ class ExpandedRefBox extends StatelessWidget {
       children: children,
     );
   }
-
-  Size screenSize(BuildContext context) {
-    return MediaQuery
-        .of(context)
-        .size;
-  }
-
-  double containerHeight(BuildContext context,
-      {double containerHeight = constContainerHeight,
-        double sizeReduction = 0.0}) {
-    return (screenSize(context).height - sizeReduction) / containerHeight;
-  }
-
-  double containerHeightWithToolbar(BuildContext context,
-      {double newContainerHeight = constContainerHeight}) {
-    return containerHeight(context,
-        containerHeight: newContainerHeight, sizeReduction: kToolbarHeight);
-  }
 }
 
+//RefScreen class.
 class RefScreen extends StatelessWidget {
+  //Create route name for navigation purposes.
   static const routeName = 'refScreen';
 
+  //Build method.
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
           title: Text("References"),
         ),
+        //Call method to display boxes in body.
         body: ExpandedRefBox());
   }
 }
 
+//Boxes for the equipment screen.
 class ExpandedEquipBox extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    //Create list of widgets.
     final children = <Widget>[];
-    var screenSize = MediaQuery
-        .of(context)
-        .size;
-    var width = screenSize.width;
-    var quarterWidth = width / 4;
 
+    //Populate list of widgets.
     for (var i = 0; i < equipConstNumOfButtons; i++) {
       switch (i) {
         case 0:
@@ -220,21 +162,8 @@ class ExpandedEquipBox extends StatelessWidget {
           break;
       }
     }
-    // return new SingleChildScrollView(
-    //   child: Container(
-    //     width: width,
-    //     height: containerHeightWithToolbar(context),
-    //     padding: EdgeInsets.only(left: quarterWidth, right: quarterWidth),
-    //     child: GridView.count(
-    //       primary: false,
-    //       padding: const EdgeInsets.all(20),
-    //       crossAxisSpacing: 10,
-    //       mainAxisSpacing: 10,
-    //       crossAxisCount: 2,
-    //       children: children,
-    //     ),
-    //   ),
-    // );
+
+    //Return a grid of buttons using list of widgets.
     return new GridView.count(
       primary: false,
       padding: const EdgeInsets.all(20),
@@ -244,40 +173,26 @@ class ExpandedEquipBox extends StatelessWidget {
       children: children,
     );
   }
-
-  Size screenSize(BuildContext context) {
-    return MediaQuery
-        .of(context)
-        .size;
-  }
-
-  double containerHeight(BuildContext context,
-      {double containerHeight = constContainerHeight,
-        double sizeReduction = 0.0}) {
-    return (screenSize(context).height - sizeReduction) / containerHeight;
-  }
-
-  double containerHeightWithToolbar(BuildContext context,
-      {double newContainerHeight = constContainerHeight}) {
-    return containerHeight(context,
-        containerHeight: newContainerHeight, sizeReduction: kToolbarHeight);
-  }
 }
 
+//EquipScreen class.
 class EquipScreen extends StatelessWidget {
+  //Create list of widgets.
   static const routeName = 'equipScreen';
 
+  //Build method.
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
           title: Text("Equipment"),
         ),
+        //Call method to display boxes in body.
         body: ExpandedEquipBox());
   }
 }
 
-
+//GMRules class.
 class GMRules extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -288,10 +203,13 @@ class GMRules extends StatelessWidget {
         body: Container(
             child: Center(
               child: FutureBuilder(
+                //Create a future to read local storage.
                   future: DefaultAssetBundle.of(context).loadString(
                       'AssetManifest.json'),
                   builder: (context, snapshot) {
+                    //Create list of strings from snapshot.
                     List<String> files = getFileData(snapshot.data);
+                    //Create
                     return files.isNotEmpty ? new DataPageBuilder(
                         fileData: files) : new Center(
                         child: CircularProgressIndicator());

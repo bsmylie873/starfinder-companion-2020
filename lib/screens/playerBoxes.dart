@@ -5,20 +5,24 @@ import 'raceScreen.dart';
 import 'sheetScreen.dart';
 import 'skillScreen.dart';
 
+//These values dictate the number of buttons to be displayed and the height of
+//each button.
 const double pConstNumOfButtons = 5;
 const double constContainerHeight = 1;
 
+//Box 1.
 class PlayerBox extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
     return Card(
         margin: EdgeInsets.only(top: 50.0, bottom: 50.0),
-        //color: Colors.amber,
+        //Uses card design.
         child: ListTile(
+          //Icon relevant to button destination.
             leading: Icon(Icons.hail),
             title: Text('Classes'),
-            //contentPadding: EdgeInsets.only(bottom: 50.0),
+            //When tapped, tile will load the new screen index.
             onTap: () {
               Navigator.push(
                 context,
@@ -29,6 +33,7 @@ class PlayerBox extends StatelessWidget {
 
 }
 
+//Box 2.
 class PlayerBox1 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -49,6 +54,7 @@ class PlayerBox1 extends StatelessWidget {
   }
 }
 
+//Box 3.
 class PlayerBox2 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -68,6 +74,7 @@ class PlayerBox2 extends StatelessWidget {
   }
 }
 
+//Box 4.
 class PlayerBox3 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -86,22 +93,9 @@ class PlayerBox3 extends StatelessWidget {
               );
             }));
   }
-  Size screenSize(BuildContext context) {
-    return MediaQuery.of(context).size;
-  }
-
-  double buttonHeight(BuildContext context,
-      {double numOfButtons = pConstNumOfButtons, double sizeReduction = 0.0}) {
-    return (screenSize(context).height - sizeReduction) / numOfButtons;
-  }
-
-  double buttonHeightWithToolbar(BuildContext context,
-      {double numOfButtons = pConstNumOfButtons}) {
-    return buttonHeight(context,
-        numOfButtons: numOfButtons, sizeReduction: kToolbarHeight);
-  }
 }
 
+//Box 5.
 class PlayerBox4 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -119,22 +113,5 @@ class PlayerBox4 extends StatelessWidget {
                     builder: (context) => CharacterSheetAttempt()),
               );
             }));
-  }
-
-  Size screenSize(BuildContext context) {
-    return MediaQuery
-        .of(context)
-        .size;
-  }
-
-  double buttonHeight(BuildContext context,
-      {double numOfButtons = pConstNumOfButtons, double sizeReduction = 0.0}) {
-    return (screenSize(context).height - sizeReduction) / numOfButtons;
-  }
-
-  double buttonHeightWithToolbar(BuildContext context,
-      {double numOfButtons = pConstNumOfButtons}) {
-    return buttonHeight(context,
-        numOfButtons: numOfButtons, sizeReduction: kToolbarHeight);
   }
 }

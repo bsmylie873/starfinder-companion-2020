@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'web_view_container.dart';
+import '../web_view_container.dart';
 
 class Home extends StatelessWidget {
   final _links = ['https://www.starjammersrd.com/'];

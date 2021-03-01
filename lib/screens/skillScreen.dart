@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_search_bar/flutter_search_bar.dart';
 
+//THIS CLASS REMAINS UNIMPLEMENTED DUE TO LACK OF DATA. THERE ARE NO COMMENTS.
+
 class SkillList extends StatefulWidget {
   @override
   SkillListState createState() => SkillListState();
