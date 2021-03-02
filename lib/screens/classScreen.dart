@@ -52,6 +52,7 @@ class ClassListState extends State<ClassList> {
     return classDetails;
   }
 
+  //This method returns a list of strings that contain the user's query.
   Future<List<String>> fetchSearched(String searchQuery) async {
     //Parameter converted to lower case.
     String lowerCaseSearchQuery = searchQuery.toLowerCase();

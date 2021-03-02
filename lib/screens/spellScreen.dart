@@ -52,6 +52,7 @@ class SpellListState extends State<SpellList> {
     return spellDetails;
   }
 
+  //This method returns a list of strings that contain the user's query.
   Future<List<String>> fetchSearched(String searchQuery) async {
     //Parameter converted to lower case in new variable.
     String lowerCaseSearchQuery = searchQuery.toLowerCase();

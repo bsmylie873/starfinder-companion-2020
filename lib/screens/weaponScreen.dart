@@ -52,6 +52,7 @@ class WeaponListState extends State<WeaponList> {
     return weaponDetails;
   }
 
+  //This method returns a list of strings that contain the user's query.
   Future<List<String>> fetchSearched(String searchQuery) async {
     //List of strings created.
     List<String> searchValues = new List();
