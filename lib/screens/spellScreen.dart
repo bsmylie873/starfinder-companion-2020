@@ -1,4 +1,5 @@
 import '../objects/spell.dart';
+import '../sequentialListSearch.dart';
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -31,6 +32,8 @@ class SpellListState extends State<SpellList> {
     Map<String, dynamic> jsonResponses = jsonDecode(jsonString);
     //Keys extracted from map (spell names).
     listOfSpellNames = jsonResponses.keys.toList();
+    //Sort list alphabetically.
+    listOfSpellNames.sort();
     return listOfSpellNames;
   }
 
@@ -50,27 +53,14 @@ class SpellListState extends State<SpellList> {
   }
 
   Future<List<String>> fetchSearched(String searchQuery) async {
-    //List of strings created.
-    List<String> searchValues = new List();
-    //Parameter converted to lower case.
-    searchQuery.toLowerCase();
+    //Parameter converted to lower case in new variable.
+    String lowerCaseSearchQuery = searchQuery.toLowerCase();
     //Temporary list allowed to equal key list.
     List<String> tempList = listOfSpellNames;
     //Temporary list set to lower case.
     tempList = tempList.map((e) => e.toLowerCase()).toList();
     //Sequential search of temporary list with search query.
-    for (var i = 0; i < listOfSpellNames.length; i++) {
-      if (tempList[i].contains(searchQuery)) {
-        searchValues.add(listOfSpellNames[i]);
-        print(searchValues[0]);
-      }
-    }
-    //Some error handling in case search has no matches.
-    if (searchValues.isEmpty){
-      searchValues.add("No results found!");
-    }
-    //Result returned.
-    return searchValues;
+    return sequentialListSearch(lowerCaseSearchQuery, tempList, listOfSpellNames);
   }
 
   //Spell detail display widget, with a spell as a parameter.

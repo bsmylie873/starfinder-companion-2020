@@ -1,4 +1,5 @@
 import '../objects/race.dart';
+import '../sequentialListSearch.dart';
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -31,6 +32,8 @@ class RaceListState extends State<RaceList> {
     Map<String, dynamic> jsonResponses = jsonDecode(jsonString);
     //Keys extracted from map (spell names).
     listOfRaceNames = jsonResponses.keys.toList();
+    //Sort list alphabetically.
+    listOfRaceNames.sort();
     return listOfRaceNames;
   }
 
@@ -50,27 +53,14 @@ class RaceListState extends State<RaceList> {
   }
 
   Future<List<String>> fetchSearched(String searchQuery) async {
-    //List of strings created.
-    List<String> searchValues = new List();
-    //Parameter converted to lower case.
-    searchQuery.toLowerCase();
+    //Parameter converted to lower case in new variable.
+    String lowerCaseSearchQuery = searchQuery.toLowerCase();
     //Temporary list allowed to equal key list.
     List<String> tempList = listOfRaceNames;
     //Temporary list set to lower case.
     tempList = tempList.map((e) => e.toLowerCase()).toList();
     //Sequential search of temporary list with search query.
-    for (var i = 0; i < listOfRaceNames.length; i++) {
-      if (tempList[i].contains(searchQuery)) {
-        searchValues.add(listOfRaceNames[i]);
-        print(searchValues[0]);
-      }
-    }
-    //Some error handling in case search has no matches.
-    if (searchValues.isEmpty){
-      searchValues.add("No results found!");
-    }
-    //Result returned.
-    return searchValues;
+    return sequentialListSearch(lowerCaseSearchQuery, tempList, listOfRaceNames);
   }
 
   //Race detail display widget, with a race as a parameter.

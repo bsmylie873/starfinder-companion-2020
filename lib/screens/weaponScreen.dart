@@ -1,4 +1,5 @@
 import '../objects/weapon.dart';
+import '../sequentialListSearch.dart';
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -31,6 +32,8 @@ class WeaponListState extends State<WeaponList> {
     Map<String, dynamic> jsonResponses = jsonDecode(jsonString);
     //Keys extracted from map (weapon names).
     listOfWeaponNames = jsonResponses.keys.toList();
+    //Sort list alphabetically.
+    listOfWeaponNames.sort();
     return listOfWeaponNames;
   }
 
@@ -53,24 +56,13 @@ class WeaponListState extends State<WeaponList> {
     //List of strings created.
     List<String> searchValues = new List();
     //Parameter converted to lower case.
-    searchQuery.toLowerCase();
+    String lowerCaseSearchQuery = searchQuery.toLowerCase();
     //Temporary list allowed to equal key list.
     List<String> tempList = listOfWeaponNames;
     //Temporary list set to lower case.
     tempList = tempList.map((e) => e.toLowerCase()).toList();
     //Sequential search of temporary list with search query.
-    for (var i = 0; i < listOfWeaponNames.length; i++) {
-      if (tempList[i].contains(searchQuery)) {
-        searchValues.add(listOfWeaponNames[i]);
-        print(searchValues[0]);
-      }
-    }
-    //Some error handling in case search has no matches.
-    if (searchValues.isEmpty){
-      searchValues.add("No results found!");
-    }
-    //Result returned.
-    return searchValues;
+    return sequentialListSearch(lowerCaseSearchQuery, tempList, listOfWeaponNames);
   }
 
   //Weapon detail display widget, with a weapon as a parameter.

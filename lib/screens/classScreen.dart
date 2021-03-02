@@ -1,4 +1,5 @@
 import '../objects/class.dart';
+import '../sequentialListSearch.dart';
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -31,6 +32,8 @@ class ClassListState extends State<ClassList> {
     Map<String, dynamic> jsonResponses = jsonDecode(jsonString);
     //Keys extracted from map (class names).
     listOfClassNames = jsonResponses.keys.toList();
+    //Sort list alphabetically.
+    listOfClassNames.sort();
     return listOfClassNames;
   }
 
@@ -50,27 +53,14 @@ class ClassListState extends State<ClassList> {
   }
 
   Future<List<String>> fetchSearched(String searchQuery) async {
-    //List of strings created.
-    List<String> searchValues = new List();
     //Parameter converted to lower case.
-    searchQuery.toLowerCase();
+    String lowerCaseSearchQuery = searchQuery.toLowerCase();
     //Temporary list allowed to equal key list.
     List<String> tempList = listOfClassNames;
     //Temporary list set to lower case.
     tempList = tempList.map((e) => e.toLowerCase()).toList();
     //Sequential search of temporary list with search query.
-    for (var i = 0; i < listOfClassNames.length; i++) {
-      if (tempList[i].contains(searchQuery)) {
-        searchValues.add(listOfClassNames[i]);
-        print(searchValues[0]);
-      }
-    }
-    //Some error handling in case search has no matches.
-    if (searchValues.isEmpty){
-      searchValues.add("No results found!");
-    }
-    //Result returned.
-    return searchValues;
+    return sequentialListSearch(lowerCaseSearchQuery, tempList, listOfClassNames);
   }
 
   //Class detail display widget, with a class as a parameter.
