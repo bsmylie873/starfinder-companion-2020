@@ -49,18 +49,6 @@ class ClassListState extends State<ClassList> {
     return classDetails;
   }
 
-  //This method returns a list of strings that contain the user's query.
-  Future<List<String>> fetchSearched(String searchQuery) async {
-    //Parameter converted to lower case.
-    String lowerCaseSearchQuery = searchQuery.toLowerCase();
-    //Temporary list allowed to equal key list.
-    List<String> tempList = listOfClassNames;
-    //Temporary list set to lower case.
-    tempList = tempList.map((e) => e.toLowerCase()).toList();
-    //Sequential search of temporary list with search query.
-    return sequentialListSearch(lowerCaseSearchQuery, tempList, listOfClassNames);
-  }
-
   //Class detail display widget, with a class as a parameter.
   Widget selectedClass(BuildContext context, String class1) {
     return Scaffold(
@@ -90,7 +78,7 @@ class ClassListState extends State<ClassList> {
         ),
         body: FutureBuilder(
           //Future builder which calls the fetchSearched method with parameter.
-            future: fetchSearched(searchQuery),
+            future: fetchSearched(searchQuery, listOfClassNames),
             builder: (context, snapshot) {
               //Some indication of activity for the user when delayed.
               if (snapshot.connectionState == ConnectionState.waiting) {

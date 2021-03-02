@@ -49,20 +49,6 @@ class WeaponListState extends State<WeaponList> {
     return weaponDetails;
   }
 
-  //This method returns a list of strings that contain the user's query.
-  Future<List<String>> fetchSearched(String searchQuery) async {
-    //List of strings created.
-    List<String> searchValues = new List();
-    //Parameter converted to lower case.
-    String lowerCaseSearchQuery = searchQuery.toLowerCase();
-    //Temporary list allowed to equal key list.
-    List<String> tempList = listOfWeaponNames;
-    //Temporary list set to lower case.
-    tempList = tempList.map((e) => e.toLowerCase()).toList();
-    //Sequential search of temporary list with search query.
-    return sequentialListSearch(lowerCaseSearchQuery, tempList, listOfWeaponNames);
-  }
-
   //Weapon detail display widget, with a weapon as a parameter.
   Widget selectedWeapon(BuildContext context, String weapon) {
     return Scaffold(
@@ -92,7 +78,7 @@ class WeaponListState extends State<WeaponList> {
         ),
         body: FutureBuilder(
           //Future builder which calls the fetchSearched method with parameter.
-            future: fetchSearched(searchQuery),
+            future: fetchSearched(searchQuery, listOfWeaponNames),
             builder: (context, snapshot) {
               //Some indication of activity for the user when delayed.
               if (snapshot.connectionState == ConnectionState.waiting) {

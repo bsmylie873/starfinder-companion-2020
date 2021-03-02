@@ -49,18 +49,6 @@ class SpellListState extends State<SpellList> {
     return spellDetails;
   }
 
-  //This method returns a list of strings that contain the user's query.
-  Future<List<String>> fetchSearched(String searchQuery) async {
-    //Parameter converted to lower case in new variable.
-    String lowerCaseSearchQuery = searchQuery.toLowerCase();
-    //Temporary list allowed to equal key list.
-    List<String> tempList = listOfSpellNames;
-    //Temporary list set to lower case.
-    tempList = tempList.map((e) => e.toLowerCase()).toList();
-    //Sequential search of temporary list with search query.
-    return sequentialListSearch(lowerCaseSearchQuery, tempList, listOfSpellNames);
-  }
-
   //Spell detail display widget, with a spell as a parameter.
   Widget selectedSpell(BuildContext context, String spell) {
     return Scaffold(
@@ -90,7 +78,7 @@ class SpellListState extends State<SpellList> {
         ),
         body: FutureBuilder(
           //Future builder which calls the fetchSearched method with parameter.
-            future: fetchSearched(searchQuery),
+            future: fetchSearched(searchQuery, listOfSpellNames),
             builder: (context, snapshot) {
               //Some indication of activity for the user when delayed.
               if (snapshot.connectionState == ConnectionState.waiting) {

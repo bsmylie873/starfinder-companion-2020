@@ -22,7 +22,7 @@ class RaceListState extends State<RaceList> {
   List<String> listOfRaceNames = new List();
   List<String> raceDetails = new List();
 
-  //This method creates a string list of all classes.
+  //This method creates a string list of all races.
   Future<List<String>> fetchRaces() async {
     String jsonString = await loadFromAJson(jsonLocation);
     //Future String parsed into a map.
@@ -34,7 +34,7 @@ class RaceListState extends State<RaceList> {
     return listOfRaceNames;
   }
 
-  //This method fetches the details of a single class.
+  //This method fetches the details of a single race.
   Future<List<String>> fetchARace(String raceName) async {
     //Class object created.
     String jsonString = await loadFromAJson(jsonLocation);
@@ -49,17 +49,6 @@ class RaceListState extends State<RaceList> {
     return raceDetails;
   }
 
-  //This method returns a list of strings that contain the user's query.
-  Future<List<String>> fetchSearched(String searchQuery) async {
-    //Parameter converted to lower case in new variable.
-    String lowerCaseSearchQuery = searchQuery.toLowerCase();
-    //Temporary list allowed to equal key list.
-    List<String> tempList = listOfRaceNames;
-    //Temporary list set to lower case.
-    tempList = tempList.map((e) => e.toLowerCase()).toList();
-    //Sequential search of temporary list with search query.
-    return sequentialListSearch(lowerCaseSearchQuery, tempList, listOfRaceNames);
-  }
 
   //Race detail display widget, with a race as a parameter.
   Widget selectedRace(BuildContext context, String race) {
@@ -90,7 +79,7 @@ class RaceListState extends State<RaceList> {
         ),
         body: FutureBuilder(
           //Future builder which calls the fetchSearched method with parameter.
-            future: fetchSearched(searchQuery),
+            future: fetchSearched(searchQuery, listOfRaceNames),
             builder: (context, snapshot) {
               //Some indication of activity for the user when delayed.
               if (snapshot.connectionState == ConnectionState.waiting) {
