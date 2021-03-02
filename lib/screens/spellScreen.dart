@@ -1,8 +1,8 @@
+import '../jsonUtil.dart';
 import '../objects/spell.dart';
 import '../sequentialListSearch.dart';
 import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_search_bar/flutter_search_bar.dart';
 
 //Stateful SpellList class.
@@ -15,19 +15,16 @@ class SpellList extends StatefulWidget {
 class SpellListState extends State<SpellList> {
   //Scaffold key used for SearchBar declared.
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+  //Store location of JSON data.
+  final String jsonLocation = "data/sfrpg_spells.json";
 
   //List of strings for different fetch methods initialised.
   List<String> listOfSpellNames = new List();
   List<String> spellDetails = new List();
 
-  //Json data loaded into a Future of type String.
-  Future<String> _loadFromSpellJson() async {
-    return await rootBundle.loadString("data/sfrpg_spells.json");
-  }
-
   //This method creates a string list of all spells.
   Future<List<String>> fetchSpells() async {
-    String jsonString = await _loadFromSpellJson();
+    String jsonString = await loadFromAJson(jsonLocation);
     //Future String parsed into a map.
     Map<String, dynamic> jsonResponses = jsonDecode(jsonString);
     //Keys extracted from map (spell names).
@@ -39,7 +36,7 @@ class SpellListState extends State<SpellList> {
 
   //This method fetches the details of a single spell.
   Future<List<String>> fetchASpell(String spellName) async {
-    String jsonString = await _loadFromSpellJson();
+    String jsonString = await loadFromAJson(jsonLocation);
     //Spell object created.
     Spell newSpell = new Spell();
     //Future of type string parsed into a map.

@@ -1,8 +1,8 @@
+import '../jsonUtil.dart';
 import '../objects/race.dart';
 import '../sequentialListSearch.dart';
 import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_search_bar/flutter_search_bar.dart';
 
 //Stateful RaceList class.
@@ -15,19 +15,16 @@ class RaceList extends StatefulWidget {
 class RaceListState extends State<RaceList> {
   //Scaffold key used for SearchBar declared.
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+  //Store location of JSON data.
+  final String jsonLocation = "data/sfrpg_races.json";
 
   //List of strings for different fetch methods initialised.
   List<String> listOfRaceNames = new List();
   List<String> raceDetails = new List();
 
-  //Json data loaded into a Future of type String.
-  Future<String> _loadFromRaceJson() async {
-    return await rootBundle.loadString("data/sfrpg_races.json");
-  }
-
   //This method creates a string list of all classes.
   Future<List<String>> fetchRaces() async {
-    String jsonString = await _loadFromRaceJson();
+    String jsonString = await loadFromAJson(jsonLocation);
     //Future String parsed into a map.
     Map<String, dynamic> jsonResponses = jsonDecode(jsonString);
     //Keys extracted from map (spell names).
@@ -40,7 +37,7 @@ class RaceListState extends State<RaceList> {
   //This method fetches the details of a single class.
   Future<List<String>> fetchARace(String raceName) async {
     //Class object created.
-    String jsonString = await _loadFromRaceJson();
+    String jsonString = await loadFromAJson(jsonLocation);
     //Future of type string parsed into a map.
     Race newRace = new Race();
     //NewRace takes values from matching entry in jsonResponses map.

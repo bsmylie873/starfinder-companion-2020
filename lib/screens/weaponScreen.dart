@@ -1,8 +1,8 @@
+import '../jsonUtil.dart';
 import '../objects/weapon.dart';
 import '../sequentialListSearch.dart';
 import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_search_bar/flutter_search_bar.dart';
 
 //Stateful WeaponList class.
@@ -15,19 +15,16 @@ class WeaponList extends StatefulWidget {
 class WeaponListState extends State<WeaponList> {
   //Scaffold key used for SearchBar declared.
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+  //Store location of JSON data.
+  final String jsonLocation = "data/sfrpg_weapons.json";
 
   //List of strings for different fetch methods initialised.
   List<String> listOfWeaponNames = new List();
   List<String> weaponDetails = new List();
 
-  //Json data loaded into a Future of type String.
-  Future<String> _loadFromWeaponJson() async {
-    return await rootBundle.loadString("data/sfrpg_weapons.json");
-  }
-
   //This method creates a string list of all weapons.
   Future<List<String>> fetchWeapons() async {
-    String jsonString = await _loadFromWeaponJson();
+    String jsonString = await loadFromAJson(jsonLocation);
     //Future String parsed into a map.
     Map<String, dynamic> jsonResponses = jsonDecode(jsonString);
     //Keys extracted from map (weapon names).
@@ -39,7 +36,7 @@ class WeaponListState extends State<WeaponList> {
 
   //This method fetches the details of a single weapon.
   Future<List<String>> fetchAWeapon(String weaponName) async {
-    String jsonString = await _loadFromWeaponJson();
+    String jsonString = await loadFromAJson(jsonLocation);
     //Weapon object created.
     Weapon newWeapon = new Weapon();
     //Future of type string parsed into a map.

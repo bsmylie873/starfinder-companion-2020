@@ -1,8 +1,8 @@
+import '../jsonUtil.dart';
 import '../objects/class.dart';
 import '../sequentialListSearch.dart';
 import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_search_bar/flutter_search_bar.dart';
 
 //Stateful ClassList class.
@@ -15,19 +15,16 @@ class ClassList extends StatefulWidget {
 class ClassListState extends State<ClassList> {
   //Scaffold key used for SearchBar declared.
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+  //Store location of JSON data.
+  final String jsonLocation = "data/sfrpg_classes.json";
 
   //List of strings for different fetch methods initialised.
   List<String> listOfClassNames = new List();
   List<String> classDetails = new List();
 
-  //Json data loaded into a Future of type String.
-  Future<String> _loadFromClassJson() async {
-    return await rootBundle.loadString("data/sfrpg_classes.json");
-  }
-
   //This method creates a string list of all classes.
   Future<List<String>> fetchClasses() async {
-    String jsonString = await _loadFromClassJson();
+    String jsonString = await loadFromAJson(jsonLocation);
     //Future String parsed into a map.
     Map<String, dynamic> jsonResponses = jsonDecode(jsonString);
     //Keys extracted from map (class names).
@@ -39,7 +36,7 @@ class ClassListState extends State<ClassList> {
 
   //This method fetches the details of a single class.
   Future<List<String>> fetchAClass(String className) async {
-    String jsonString = await _loadFromClassJson();
+    String jsonString = await loadFromAJson(jsonLocation);
     //Class object created.
     Class newClass = new Class();
     //Future of type string parsed into a map.
