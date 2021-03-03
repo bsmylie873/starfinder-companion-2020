@@ -1,6 +1,4 @@
 import '../jsonUtil.dart';
-import '../objects/class.dart';
-import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_search_bar/flutter_search_bar.dart';
 
