@@ -1,6 +1,4 @@
 import '../jsonUtil.dart';
-import '../objects/race.dart';
-import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_search_bar/flutter_search_bar.dart';
 
@@ -16,27 +14,11 @@ class RaceListState extends State<RaceList> {
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
   //Store location of JSON data.
   final String jsonLocation = "data/sfrpg_races.json";
+  //Index type identifies which index is being processed.
   final String indexType = "Race";
 
   //List of strings for different fetch methods initialised.
-  List<String> listOfRaceNames = new List();
   List<String> raceDetails = new List();
-
-  //This method fetches the details of a single race.
-  Future<List<String>> fetchARace(String raceName) async {
-    //Class object created.
-    String jsonString = await loadFromAJson(jsonLocation);
-    //Future of type string parsed into a map.
-    Race newRace = new Race();
-    //NewRace takes values from matching entry in jsonResponses map.
-    Map<String, dynamic> jsonResponses = jsonDecode(jsonString);
-    newRace = Race.fromJson(jsonResponses[raceName]);
-    newRace.name = raceName;
-    //List of strings takes values from newRace and then returned.
-    raceDetails = newRace.raceDetails(newRace);
-    return raceDetails;
-  }
-
 
   //Race detail display widget, with a race as a parameter.
   Widget selectedRace(BuildContext context, String race) {
@@ -46,7 +28,7 @@ class RaceListState extends State<RaceList> {
         ),
         body: FutureBuilder(
           //Future builder which calls the fetchARace method with parameter.
-            future: fetchARace(race),
+            future: fetchAnIndex(jsonLocation, indexType, race, raceDetails),
             builder: (context, snapshot) {
               //Some indication of activity for the user when delayed.
               if (snapshot.connectionState == ConnectionState.waiting) {

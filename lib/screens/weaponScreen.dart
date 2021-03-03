@@ -1,7 +1,4 @@
 import '../jsonUtil.dart';
-import '../objects/weapon.dart';
-import '../sequentialListSearch.dart';
-import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_search_bar/flutter_search_bar.dart';
 
@@ -17,26 +14,11 @@ class WeaponListState extends State<WeaponList> {
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
   //Store location of JSON data.
   final String jsonLocation = "data/sfrpg_weapons.json";
-
-  //List of strings for different fetch methods initialised.
-  List<String> listOfWeaponNames = new List();
-  List<String> weaponDetails = new List();
+  //Index type identifies which index is being processed.
   final String indexType = "Weapon";
 
-  //This method fetches the details of a single weapon.
-  Future<List<String>> fetchAWeapon(String weaponName) async {
-    String jsonString = await loadFromAJson(jsonLocation);
-    //Weapon object created.
-    Weapon newWeapon = new Weapon();
-    //Future of type string parsed into a map.
-    Map<String, dynamic> jsonResponses = jsonDecode(jsonString);
-    //NewWeapon takes values from matching entry in jsonResponses map.
-    newWeapon = Weapon.fromJson(jsonResponses[weaponName]);
-    newWeapon.name = weaponName;
-    //List of strings takes values from newWeapon and then returned.
-    weaponDetails = newWeapon.weaponDetails(newWeapon);
-    return weaponDetails;
-  }
+  //List of strings for different fetch methods initialised.
+  List<String> weaponDetails = new List();
 
   //Weapon detail display widget, with a weapon as a parameter.
   Widget selectedWeapon(BuildContext context, String weapon) {
@@ -45,8 +27,8 @@ class WeaponListState extends State<WeaponList> {
           title: Text(weapon),
         ),
         body: FutureBuilder(
-          //Future builder which calls the fetchAWeapon method with parameter.
-            future: fetchAWeapon(weapon),
+          //Future builder which calls the fetchAnIndex method with parameter.
+            future: fetchAnIndex(jsonLocation, indexType, weapon, weaponDetails),
             builder: (context, snapshot) {
               //Some indication of activity for the user when delayed.
               if (snapshot.connectionState == ConnectionState.waiting) {

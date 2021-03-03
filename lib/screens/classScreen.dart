@@ -1,6 +1,5 @@
 import '../jsonUtil.dart';
 import '../objects/class.dart';
-import '../sequentialListSearch.dart';
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_search_bar/flutter_search_bar.dart';
@@ -17,26 +16,11 @@ class ClassListState extends State<ClassList> {
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
   //Store location of JSON data.
   final String jsonLocation = "data/sfrpg_classes.json";
+  //Index type identifies which index is being processed.
   final String indexType = "Class";
 
-  //List of strings for different fetch methods initialised.
-  final List<String> listOfClassNames = List();
+  //List of strings for fetch class details.
   List<String> classDetails = new List();
-
-  //This method fetches the details of a single class.
-  Future<List<String>> fetchAClass(String className) async {
-    String jsonString = await loadFromAJson(jsonLocation);
-    //Class object created.
-    Class newClass = new Class();
-    //Future of type string parsed into a map.
-    Map<String, dynamic> jsonResponses = jsonDecode(jsonString);
-    //NewClass takes values from matching entry in jsonResponses map.
-    newClass = Class.fromJson(jsonResponses[className]);
-    newClass.name = className;
-    //List of strings takes values from newSpell and then returned.
-    classDetails = newClass.classDetails(newClass);
-    return classDetails;
-  }
 
   //Class detail display widget, with a class as a parameter.
   Widget selectedClass(BuildContext context, String class1) {
@@ -46,7 +30,7 @@ class ClassListState extends State<ClassList> {
         ),
         body: FutureBuilder(
           //Future builder which calls the fetchAClass method with parameter.
-            future: fetchAClass(class1),
+            future: fetchAnIndex(jsonLocation, indexType, class1, classDetails),
             builder: (context, snapshot) {
               //Some indication of activity for the user when delayed.
               if (snapshot.connectionState == ConnectionState.waiting) {

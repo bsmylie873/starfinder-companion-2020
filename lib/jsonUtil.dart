@@ -8,9 +8,11 @@ import 'sequentialListSearch.dart';
 
 //This method fetches the details of a single index.
 Future<List<String>> fetchAnIndex(String jsonLocation, String indexType, String indexName, List<String> indexDetails) async {
+  //Json loaded from appropriate file determined by parameter.
   String jsonString = await loadFromAJson(jsonLocation);
-  //Object created.
+  //Index type used to determine index type.
   if (indexType == "Class"){
+    //Class object created.
     Class newClass = new Class();
     //Future of type string parsed into a map.
     Map<String, dynamic> jsonResponses = jsonDecode(jsonString);
@@ -23,6 +25,7 @@ Future<List<String>> fetchAnIndex(String jsonLocation, String indexType, String 
   }
 
   if (indexType == "Race"){
+    //Race object created.
     Race newRace = new Race();
     //Future of type string parsed into a map.
     Map<String, dynamic> jsonResponses = jsonDecode(jsonString);
@@ -34,7 +37,8 @@ Future<List<String>> fetchAnIndex(String jsonLocation, String indexType, String 
     return indexDetails;
   }
 
-  if (indexType == "Spells"){
+  if (indexType == "Spell"){
+    //Spell object created.
     Spell newSpell = new Spell();
     //Future of type string parsed into a map.
     Map<String, dynamic> jsonResponses = jsonDecode(jsonString);
@@ -46,7 +50,8 @@ Future<List<String>> fetchAnIndex(String jsonLocation, String indexType, String 
     return indexDetails;
   }
 
-  if (indexType == "Weapons"){
+  if (indexType == "Weapon"){
+    //Weapon object created.
     Weapon newWeapon = new Weapon();
     //Future of type string parsed into a map.
     Map<String, dynamic> jsonResponses = jsonDecode(jsonString);
@@ -58,10 +63,17 @@ Future<List<String>> fetchAnIndex(String jsonLocation, String indexType, String 
     return indexDetails;
   }
 
+  //Index type error handling.
+  else {
+    indexDetails.add("Something went wrong! Index not set correctly!");
+    return indexDetails;
+  }
+
 }
 
 //This method creates a string list of all entries.
 Future<List<String>> fetchEntries(String jsonLocation) async {
+  //New list created to hold entries to be returned.
   List<String> permanentList = new List();
   String jsonString = await loadFromAJson(jsonLocation);
   //Future String parsed into a map.
@@ -78,25 +90,33 @@ Future<List<String>> fetchEntries(String jsonLocation) async {
 Future<List<String>> fetchSearched(String searchQuery, String indexType) async {
   //Parameter converted to lower case in new variable.
   String lowerCaseSearchQuery = searchQuery.toLowerCase();
+  //New list created to hold entries to be searched.
   List<String> searchList = new List();
+  //File location string initialised.
   String jsonLocation = "";
 
+  //Index type used to determine index type.
   if (indexType == "Class") {
+    //Appropriate file chosen.
     jsonLocation = "data/sfrpg_classes.json";
   }
 
   if (indexType == "Race") {
+    //Appropriate file chosen.
     jsonLocation = "data/sfrpg_races.json";
   }
 
   if (indexType == "Spell") {
+    //Appropriate file chosen.
     jsonLocation = "data/sfrpg_spells.json";
   }
 
   if (indexType == "Weapon") {
+    //Appropriate file chosen.
     jsonLocation = "data/sfrpg_weapons.json";
   }
 
+  //List of strings populated with keys.
   searchList = await fetchEntries(jsonLocation);
   //Temporary list allowed to equal key list.
   List<String> tempList = searchList;

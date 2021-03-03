@@ -1,7 +1,4 @@
 import '../jsonUtil.dart';
-import '../objects/spell.dart';
-import '../sequentialListSearch.dart';
-import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_search_bar/flutter_search_bar.dart';
 
@@ -17,12 +14,11 @@ class SpellListState extends State<SpellList> {
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
   //Store location of JSON data.
   final String jsonLocation = "data/sfrpg_spells.json";
+  //Index type identifies which index is being processed.
   final String indexType = "Spell";
 
-  //List of strings for different fetch methods initialised.
-  List<String> listOfSpellNames = new List();
+  //List of strings for fetch spell details.
   List<String> spellDetails = new List();
-
 
   //Spell detail display widget, with a spell as a parameter.
   Widget selectedSpell(BuildContext context, String spell) {
