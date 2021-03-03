@@ -46,7 +46,7 @@ class MyAppState extends State<MyApp> {
         title: 'Splash Screen',
         home: AnimatedSplashScreen(
             duration: 1000,
-            splash: 'images/StarLogo.png',
+            splash: 'images/foreground.png',
             splashIconSize: 1500,
             nextScreen: MainScreen(),
             splashTransition: SplashTransition.rotationTransition,

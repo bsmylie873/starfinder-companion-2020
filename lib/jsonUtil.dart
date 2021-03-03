@@ -6,7 +6,6 @@ import 'objects/weapon.dart';
 import 'package:flutter/services.dart';
 import 'sequentialListSearch.dart';
 
-
 //This method fetches the details of a single index.
 Future<List<String>> fetchAnIndex(String jsonLocation, String indexType, String indexName, List<String> indexDetails) async {
   String jsonString = await loadFromAJson(jsonLocation);
@@ -61,7 +60,6 @@ Future<List<String>> fetchAnIndex(String jsonLocation, String indexType, String 
 
 }
 
-
 //This method creates a string list of all entries.
 Future<List<String>> fetchEntries(String jsonLocation) async {
   List<String> permanentList = new List();
@@ -85,22 +83,18 @@ Future<List<String>> fetchSearched(String searchQuery, String indexType) async {
 
   if (indexType == "Class") {
     jsonLocation = "data/sfrpg_classes.json";
-    searchList = await fetchEntries(jsonLocation);
   }
 
   if (indexType == "Race") {
     jsonLocation = "data/sfrpg_races.json";
-    searchList = await fetchEntries(jsonLocation);
   }
 
   if (indexType == "Spell") {
     jsonLocation = "data/sfrpg_spells.json";
-    searchList = await fetchEntries(jsonLocation);
   }
 
   if (indexType == "Weapon") {
     jsonLocation = "data/sfrpg_weapons.json";
-    searchList = await fetchEntries(jsonLocation);
   }
 
   searchList = await fetchEntries(jsonLocation);
