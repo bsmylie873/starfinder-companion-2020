@@ -17,22 +17,11 @@ class ClassListState extends State<ClassList> {
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
   //Store location of JSON data.
   final String jsonLocation = "data/sfrpg_classes.json";
+  final String indexType = "Class";
 
   //List of strings for different fetch methods initialised.
-  List<String> listOfClassNames = new List();
+  final List<String> listOfClassNames = List();
   List<String> classDetails = new List();
-
-  //This method creates a string list of all classes.
-  Future<List<String>> fetchClasses() async {
-    String jsonString = await loadFromAJson(jsonLocation);
-    //Future String parsed into a map.
-    Map<String, dynamic> jsonResponses = jsonDecode(jsonString);
-    //Keys extracted from map (class names).
-    listOfClassNames = jsonResponses.keys.toList();
-    //Sort list alphabetically.
-    listOfClassNames.sort();
-    return listOfClassNames;
-  }
 
   //This method fetches the details of a single class.
   Future<List<String>> fetchAClass(String className) async {
@@ -78,7 +67,7 @@ class ClassListState extends State<ClassList> {
         ),
         body: FutureBuilder(
           //Future builder which calls the fetchSearched method with parameter.
-            future: fetchSearched(searchQuery, listOfClassNames),
+            future: fetchSearched(searchQuery, indexType),
             builder: (context, snapshot) {
               //Some indication of activity for the user when delayed.
               if (snapshot.connectionState == ConnectionState.waiting) {
@@ -190,7 +179,7 @@ class ClassListState extends State<ClassList> {
         key: _scaffoldKey,
         body: FutureBuilder(
           //Future builder which calls the fetchClasses method.
-            future: fetchClasses(),
+            future: fetchEntries(jsonLocation),
             builder: (context, AsyncSnapshot snapshot) {
               //Some indication of activity for the user when delayed.
               if (!snapshot.hasData) {

@@ -1,7 +1,8 @@
+import 'index.dart';
+
 //This object is used in the Weapon index.
-class Weapon {
+class Weapon extends Index{
   //These parameters match the sfrpg_weapons json fields.
-  String name;
   final String source;
   final String type;
   final String handed;
@@ -385,7 +386,7 @@ class Weapon {
   }
 
   //This is the constructor for the Weapon object.
-  Weapon({this.name, this.source, this.type, this.handed, this.category, this.level,
+  Weapon({name, this.source, this.type, this.handed, this.category, this.level,
     this.price, this.damage, this.range, this.critical, this.ammo, this.capacity,
     this.usage, this.bulk, this.special, this.analog, this.antibiological, this.archaic,
     this.aurora, this.automatic, this.blast, this.block, this.boost, this.breach,
@@ -401,12 +402,13 @@ class Weapon {
     this.sunder, this.tail, this.thought, this.throttle, this.thrown, this.trip,
     this.unwieldy, this.wideLine, this.damageRoll, this.damageType, this.damageType2,
     this.weaponTier, this.criticalType, this.criticalDuration, this.criticalValue,
-    this.isMelee, this.isRanged, this.units});
+    this.isMelee, this.isRanged, this.units}): super(name: name);
 
   //This parses the json into the Weapon object.
   factory Weapon.fromJson(Map<String, dynamic> json) {
+    final index = Index.fromJson(json);
     return Weapon(
-        name: json['Name'],
+        name: index.name,
         source: json['Source'],
         type: json['Type'],
         handed: json['Handed'],

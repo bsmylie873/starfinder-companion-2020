@@ -1,7 +1,8 @@
+import 'index.dart';
+
 //This object is used in the Spell index.
-class Spell {
+class Spell extends Index{
   //These parameters match the sfrpg_spells json fields.
-  String name;
   final String castingTime;
   final String classes;
   final String spellListDescription;
@@ -72,14 +73,15 @@ class Spell {
   }
 
   //This is the constructor for the Spell object.
-  Spell({this.name, this.castingTime, this.classes, this.spellListDescription, this.descriptor,
+  Spell({name, this.castingTime, this.classes, this.spellListDescription, this.descriptor,
     this.duration, this.level, this.description, this.range, this.savingThrow, this.school,
-    this.source, this.pageNo, this.spellResistance, this.targetsEffectArea});
+    this.source, this.pageNo, this.spellResistance, this.targetsEffectArea}): super(name: name);
 
   //This parses the json into the Spell object.
   factory Spell.fromJson(Map<String, dynamic> json) {
+    final index = Index.fromJson(json);
     return Spell(
-      name: json['name'],
+      name: index.name,
       castingTime: json['CastingTime'],
       classes: json['Classes'],
       spellListDescription: json['SpellListDescription'],

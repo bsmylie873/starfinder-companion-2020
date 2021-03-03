@@ -21,18 +21,7 @@ class WeaponListState extends State<WeaponList> {
   //List of strings for different fetch methods initialised.
   List<String> listOfWeaponNames = new List();
   List<String> weaponDetails = new List();
-
-  //This method creates a string list of all weapons.
-  Future<List<String>> fetchWeapons() async {
-    String jsonString = await loadFromAJson(jsonLocation);
-    //Future String parsed into a map.
-    Map<String, dynamic> jsonResponses = jsonDecode(jsonString);
-    //Keys extracted from map (weapon names).
-    listOfWeaponNames = jsonResponses.keys.toList();
-    //Sort list alphabetically.
-    listOfWeaponNames.sort();
-    return listOfWeaponNames;
-  }
+  final String indexType = "Weapon";
 
   //This method fetches the details of a single weapon.
   Future<List<String>> fetchAWeapon(String weaponName) async {
@@ -78,7 +67,7 @@ class WeaponListState extends State<WeaponList> {
         ),
         body: FutureBuilder(
           //Future builder which calls the fetchSearched method with parameter.
-            future: fetchSearched(searchQuery, listOfWeaponNames),
+            future: fetchSearched(searchQuery, indexType),
             builder: (context, snapshot) {
               //Some indication of activity for the user when delayed.
               if (snapshot.connectionState == ConnectionState.waiting) {
@@ -188,7 +177,7 @@ class WeaponListState extends State<WeaponList> {
         key: _scaffoldKey,
         body: FutureBuilder(
           //Future builder which calls the fetchWeapons method.
-            future: fetchWeapons(),
+            future: fetchEntries(jsonLocation),
             builder: (context, AsyncSnapshot snapshot) {
               //Some indication of activity for the user when delayed.
               if (!snapshot.hasData) {

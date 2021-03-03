@@ -1,6 +1,5 @@
 import '../jsonUtil.dart';
 import '../objects/race.dart';
-import '../sequentialListSearch.dart';
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_search_bar/flutter_search_bar.dart';
@@ -17,22 +16,11 @@ class RaceListState extends State<RaceList> {
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
   //Store location of JSON data.
   final String jsonLocation = "data/sfrpg_races.json";
+  final String indexType = "Race";
 
   //List of strings for different fetch methods initialised.
   List<String> listOfRaceNames = new List();
   List<String> raceDetails = new List();
-
-  //This method creates a string list of all races.
-  Future<List<String>> fetchRaces() async {
-    String jsonString = await loadFromAJson(jsonLocation);
-    //Future String parsed into a map.
-    Map<String, dynamic> jsonResponses = jsonDecode(jsonString);
-    //Keys extracted from map (spell names).
-    listOfRaceNames = jsonResponses.keys.toList();
-    //Sort list alphabetically.
-    listOfRaceNames.sort();
-    return listOfRaceNames;
-  }
 
   //This method fetches the details of a single race.
   Future<List<String>> fetchARace(String raceName) async {
@@ -79,7 +67,7 @@ class RaceListState extends State<RaceList> {
         ),
         body: FutureBuilder(
           //Future builder which calls the fetchSearched method with parameter.
-            future: fetchSearched(searchQuery, listOfRaceNames),
+            future: fetchSearched(searchQuery, indexType),
             builder: (context, snapshot) {
               //Some indication of activity for the user when delayed.
               if (snapshot.connectionState == ConnectionState.waiting) {
@@ -189,7 +177,7 @@ class RaceListState extends State<RaceList> {
         key: _scaffoldKey,
         body: FutureBuilder(
           //Future builder which calls the fetchSpells method.
-            future: fetchRaces(),
+            future: fetchEntries(jsonLocation),
             builder: (context, AsyncSnapshot snapshot) {
               //Some indication of activity for the user when delayed.
               if (!snapshot.hasData) {

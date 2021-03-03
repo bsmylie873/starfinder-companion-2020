@@ -1,7 +1,8 @@
+import 'index.dart';
+
 //This object is used in the Classes index.
-class Class {
+class Class extends Index {
   //These parameters match the sfrpg_classes json fields.
-  String name;
   final String source;
   final int hp;
   final int stamina;
@@ -133,18 +134,19 @@ class Class {
   }
 
   //This is the constructor for the Class object.
-  Class({this.name, this.source, this.hp, this.stamina, this.levelPoints,
+  Class({name, this.source, this.hp, this.stamina, this.levelPoints,
     this.armorProficiencies, this.weaponProficiencies, this.keyAbility, this.acrobatics,
     this.athletics, this.bluff, this.computers, this.culture, this.diplomacy, this.disguise,
     this.engineering, this.intimidate, this.lifeScience, this.medicine, this.mysticism,
     this.perception, this.piloting, this.physicalScience, this.professionCharisma,
     this.professionIntelligence, this.professionWisdom, this.senseMotive, this.sleightOfHand,
-    this.stealth, this.survival,});
+    this.stealth, this.survival,}): super(name: name);
 
   //This parses the json into the Class object.
   factory Class.fromJson(Map<String, dynamic> json) {
+    final index = Index.fromJson(json);
     return Class(
-      name: json['Name'],
+      name: index.name,
       source: json['Source'],
       hp: json['Hp'],
       stamina: json['Stamina'],
