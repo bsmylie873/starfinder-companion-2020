@@ -1,8 +1,5 @@
-import '../objects/spell.dart';
-import '../sequentialListSearch.dart';
-import 'dart:convert';
+import '../jsonUtil.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_search_bar/flutter_search_bar.dart';
 
 //Stateful SpellList class.
@@ -15,54 +12,13 @@ class SpellList extends StatefulWidget {
 class SpellListState extends State<SpellList> {
   //Scaffold key used for SearchBar declared.
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+  //Store location of JSON data.
+  final String jsonLocation = "data/sfrpg_spells.json";
+  //Index type identifies which index is being processed.
+  final String indexType = "Spell";
 
-  //List of strings for different fetch methods initialised.
-  List<String> listOfSpellNames = new List();
+  //List of strings for fetch spell details.
   List<String> spellDetails = new List();
-
-  //Json data loaded into a Future of type String.
-  Future<String> _loadFromSpellJson() async {
-    return await rootBundle.loadString("data/sfrpg_spells.json");
-  }
-
-  //This method creates a string list of all spells.
-  Future<List<String>> fetchSpells() async {
-    String jsonString = await _loadFromSpellJson();
-    //Future String parsed into a map.
-    Map<String, dynamic> jsonResponses = jsonDecode(jsonString);
-    //Keys extracted from map (spell names).
-    listOfSpellNames = jsonResponses.keys.toList();
-    //Sort list alphabetically.
-    listOfSpellNames.sort();
-    return listOfSpellNames;
-  }
-
-  //This method fetches the details of a single spell.
-  Future<List<String>> fetchASpell(String spellName) async {
-    String jsonString = await _loadFromSpellJson();
-    //Spell object created.
-    Spell newSpell = new Spell();
-    //Future of type string parsed into a map.
-    Map<String, dynamic> jsonResponses = jsonDecode(jsonString);
-    //NewSpell takes values from matching entry in jsonResponses map.
-    newSpell = Spell.fromJson(jsonResponses[spellName]);
-    newSpell.name = spellName;
-    //List of strings takes values from newSpell and then returned.
-    spellDetails = newSpell.spellDetails(newSpell);
-    return spellDetails;
-  }
-
-  //This method returns a list of strings that contain the user's query.
-  Future<List<String>> fetchSearched(String searchQuery) async {
-    //Parameter converted to lower case in new variable.
-    String lowerCaseSearchQuery = searchQuery.toLowerCase();
-    //Temporary list allowed to equal key list.
-    List<String> tempList = listOfSpellNames;
-    //Temporary list set to lower case.
-    tempList = tempList.map((e) => e.toLowerCase()).toList();
-    //Sequential search of temporary list with search query.
-    return sequentialListSearch(lowerCaseSearchQuery, tempList, listOfSpellNames);
-  }
 
   //Spell detail display widget, with a spell as a parameter.
   Widget selectedSpell(BuildContext context, String spell) {
@@ -72,7 +28,7 @@ class SpellListState extends State<SpellList> {
         ),
         body: FutureBuilder(
           //Future builder which calls the fetchASpell method with parameter.
-            future: fetchASpell(spell),
+            future: fetchAnIndex(jsonLocation, indexType, spell, spellDetails),
             builder: (context, snapshot) {
               //Some indication of activity for the user when delayed.
               if (snapshot.connectionState == ConnectionState.waiting) {
@@ -93,7 +49,7 @@ class SpellListState extends State<SpellList> {
         ),
         body: FutureBuilder(
           //Future builder which calls the fetchSearched method with parameter.
-            future: fetchSearched(searchQuery),
+            future: fetchSearched(searchQuery, indexType),
             builder: (context, snapshot) {
               //Some indication of activity for the user when delayed.
               if (snapshot.connectionState == ConnectionState.waiting) {
@@ -203,7 +159,7 @@ class SpellListState extends State<SpellList> {
         key: _scaffoldKey,
         body: FutureBuilder(
           //Future builder which calls the fetchSpells method.
-            future: fetchSpells(),
+            future: fetchEntries(jsonLocation),
             builder: (context, AsyncSnapshot snapshot) {
               //Some indication of activity for the user when delayed.
               if (!snapshot.hasData) {

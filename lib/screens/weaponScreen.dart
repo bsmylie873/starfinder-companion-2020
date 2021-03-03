@@ -1,8 +1,5 @@
-import '../objects/weapon.dart';
-import '../sequentialListSearch.dart';
-import 'dart:convert';
+import '../jsonUtil.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_search_bar/flutter_search_bar.dart';
 
 //Stateful WeaponList class.
@@ -15,56 +12,13 @@ class WeaponList extends StatefulWidget {
 class WeaponListState extends State<WeaponList> {
   //Scaffold key used for SearchBar declared.
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+  //Store location of JSON data.
+  final String jsonLocation = "data/sfrpg_weapons.json";
+  //Index type identifies which index is being processed.
+  final String indexType = "Weapon";
 
   //List of strings for different fetch methods initialised.
-  List<String> listOfWeaponNames = new List();
   List<String> weaponDetails = new List();
-
-  //Json data loaded into a Future of type String.
-  Future<String> _loadFromWeaponJson() async {
-    return await rootBundle.loadString("data/sfrpg_weapons.json");
-  }
-
-  //This method creates a string list of all weapons.
-  Future<List<String>> fetchWeapons() async {
-    String jsonString = await _loadFromWeaponJson();
-    //Future String parsed into a map.
-    Map<String, dynamic> jsonResponses = jsonDecode(jsonString);
-    //Keys extracted from map (weapon names).
-    listOfWeaponNames = jsonResponses.keys.toList();
-    //Sort list alphabetically.
-    listOfWeaponNames.sort();
-    return listOfWeaponNames;
-  }
-
-  //This method fetches the details of a single weapon.
-  Future<List<String>> fetchAWeapon(String weaponName) async {
-    String jsonString = await _loadFromWeaponJson();
-    //Weapon object created.
-    Weapon newWeapon = new Weapon();
-    //Future of type string parsed into a map.
-    Map<String, dynamic> jsonResponses = jsonDecode(jsonString);
-    //NewWeapon takes values from matching entry in jsonResponses map.
-    newWeapon = Weapon.fromJson(jsonResponses[weaponName]);
-    newWeapon.name = weaponName;
-    //List of strings takes values from newWeapon and then returned.
-    weaponDetails = newWeapon.weaponDetails(newWeapon);
-    return weaponDetails;
-  }
-
-  //This method returns a list of strings that contain the user's query.
-  Future<List<String>> fetchSearched(String searchQuery) async {
-    //List of strings created.
-    List<String> searchValues = new List();
-    //Parameter converted to lower case.
-    String lowerCaseSearchQuery = searchQuery.toLowerCase();
-    //Temporary list allowed to equal key list.
-    List<String> tempList = listOfWeaponNames;
-    //Temporary list set to lower case.
-    tempList = tempList.map((e) => e.toLowerCase()).toList();
-    //Sequential search of temporary list with search query.
-    return sequentialListSearch(lowerCaseSearchQuery, tempList, listOfWeaponNames);
-  }
 
   //Weapon detail display widget, with a weapon as a parameter.
   Widget selectedWeapon(BuildContext context, String weapon) {
@@ -73,8 +27,8 @@ class WeaponListState extends State<WeaponList> {
           title: Text(weapon),
         ),
         body: FutureBuilder(
-          //Future builder which calls the fetchAWeapon method with parameter.
-            future: fetchAWeapon(weapon),
+          //Future builder which calls the fetchAnIndex method with parameter.
+            future: fetchAnIndex(jsonLocation, indexType, weapon, weaponDetails),
             builder: (context, snapshot) {
               //Some indication of activity for the user when delayed.
               if (snapshot.connectionState == ConnectionState.waiting) {
@@ -95,7 +49,7 @@ class WeaponListState extends State<WeaponList> {
         ),
         body: FutureBuilder(
           //Future builder which calls the fetchSearched method with parameter.
-            future: fetchSearched(searchQuery),
+            future: fetchSearched(searchQuery, indexType),
             builder: (context, snapshot) {
               //Some indication of activity for the user when delayed.
               if (snapshot.connectionState == ConnectionState.waiting) {
@@ -205,7 +159,7 @@ class WeaponListState extends State<WeaponList> {
         key: _scaffoldKey,
         body: FutureBuilder(
           //Future builder which calls the fetchWeapons method.
-            future: fetchWeapons(),
+            future: fetchEntries(jsonLocation),
             builder: (context, AsyncSnapshot snapshot) {
               //Some indication of activity for the user when delayed.
               if (!snapshot.hasData) {

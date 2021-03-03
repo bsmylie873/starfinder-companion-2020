@@ -1,7 +1,8 @@
+import 'index.dart';
+
 //This object is used in the Races index.
-class Race {
+class Race extends Index{
   //These parameters match the sfrpg_races json fields.
-  String name;
   final String source;
   final String size;
   final String type;
@@ -170,7 +171,7 @@ class Race {
   }
 
   //This is the constructor for the Race object.
-  Race({this.name, this.source, this.size, this.type, this.subtype,
+  Race({name, this.source, this.size, this.type, this.subtype,
     this.hp, this.speed, this.abilityModifiers, this.averageHeight, this.averageWeight,
     this.ageOfMaturity, this.maximumAge, this.strMod, this.dexMod, this.conMod,
     this.intMod, this.wisMod, this.chaMod, this.reflexMod, this.fortMod, this.willMod,
@@ -178,12 +179,13 @@ class Race {
     this.disguiseMod, this.engineeringMod, this.intimidateMod, this.lifeScienceMod,
     this.mysticismMod, this.medicineMod, this.perceptionMod, this.physicalScienceMod,
     this.senseMotiveMod, this.stealthMod, this.survivalMod, this.acMod, this.abilityPicks,
-    this.skillPicks});
+    this.skillPicks}): super(name: name);
 
   //This parses the json into the Race object.
   factory Race.fromJson(Map<String, dynamic> json) {
+    final index = Index.fromJson(json);
     return Race(
-      name: json['Name'],
+      name: index.name,
       source: json['Source'],
       size: json['Size'],
       type: json['Type'],

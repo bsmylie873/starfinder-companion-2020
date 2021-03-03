@@ -1,5 +1,5 @@
 name: testflutter
-description: A new Flutter application.
+description: This application is a mobile companion for use with Starfinder role-playing game by Paizo Inc.
 
 # The following line prevents the package from being accidentally published to
 # pub.dev using `pub publish`. This is preferred for private packages.
@@ -26,20 +26,24 @@ dependencies:
   provider: ^4.3.2+2
   path_provider: ^1.6.24
   shared_preferences: ^0.5.12+4
-  webview_flutter: ^1.0.7
   splashscreen: ^1.2.0
-  flare_flutter: ^2.0.1
   animated_splash_screen: ^1.0.1+2
+  webview_flutter: ^1.0.7
   page_transition: ^1.1.7+2
-  csv: ^4.1.0
-  flappy_search_bar: 1.7.2
   flutter_search_bar: ^2.1.0
-  search_page: ^1.4.0
   permission_handler: ^5.0.1+1
+  flutter_launcher_icons: ^0.8.0
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.0
   mockito: ^4.1.4
+
+flutter_icons:
+  android: true
+  ios: true
+  image_path: "images/icon.png"
+  adaptive_icon_background: "images/background.png"
+  adaptive_icon_foreground: "images/foreground.png"
 
 dev_dependencies:
   flutter_test:

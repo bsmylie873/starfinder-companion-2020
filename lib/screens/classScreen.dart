@@ -1,8 +1,5 @@
-import '../objects/class.dart';
-import '../sequentialListSearch.dart';
-import 'dart:convert';
+import '../jsonUtil.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_search_bar/flutter_search_bar.dart';
 
 //Stateful ClassList class.
@@ -15,54 +12,13 @@ class ClassList extends StatefulWidget {
 class ClassListState extends State<ClassList> {
   //Scaffold key used for SearchBar declared.
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+  //Store location of JSON data.
+  final String jsonLocation = "data/sfrpg_classes.json";
+  //Index type identifies which index is being processed.
+  final String indexType = "Class";
 
-  //List of strings for different fetch methods initialised.
-  List<String> listOfClassNames = new List();
+  //List of strings for fetch class details.
   List<String> classDetails = new List();
-
-  //Json data loaded into a Future of type String.
-  Future<String> _loadFromClassJson() async {
-    return await rootBundle.loadString("data/sfrpg_classes.json");
-  }
-
-  //This method creates a string list of all classes.
-  Future<List<String>> fetchClasses() async {
-    String jsonString = await _loadFromClassJson();
-    //Future String parsed into a map.
-    Map<String, dynamic> jsonResponses = jsonDecode(jsonString);
-    //Keys extracted from map (class names).
-    listOfClassNames = jsonResponses.keys.toList();
-    //Sort list alphabetically.
-    listOfClassNames.sort();
-    return listOfClassNames;
-  }
-
-  //This method fetches the details of a single class.
-  Future<List<String>> fetchAClass(String className) async {
-    String jsonString = await _loadFromClassJson();
-    //Class object created.
-    Class newClass = new Class();
-    //Future of type string parsed into a map.
-    Map<String, dynamic> jsonResponses = jsonDecode(jsonString);
-    //NewClass takes values from matching entry in jsonResponses map.
-    newClass = Class.fromJson(jsonResponses[className]);
-    newClass.name = className;
-    //List of strings takes values from newSpell and then returned.
-    classDetails = newClass.classDetails(newClass);
-    return classDetails;
-  }
-
-  //This method returns a list of strings that contain the user's query.
-  Future<List<String>> fetchSearched(String searchQuery) async {
-    //Parameter converted to lower case.
-    String lowerCaseSearchQuery = searchQuery.toLowerCase();
-    //Temporary list allowed to equal key list.
-    List<String> tempList = listOfClassNames;
-    //Temporary list set to lower case.
-    tempList = tempList.map((e) => e.toLowerCase()).toList();
-    //Sequential search of temporary list with search query.
-    return sequentialListSearch(lowerCaseSearchQuery, tempList, listOfClassNames);
-  }
 
   //Class detail display widget, with a class as a parameter.
   Widget selectedClass(BuildContext context, String class1) {
@@ -72,7 +28,7 @@ class ClassListState extends State<ClassList> {
         ),
         body: FutureBuilder(
           //Future builder which calls the fetchAClass method with parameter.
-            future: fetchAClass(class1),
+            future: fetchAnIndex(jsonLocation, indexType, class1, classDetails),
             builder: (context, snapshot) {
               //Some indication of activity for the user when delayed.
               if (snapshot.connectionState == ConnectionState.waiting) {
@@ -93,7 +49,7 @@ class ClassListState extends State<ClassList> {
         ),
         body: FutureBuilder(
           //Future builder which calls the fetchSearched method with parameter.
-            future: fetchSearched(searchQuery),
+            future: fetchSearched(searchQuery, indexType),
             builder: (context, snapshot) {
               //Some indication of activity for the user when delayed.
               if (snapshot.connectionState == ConnectionState.waiting) {
@@ -205,7 +161,7 @@ class ClassListState extends State<ClassList> {
         key: _scaffoldKey,
         body: FutureBuilder(
           //Future builder which calls the fetchClasses method.
-            future: fetchClasses(),
+            future: fetchEntries(jsonLocation),
             builder: (context, AsyncSnapshot snapshot) {
               //Some indication of activity for the user when delayed.
               if (!snapshot.hasData) {

@@ -1,8 +1,5 @@
-import '../objects/race.dart';
-import '../sequentialListSearch.dart';
-import 'dart:convert';
+import '../jsonUtil.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_search_bar/flutter_search_bar.dart';
 
 //Stateful RaceList class.
@@ -15,54 +12,13 @@ class RaceList extends StatefulWidget {
 class RaceListState extends State<RaceList> {
   //Scaffold key used for SearchBar declared.
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+  //Store location of JSON data.
+  final String jsonLocation = "data/sfrpg_races.json";
+  //Index type identifies which index is being processed.
+  final String indexType = "Race";
 
   //List of strings for different fetch methods initialised.
-  List<String> listOfRaceNames = new List();
   List<String> raceDetails = new List();
-
-  //Json data loaded into a Future of type String.
-  Future<String> _loadFromRaceJson() async {
-    return await rootBundle.loadString("data/sfrpg_races.json");
-  }
-
-  //This method creates a string list of all classes.
-  Future<List<String>> fetchRaces() async {
-    String jsonString = await _loadFromRaceJson();
-    //Future String parsed into a map.
-    Map<String, dynamic> jsonResponses = jsonDecode(jsonString);
-    //Keys extracted from map (spell names).
-    listOfRaceNames = jsonResponses.keys.toList();
-    //Sort list alphabetically.
-    listOfRaceNames.sort();
-    return listOfRaceNames;
-  }
-
-  //This method fetches the details of a single class.
-  Future<List<String>> fetchARace(String raceName) async {
-    //Class object created.
-    String jsonString = await _loadFromRaceJson();
-    //Future of type string parsed into a map.
-    Race newRace = new Race();
-    //NewRace takes values from matching entry in jsonResponses map.
-    Map<String, dynamic> jsonResponses = jsonDecode(jsonString);
-    newRace = Race.fromJson(jsonResponses[raceName]);
-    newRace.name = raceName;
-    //List of strings takes values from newRace and then returned.
-    raceDetails = newRace.raceDetails(newRace);
-    return raceDetails;
-  }
-
-  //This method returns a list of strings that contain the user's query.
-  Future<List<String>> fetchSearched(String searchQuery) async {
-    //Parameter converted to lower case in new variable.
-    String lowerCaseSearchQuery = searchQuery.toLowerCase();
-    //Temporary list allowed to equal key list.
-    List<String> tempList = listOfRaceNames;
-    //Temporary list set to lower case.
-    tempList = tempList.map((e) => e.toLowerCase()).toList();
-    //Sequential search of temporary list with search query.
-    return sequentialListSearch(lowerCaseSearchQuery, tempList, listOfRaceNames);
-  }
 
   //Race detail display widget, with a race as a parameter.
   Widget selectedRace(BuildContext context, String race) {
@@ -72,7 +28,7 @@ class RaceListState extends State<RaceList> {
         ),
         body: FutureBuilder(
           //Future builder which calls the fetchARace method with parameter.
-            future: fetchARace(race),
+            future: fetchAnIndex(jsonLocation, indexType, race, raceDetails),
             builder: (context, snapshot) {
               //Some indication of activity for the user when delayed.
               if (snapshot.connectionState == ConnectionState.waiting) {
@@ -93,7 +49,7 @@ class RaceListState extends State<RaceList> {
         ),
         body: FutureBuilder(
           //Future builder which calls the fetchSearched method with parameter.
-            future: fetchSearched(searchQuery),
+            future: fetchSearched(searchQuery, indexType),
             builder: (context, snapshot) {
               //Some indication of activity for the user when delayed.
               if (snapshot.connectionState == ConnectionState.waiting) {
@@ -203,7 +159,7 @@ class RaceListState extends State<RaceList> {
         key: _scaffoldKey,
         body: FutureBuilder(
           //Future builder which calls the fetchSpells method.
-            future: fetchRaces(),
+            future: fetchEntries(jsonLocation),
             builder: (context, AsyncSnapshot snapshot) {
               //Some indication of activity for the user when delayed.
               if (!snapshot.hasData) {
