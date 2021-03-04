@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'enums.dart';
 import 'objects/class.dart';
 import 'objects/race.dart';
 import 'objects/spell.dart';
@@ -7,11 +8,11 @@ import 'package:flutter/services.dart';
 import 'sequentialListSearch.dart';
 
 //This method fetches the details of a single index.
-Future<List<String>> fetchAnIndex(String jsonLocation, String indexType, String indexName, List<String> indexDetails) async {
+Future<List<String>> fetchAnEntry(String jsonLocation, indexType indexType1, String indexName, List<String> indexDetails) async {
   //Json loaded from appropriate file determined by parameter.
   String jsonString = await loadFromAJson(jsonLocation);
   //Index type used to determine index type.
-  if (indexType == "Class"){
+  if (indexType1 == indexType.CLASS){
     //Class object created.
     Class newClass = new Class();
     //Future of type string parsed into a map.
@@ -24,7 +25,7 @@ Future<List<String>> fetchAnIndex(String jsonLocation, String indexType, String 
     return indexDetails;
   }
 
-  if (indexType == "Race"){
+  if (indexType1 == indexType.RACE){
     //Race object created.
     Race newRace = new Race();
     //Future of type string parsed into a map.
@@ -37,7 +38,7 @@ Future<List<String>> fetchAnIndex(String jsonLocation, String indexType, String 
     return indexDetails;
   }
 
-  if (indexType == "Spell"){
+  if (indexType1 == indexType.SPELL){
     //Spell object created.
     Spell newSpell = new Spell();
     //Future of type string parsed into a map.
@@ -50,7 +51,7 @@ Future<List<String>> fetchAnIndex(String jsonLocation, String indexType, String 
     return indexDetails;
   }
 
-  if (indexType == "Weapon"){
+  if (indexType1 == indexType.WEAPON){
     //Weapon object created.
     Weapon newWeapon = new Weapon();
     //Future of type string parsed into a map.
@@ -87,7 +88,7 @@ Future<List<String>> fetchEntries(String jsonLocation) async {
 
 
 //This method returns a list of strings that contain the user's query.
-Future<List<String>> fetchSearched(String searchQuery, String indexType) async {
+Future<List<String>> fetchSearched(String searchQuery, indexType indexType1) async {
   //Parameter converted to lower case in new variable.
   String lowerCaseSearchQuery = searchQuery.toLowerCase();
   //New list created to hold entries to be searched.
@@ -96,22 +97,22 @@ Future<List<String>> fetchSearched(String searchQuery, String indexType) async {
   String jsonLocation = "";
 
   //Index type used to determine index type.
-  if (indexType == "Class") {
+  if (indexType1 == indexType.CLASS) {
     //Appropriate file chosen.
     jsonLocation = "data/sfrpg_classes.json";
   }
 
-  if (indexType == "Race") {
+  if (indexType1 == indexType.RACE) {
     //Appropriate file chosen.
     jsonLocation = "data/sfrpg_races.json";
   }
 
-  if (indexType == "Spell") {
+  if (indexType1 == indexType.SPELL) {
     //Appropriate file chosen.
     jsonLocation = "data/sfrpg_spells.json";
   }
 
-  if (indexType == "Weapon") {
+  if (indexType1 == indexType.WEAPON) {
     //Appropriate file chosen.
     jsonLocation = "data/sfrpg_weapons.json";
   }

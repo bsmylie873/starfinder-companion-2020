@@ -1,3 +1,4 @@
+import '../enums.dart';
 import '../jsonUtil.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_search_bar/flutter_search_bar.dart';
@@ -15,7 +16,7 @@ class ClassListState extends State<ClassList> {
   //Store location of JSON data.
   final String jsonLocation = "data/sfrpg_classes.json";
   //Index type identifies which index is being processed.
-  final String indexType = "Class";
+  indexType classEnum = indexType.CLASS;
 
   //List of strings for fetch class details.
   List<String> classDetails = new List();
@@ -28,7 +29,7 @@ class ClassListState extends State<ClassList> {
         ),
         body: FutureBuilder(
           //Future builder which calls the fetchAClass method with parameter.
-            future: fetchAnIndex(jsonLocation, indexType, class1, classDetails),
+            future: fetchAnEntry(jsonLocation, classEnum, class1, classDetails),
             builder: (context, snapshot) {
               //Some indication of activity for the user when delayed.
               if (snapshot.connectionState == ConnectionState.waiting) {
@@ -49,7 +50,7 @@ class ClassListState extends State<ClassList> {
         ),
         body: FutureBuilder(
           //Future builder which calls the fetchSearched method with parameter.
-            future: fetchSearched(searchQuery, indexType),
+            future: fetchSearched(searchQuery, classEnum),
             builder: (context, snapshot) {
               //Some indication of activity for the user when delayed.
               if (snapshot.connectionState == ConnectionState.waiting) {
