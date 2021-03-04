@@ -8,16 +8,16 @@ import 'package:path_provider/path_provider.dart';
 import 'dart:io';
 import 'package:path/path.dart';
 
-
 //Flexible class, displays and allows interaction with
 // the Character Sheet and Ship Sheet HTML files using
 // Flutter Webview
 class PlayerSheetPage extends StatelessWidget {
-
   PlayerSheetPage({Key key, this.path}) : super(key: key);
+
   //Path to the Character/Ship sheet, passed as a variable to determine which
   //sheet to load
   String path;
+
   //Declaring the controller here allows functions outside of the build
   //method to interact with the controller once initialised
   WebViewController _controller;
@@ -26,7 +26,7 @@ class PlayerSheetPage extends StatelessWidget {
   Widget build(BuildContext context) {
     //This enables a hybrid Flutter and native Android webview
     //if platform is Android
-    if(Platform.isAndroid) {
+    if (Platform.isAndroid) {
       WebView.platform = SurfaceAndroidWebView();
     }
     return Scaffold(
@@ -64,7 +64,7 @@ class PlayerSheetPage extends StatelessWidget {
         // });
         //Writes the JSON file sent back from the sheet to a file, needs path
         //variable so that it knows which directory to write to, Ship/Character
-          writeContent(pageBody, path);
+        writeContent(pageBody, path);
       },
     );
   }
@@ -72,38 +72,33 @@ class PlayerSheetPage extends StatelessWidget {
   JavascriptChannel _loadDataJSChannel(
       BuildContext context, WebViewController webviewController) {
     return JavascriptChannel(
-      name: 'loadJson',
-      onMessageReceived: (JavascriptMessage message) async {
-      //Checks if the sheet path is Character or Ship and loads from directory
-        String directoryPath;
-        if (path.contains('data/characterSheet.html'))
-        {
-          directoryPath = await _localPath;
-        }
-        else {
-          directoryPath = await _localShipPath;
-        }
-        //Uses directory to route to the load sheet page, shows all files saved
-        //at the specified directory, which pops back information when a tile on
-        //that screen is pressed
+        name: 'loadJson',
+        onMessageReceived: (JavascriptMessage message) async {
+          //Checks if the sheet path is Character or Ship and loads from directory
+          String directoryPath;
+          if (path.contains('data/characterSheet.html')) {
+            directoryPath = await _localPath;
+          } else {
+            directoryPath = await _localShipPath;
+          }
+          //Uses directory to route to the load sheet page, shows all files saved
+          //at the specified directory, which pops back information when a tile on
+          //that screen is pressed
           Directory loadingSheetDirectory = new Directory(directoryPath);
-          String filePath = await Navigator.push(context,
+          String filePath = await Navigator.push(
+              context,
               MaterialPageRoute(
                   builder: (context) =>
-                      LoadSheetPage(directory: loadingSheetDirectory)
-              )
-          );
+                      LoadSheetPage(directory: loadingSheetDirectory)));
           //Loads data from popped file path and inserts values from sheet
-        //using the controller to execute the LoadJSON method
-        if(filePath != null) {
-          String result = await localContent(filePath);
-          _controller.evaluateJavascript("LoadJSON($result)");
-        }
-        else{
-          print("Non-existent or no file selected");
-        }
-        }
-    );
+          //using the controller to execute the LoadJSON method
+          if (filePath != null) {
+            String result = await localContent(filePath);
+            _controller.evaluateJavascript("LoadJSON($result)");
+          } else {
+            print("Non-existent or no file selected");
+          }
+        });
   }
 
   //Loads data from a file at the passed path
@@ -125,6 +120,7 @@ class PlayerSheetPage extends StatelessWidget {
     });
     return directory.path;
   }
+
   //Makes a file at path returned from local path
   Future<File> get _localFile async {
     final path = await _localPath;
@@ -135,7 +131,7 @@ class PlayerSheetPage extends StatelessWidget {
   Future<File> writeContent(String content, String pagePath) async {
     //Parses the JSON passed in content to the tempMap
     Map<String, dynamic> tempMap = json.decode(content);
-    if(pagePath.contains('data/characterSheet.html')) {
+    if (pagePath.contains('data/characterSheet.html')) {
       final file = await _localFile;
       String charName = tempMap["Charname"];
       charName = removeSpecialCharacters(charName);
@@ -151,8 +147,7 @@ class PlayerSheetPage extends StatelessWidget {
         /*print(writeFile.writeAsString(content));*/
         return writeFile.writeAsString(content);
       }
-    }
-    else{
+    } else {
       final file = await _localShipFile;
       String shipName = tempMap["Shipname"];
       shipName = removeSpecialCharacters(shipName);
@@ -174,30 +169,33 @@ class PlayerSheetPage extends StatelessWidget {
   String removeSpecialCharacters(String nameString) {
     nameString = nameString.replaceAll(' ', '_');
     final cleanName = nameString?.replaceAll(
-        RegExp(r"[-.!$%^&*()+|~=`{}#@\[\]:;'’<>?,/\\"'"”'"]"), "");
+        RegExp(r"[-.!$%^&*()+|~=`{}#@\[\]:;'’<>?,/\\" '"”' "]"), "");
     return cleanName;
   }
+
   //Fetches directory where ship sheets are stored,
   // creates the directory if it doesn't exist
 
   Future<String> get _localShipPath async {
     Directory appDocDirectory = await getApplicationDocumentsDirectory();
     Directory directory =
-    await new Directory(appDocDirectory.path + '/' + 'ShipSheets')
-        .create(recursive: true)
-        .then((Directory directory) {
+        await new Directory(appDocDirectory.path + '/' + 'ShipSheets')
+            .create(recursive: true)
+            .then((Directory directory) {
       print('Path of New Dir: ' + directory.path);
       return directory;
     });
     return directory.path;
   }
-    //Makes a file at ship path directory
+
+  //Makes a file at ship path directory
   Future<File> get _localShipFile async {
     final path = await _localShipPath;
     print('$path');
     return File('$path');
   }
-    //Loads a specified HTML sheet from the asset manifest
+
+  //Loads a specified HTML sheet from the asset manifest
   Future<void> loadHtmlFromAssets(String filename, controller) async {
     String fileText = await rootBundle.loadString(filename);
     controller.loadUrl(Uri.dataFromString(fileText,
@@ -206,16 +204,16 @@ class PlayerSheetPage extends StatelessWidget {
   }
 }
 
-
 class CharSheetFromDirectory extends StatelessWidget {
-  CharSheetFromDirectory({Key key, this.filePath, this.pagePath}) : super(key: key);
+  CharSheetFromDirectory({Key key, this.filePath, this.pagePath})
+      : super(key: key);
   String filePath;
   String pagePath;
   WebViewController _controller;
 
   @override
   Widget build(BuildContext context) {
-    if(Platform.isAndroid) {
+    if (Platform.isAndroid) {
       WebView.platform = SurfaceAndroidWebView();
     }
     return Scaffold(
@@ -260,8 +258,6 @@ class CharSheetFromDirectory extends StatelessWidget {
     );
   }
 
-
-
   Future<String> get _localPath async {
     Directory appDocDirectory = await getApplicationDocumentsDirectory();
     Directory directory =
@@ -283,7 +279,7 @@ class CharSheetFromDirectory extends StatelessWidget {
   Future<File> writeContent(String content, String pagePath) async {
     //Parses the JSON passed in content to the tempMap
     Map<String, dynamic> tempMap = json.decode(content);
-    if(pagePath.contains('data/characterSheet.html')) {
+    if (pagePath.contains('data/characterSheet.html')) {
       final file = await _localFile;
       String charName = tempMap["Charname"];
       charName = removeSpecialCharacters(charName);
@@ -299,8 +295,7 @@ class CharSheetFromDirectory extends StatelessWidget {
         /*print(writeFile.writeAsString(content));*/
         return writeFile.writeAsString(content);
       }
-    }
-    else{
+    } else {
       final file = await _localShipFile;
       String shipName = tempMap["Shipname"];
       shipName = removeSpecialCharacters(shipName);
@@ -322,7 +317,7 @@ class CharSheetFromDirectory extends StatelessWidget {
   String removeSpecialCharacters(String nameString) {
     nameString = nameString.replaceAll(' ', '_');
     final cleanName = nameString?.replaceAll(
-        RegExp(r"[-.!$%^&*()+|~=`{}#@\[\]:;'’<>?,/\\"'"”'"]"), "");
+        RegExp(r"[-.!$%^&*()+|~=`{}#@\[\]:;'’<>?,/\\" '"”' "]"), "");
     return cleanName;
   }
 
@@ -332,20 +327,22 @@ class CharSheetFromDirectory extends StatelessWidget {
   Future<String> get _localShipPath async {
     Directory appDocDirectory = await getApplicationDocumentsDirectory();
     Directory directory =
-    await new Directory(appDocDirectory.path + '/' + 'ShipSheets')
-        .create(recursive: true)
-        .then((Directory directory) {
+        await new Directory(appDocDirectory.path + '/' + 'ShipSheets')
+            .create(recursive: true)
+            .then((Directory directory) {
       print('Path of New Dir: ' + directory.path);
       return directory;
     });
     return directory.path;
   }
+
   //Makes a file at ship path directory
   Future<File> get _localShipFile async {
     final path = await _localShipPath;
     print('$path');
     return File('$path');
   }
+
   //Reads local file at specified path
   Future<String> localContent(String path) async {
     final file = new File(path);
@@ -395,22 +392,22 @@ class _FileListViewState extends State<FileListView> {
   Future<String> get _localShipPath async {
     Directory appDocDirectory = await getApplicationDocumentsDirectory();
     Directory directory =
-    await new Directory(appDocDirectory.path + '/' + 'ShipSheets')
-        .create(recursive: true)
-        .then((Directory directory) {
+        await new Directory(appDocDirectory.path + '/' + 'ShipSheets')
+            .create(recursive: true)
+            .then((Directory directory) {
       print('Path of New Dir: ' + directory.path);
       return directory;
     });
     return directory.path;
   }
+
   //Fetches the directory for the file list state view to read from
   Future<Directory> fileDirectory(String directoryPath) async {
-    if(directoryPath.contains('data/characterSheet.html')) {
+    if (directoryPath.contains('data/characterSheet.html')) {
       String path = await _localPath;
       Directory directory = new Directory(path);
       return directory;
-    }
-    else if(directoryPath.contains('data/shipSheet.html')){
+    } else if (directoryPath.contains('data/shipSheet.html')) {
       String path = await _localShipPath;
       Directory directory = new Directory(path);
       return directory;
@@ -418,17 +415,18 @@ class _FileListViewState extends State<FileListView> {
   }
 }
 
-class CharacterSheetDirectory extends StatefulWidget{
+class CharacterSheetDirectory extends StatefulWidget {
   final Directory directory;
 
   const CharacterSheetDirectory({Key key, this.directory}) : super(key: key);
+
   @override
-  _CharacterSheetDirectoryState createState() => _CharacterSheetDirectoryState();
+  _CharacterSheetDirectoryState createState() =>
+      _CharacterSheetDirectoryState();
 }
 
 // Reads everything in the passed directory and displays as a set of list tiles
 class _CharacterSheetDirectoryState extends State<CharacterSheetDirectory> {
-
   @override
   Widget build(BuildContext context) {
     var fileList = widget.directory
@@ -436,44 +434,61 @@ class _CharacterSheetDirectoryState extends State<CharacterSheetDirectory> {
         .map((item) => item.path)
         .where((item) => item.endsWith(".json"))
         .toList(growable: false);
-    return Scaffold(
-      appBar: AppBar(
-        title: Text("Saved Character Sheets"),
-      ),
-      body: ListView.builder(
-          itemCount: fileList == null ? 0 : fileList.length,
-          itemBuilder: (BuildContext context, int index) {
-            File file = new File(fileList[index]);
-            String name = file.path.split('/').last;
-            return new Card(
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(8.0),
-              ),
-              child: Padding(
-                  padding: const EdgeInsets.all(5.0),
-                  child: ListTile(
-                    title: Text(name),
-                    //When a tile is selected, makes a char sheet
-                    // based on the tile's associated file
-                    onTap: () => {
-                      Navigator.push(context, MaterialPageRoute(
-                        builder: (context) {
-                          return CharSheetFromDirectory(filePath: file.path,
-                              pagePath: widget.directory.path);
-                        },
-                      ))
-                    },
-                    //Trash icon that can delete files
-                    trailing: IconButton(
-                      icon: Icon(CupertinoIcons.trash),
-                      onPressed: () {
-                        showAlertDialog(context, file);
+    if(fileList.isNotEmpty) {
+      return Scaffold(
+        appBar: AppBar(
+          title: Text("Saved Character Sheets"),
+        ),
+        body: ListView.builder(
+            itemCount: fileList == null ? 0 : fileList.length,
+            itemBuilder: (BuildContext context, int index) {
+              File file = new File(fileList[index]);
+              String name = file.path
+                  .split('/')
+                  .last;
+              return new Card(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(8.0),
+                ),
+                child: Padding(
+                    padding: const EdgeInsets.all(5.0),
+                    child: ListTile(
+                      title: Text(name),
+                      //When a tile is selected, makes a char sheet
+                      // based on the tile's associated file
+                      onTap: () =>
+                      {
+                        Navigator.push(context, MaterialPageRoute(
+                          builder: (context) {
+                            return CharSheetFromDirectory(
+                                filePath: file.path,
+                                pagePath: widget.directory.path);
+                          },
+                        ))
                       },
-                    ),
-                  )),
-            );
-          }),
-    );
+                      //Trash icon that can delete files
+                      trailing: IconButton(
+                        icon: Icon(CupertinoIcons.trash),
+                        onPressed: () {
+                          showAlertDialog(context, file);
+                        },
+                      ),
+                    )),
+              );
+            }),
+      );
+    }
+    else{
+      return Scaffold(
+        appBar: AppBar(
+          title: Text("No saved files found")
+        ),
+        body: Center(
+          child: Text("It seems there are no files saved here, you can find the"
+              "Character and Ship sheets under the Player Portal to get started"),
+        )
+      );
+    }
   }
 
   showAlertDialog(BuildContext context, File file) {
@@ -489,10 +504,7 @@ class _CharacterSheetDirectoryState extends State<CharacterSheetDirectory> {
       onPressed: () {
         Navigator.of(context, rootNavigator: true).pop('dialog');
         file.deleteSync(recursive: false);
-        setState(() {
-
-        });
-
+        setState(() {});
       },
     );
 
@@ -513,18 +525,18 @@ class _CharacterSheetDirectoryState extends State<CharacterSheetDirectory> {
       },
     );
   }
-
 }
-class LoadSheetPage extends StatefulWidget{
+
+class LoadSheetPage extends StatefulWidget {
   final Directory directory;
 
   const LoadSheetPage({Key key, this.directory}) : super(key: key);
+
   @override
   _LoadSheetPageState createState() => _LoadSheetPageState();
 }
 
 class _LoadSheetPageState extends State<LoadSheetPage> {
-
   @override
   Widget build(BuildContext context) {
     var fileList = widget.directory
@@ -532,38 +544,51 @@ class _LoadSheetPageState extends State<LoadSheetPage> {
         .map((item) => item.path)
         .where((item) => item.endsWith(".json"))
         .toList(growable: false);
+    if(fileList.isNotEmpty) {
+      return Scaffold(
+        appBar: AppBar(
+          title: Text("Saved Sheets"),
+        ),
+        body: ListView.builder(
+            itemCount: fileList == null ? 0 : fileList.length,
+            itemBuilder: (BuildContext context, int index) {
+              File file = new File(fileList[index]);
+              String name = file.path
+                  .split('/')
+                  .last;
+              return new Card(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(8.0),
+                ),
+                child: Padding(
+                    padding: const EdgeInsets.all(5.0),
+                    child: ListTile(
+                      title: Text(name),
+                      //Pops context back with file path for sheet to interpret
+                      onTap: () => {Navigator.pop(context, file.path)},
+                      //Trash icon that can delete files
+                      trailing: IconButton(
+                        icon: Icon(CupertinoIcons.trash),
+                        onPressed: () {
+                          showAlertDialog(context, file);
+                        },
+                      ),
+                    )),
+              );
+            }),
+      );
+    }
+    else{
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Saved Sheets"),
-      ),
-      body: ListView.builder(
-          itemCount: fileList == null ? 0 : fileList.length,
-          itemBuilder: (BuildContext context, int index) {
-            File file = new File(fileList[index]);
-            String name = file.path.split('/').last;
-            return new Card(
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(8.0),
-              ),
-              child: Padding(
-                  padding: const EdgeInsets.all(5.0),
-                  child: ListTile(
-                    title: Text(name),
-                    //Pops context back with file path for sheet to interpret
-                    onTap: () => {
-                      Navigator.pop(context, file.path)
-                    },
-                    //Trash icon that can delete files
-                    trailing: IconButton(
-                      icon: Icon(CupertinoIcons.trash),
-                      onPressed: () {
-                        showAlertDialog(context, file);
-                      },
-                    ),
-                  )),
-            );
-          }),
+    appBar: AppBar(
+    title: Text("No saved files found")
+    ),
+    body: Center(
+    child: Text("It seems there are no files saved here, you can find the"
+    "Character and Ship sheets under the Player Portal to get started"),
+    )
     );
+    }
   }
 
   showAlertDialog(BuildContext context, File file) {
@@ -581,9 +606,7 @@ class _LoadSheetPageState extends State<LoadSheetPage> {
       onPressed: () {
         Navigator.of(context, rootNavigator: true).pop('dialog');
         file.deleteSync(recursive: false);
-        setState(() {
-
-        });
+        setState(() {});
       },
     );
     // set up the AlertDialog
@@ -606,26 +629,23 @@ class _LoadSheetPageState extends State<LoadSheetPage> {
 }
 
 class ChooseSheetDirectory extends StatelessWidget {
-
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Choose which directory to read sheets from")
-      ),
-      body: GridView.count(
-        primary: false,
-        padding: const EdgeInsets.all(20),
-        crossAxisSpacing: 10,
-        mainAxisSpacing: 10,
-        crossAxisCount: 2,
-        children: [
-          SheetBox1(),
-          SheetBox2(),
-        ],
-        shrinkWrap: true,
-      )
-    );
+        appBar:
+            AppBar(title: Text("Choose which directory to read sheets from")),
+        body: GridView.count(
+          primary: false,
+          padding: const EdgeInsets.all(20),
+          crossAxisSpacing: 10,
+          mainAxisSpacing: 10,
+          crossAxisCount: 2,
+          children: [
+            SheetBox1(),
+            SheetBox2(),
+          ],
+          shrinkWrap: true,
+        ));
   }
 }
