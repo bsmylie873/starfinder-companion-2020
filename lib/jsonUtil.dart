@@ -68,7 +68,7 @@ Future<List<String>> fetchAnEntry(String jsonLocation, indexType indexType1, Str
 
   //Index type error handling.
     default: {
-      indexDetails.add("Something went wrong! Index not set correctly!");
+      indexDetails.add("Something went wrong! Index type not set correctly!");
       return indexDetails;
     }
   }
