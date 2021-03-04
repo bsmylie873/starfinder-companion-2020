@@ -1,7 +1,9 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_search_bar/flutter_search_bar.dart';
 
-//THIS CLASS REMAINS UNIMPLEMENTED DUE TO LACK OF DATA. THERE ARE NO COMMENTS.
+import '../objects/spell.dart';
+import 'dart:convert';
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class OtherList extends StatefulWidget {
   @override

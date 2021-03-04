@@ -1,28 +1,26 @@
+import 'package:flutter/material.dart';
+import 'package:testflutter/table.dart';
+import 'WidgetScreens.dart';
 import 'classScreen.dart';
 import 'featScreen.dart';
-import 'package:flutter/material.dart';
 import 'raceScreen.dart';
-import 'sheetScreen.dart';
 import 'skillScreen.dart';
-
-//These values dictate the number of buttons to be displayed and the height of
-//each button.
-const double pConstNumOfButtons = 5;
+import 'spellScreen.dart';
+import 'sheetScreen.dart';
+const double pConstNumOfButtons = 6;
 const double constContainerHeight = 1;
 
-//Box 1.
 class PlayerBox extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
     return Card(
         margin: EdgeInsets.only(top: 50.0, bottom: 50.0),
-        //Uses card design.
+        //color: Colors.amber,
         child: ListTile(
-          //Icon relevant to button destination.
             leading: Icon(Icons.hail),
             title: Text('Classes'),
-            //When tapped, tile will load the new screen index.
+            //contentPadding: EdgeInsets.only(bottom: 50.0),
             onTap: () {
               Navigator.push(
                 context,
@@ -33,7 +31,6 @@ class PlayerBox extends StatelessWidget {
 
 }
 
-//Box 2.
 class PlayerBox1 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -54,7 +51,6 @@ class PlayerBox1 extends StatelessWidget {
   }
 }
 
-//Box 3.
 class PlayerBox2 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -74,7 +70,6 @@ class PlayerBox2 extends StatelessWidget {
   }
 }
 
-//Box 4.
 class PlayerBox3 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -93,9 +88,22 @@ class PlayerBox3 extends StatelessWidget {
               );
             }));
   }
+  Size screenSize(BuildContext context) {
+    return MediaQuery.of(context).size;
+  }
+
+  double buttonHeight(BuildContext context,
+      {double numOfButtons = pConstNumOfButtons, double sizeReduction = 0.0}) {
+    return (screenSize(context).height - sizeReduction) / numOfButtons;
+  }
+
+  double buttonHeightWithToolbar(BuildContext context,
+      {double numOfButtons = pConstNumOfButtons}) {
+    return buttonHeight(context,
+        numOfButtons: numOfButtons, sizeReduction: kToolbarHeight);
+  }
 }
 
-//Box 5.
 class PlayerBox4 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -110,8 +118,30 @@ class PlayerBox4 extends StatelessWidget {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                    builder: (context) => CharacterSheetAttempt()),
+                    builder: (context) => PlayerSheetPage(path: 'data/characterSheet.html')),
               );
             }));
   }
+}
+
+class PlayerBox5 extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+        margin: EdgeInsets.only(top: 50.0, bottom: 50.0),
+        //color: Colors.amber,
+        child: ListTile(
+            leading: Icon(Icons.contact_page_sharp),
+            title: Text('Ship Sheet'),
+            //contentPadding: EdgeInsets.only(bottom: 50.0),
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => PlayerSheetPage(path: 'data/shipSheet.html')),
+              );
+            }));
+  }
+
+
 }

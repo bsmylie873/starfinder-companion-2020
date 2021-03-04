@@ -383,17 +383,55 @@
 			localStorage.setItem("SFShipCrashRecovery", cstring);
 
 	}
+
+	function saveSheet() {
+	var cjson = {};
+		var shipname = document.getElementById("Shipname").value;
+		var charvars = document.querySelectorAll("input[type=text]");
+		var longvars = document.getElementsByTagName("textarea");
+		var boolvars = document.querySelectorAll("input[type=checkbox]");
+		var allowrecoverysave = false;
+
+		if(shipname=="")
+			shipname = "Unnamed Ship";
+			for(var i=0; i < charvars.length; i++)
+			{
+				cjson[charvars[i].id]=charvars[i].value;
+			}
+
+			for(var i=0; i < longvars.length; i++)
+			{
+				cjson[longvars[i].id]=longvars[i].value;
+			}
+
+			for(var i=0; i < boolvars.length; i++)
+			{
+				if(boolvars[i].checked)
+				{
+					cjson[boolvars[i].id]=true;
+				}
+			}
+
+		var cstring=JSON.stringify(cjson);
+		Flutter.postMessage(cstring);
+	}
+
+	function loadSheetAttempt() {
+	var str = "test";
+	loadJson.postMessage(str);
+	}
+
 	</script>
 	<title>Starfinder Ship Sheet</title>
 	</head>
 	<body>
 		<span class="nonprinting fixedcontrols">
-			Load:<input type="file" id="inputfile" onchange="LoadFile()">
-			<span id="DownloadLink"></span>
-			<button onclick="CrashRecovery()" title="Load last auto-saved ship.">Crash Recovery</button>
+			<button onclick="saveSheet()" title="Attempting to send back information">Save Ship Sheet</button>
+			<button onclick="loadSheetAttempt()" title="Attempting to send back information">Load Ship Sheet</button>
 		</span>
 		<table class="fullwidth">
-		<tr>
+	<tr> &nbsp</tr>
+			<tr>
 			<td><h2>Starfinder</h2></td>
 			<td class="halfwidth"><input type="text" id="Shipname" class="input_ubig" onchange="PopulateNameAndID()"><br />Ship Name</td>
 			<td class="twentyfive"><input type="text" id="Shiptier" class="input_ubig" onchange="PopulateNameAndID()"><br />Tier</td>
