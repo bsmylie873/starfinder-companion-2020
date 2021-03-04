@@ -412,6 +412,9 @@ class _FileListViewState extends State<FileListView> {
       Directory directory = new Directory(path);
       return directory;
     }
+    String path = await _localPath;
+    Directory directory = new Directory(path);
+    return directory;
   }
 }
 
