@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
+import 'screens/licenseScreen.dart';
 import 'screens/mainBoxes.dart';
 import 'themeManager.dart';
 
@@ -165,14 +166,19 @@ class SettingsRoute extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Settings"),
+        title: Text("Settings (To be implemented!)"),
       ),
       body: Center(
-        child: ElevatedButton(
-          onPressed: () {
-            // Navigate back to first route when tapped.
+
+        child: ListTile(
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => LicenseScreen()),
+            );
           },
-          child: Text('To be implemented!'),
+          title: Text('License'),
         ),
       ),
     );
