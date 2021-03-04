@@ -30,7 +30,7 @@ class PlayerSheetPage extends StatelessWidget {
       WebView.platform = SurfaceAndroidWebView();
     }
     return Scaffold(
-      appBar: AppBar(title: Text('Character Sheet')),
+      appBar: AppBar(title: Text('Starfinder Sheet')),
       body: WebView(
         javascriptMode: JavascriptMode.unrestricted,
         javascriptChannels: <JavascriptChannel>[
@@ -218,7 +218,7 @@ class CharSheetFromDirectory extends StatelessWidget {
     }
     return Scaffold(
       appBar: AppBar(
-        title: Text("Character Sheet"),
+        title: Text("Starfinder Sheet"),
       ),
       body: Center(
         child: WebView(
