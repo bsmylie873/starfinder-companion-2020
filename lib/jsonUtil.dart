@@ -12,64 +12,66 @@ Future<List<String>> fetchAnEntry(String jsonLocation, indexType indexType1, Str
   //Json loaded from appropriate file determined by parameter.
   String jsonString = await loadFromAJson(jsonLocation);
   //Index type used to determine index type.
-  if (indexType1 == indexType.CLASS){
-    //Class object created.
-    Class newClass = new Class();
-    //Future of type string parsed into a map.
-    Map<String, dynamic> jsonResponses = jsonDecode(jsonString);
-    //NewClass takes values from matching entry in jsonResponses map.
-    newClass = Class.fromJson(jsonResponses[indexName]);
-    newClass.name = indexName;
-    //List of strings takes values from newSpell and then returned.
-    indexDetails = newClass.classDetails(newClass);
-    return indexDetails;
-  }
+  switch(indexType1) {
+    case indexType.CLASS: {
+      //Class object created.
+      Class newClass = new Class();
+      //Future of type string parsed into a map.
+      Map<String, dynamic> jsonResponses = jsonDecode(jsonString);
+      //NewClass takes values from matching entry in jsonResponses map.
+      newClass = Class.fromJson(jsonResponses[indexName]);
+      newClass.name = indexName;
+      //List of strings takes values from newSpell and then returned.
+      indexDetails = newClass.classDetails(newClass);
+      return indexDetails;
+    }
 
-  if (indexType1 == indexType.RACE){
-    //Race object created.
-    Race newRace = new Race();
-    //Future of type string parsed into a map.
-    Map<String, dynamic> jsonResponses = jsonDecode(jsonString);
-    //NewClass takes values from matching entry in jsonResponses map.
-    newRace = Race.fromJson(jsonResponses[indexName]);
-    newRace.name = indexName;
-    //List of strings takes values from newSpell and then returned.
-    indexDetails = newRace.raceDetails(newRace);
-    return indexDetails;
-  }
+    case indexType.RACE: {
+      //Race object created.
+      Race newRace = new Race();
+      //Future of type string parsed into a map.
+      Map<String, dynamic> jsonResponses = jsonDecode(jsonString);
+      //NewClass takes values from matching entry in jsonResponses map.
+      newRace = Race.fromJson(jsonResponses[indexName]);
+      newRace.name = indexName;
+      //List of strings takes values from newSpell and then returned.
+      indexDetails = newRace.raceDetails(newRace);
+      return indexDetails;
+    }
 
-  if (indexType1 == indexType.SPELL){
-    //Spell object created.
-    Spell newSpell = new Spell();
-    //Future of type string parsed into a map.
-    Map<String, dynamic> jsonResponses = jsonDecode(jsonString);
-    //NewClass takes values from matching entry in jsonResponses map.
-    newSpell = Spell.fromJson(jsonResponses[indexName]);
-    newSpell.name = indexName;
-    //List of strings takes values from newSpell and then returned.
-    indexDetails = newSpell.spellDetails(newSpell);
-    return indexDetails;
-  }
 
-  if (indexType1 == indexType.WEAPON){
-    //Weapon object created.
-    Weapon newWeapon = new Weapon();
-    //Future of type string parsed into a map.
-    Map<String, dynamic> jsonResponses = jsonDecode(jsonString);
-    //NewClass takes values from matching entry in jsonResponses map.
-    newWeapon = Weapon.fromJson(jsonResponses[indexName]);
-    newWeapon.name = indexName;
-    //List of strings takes values from newSpell and then returned.
-    indexDetails = newWeapon.weaponDetails(newWeapon);
-    return indexDetails;
-  }
+    case indexType.SPELL: {
+      //Spell object created.
+      Spell newSpell = new Spell();
+      //Future of type string parsed into a map.
+      Map<String, dynamic> jsonResponses = jsonDecode(jsonString);
+      //NewClass takes values from matching entry in jsonResponses map.
+      newSpell = Spell.fromJson(jsonResponses[indexName]);
+      newSpell.name = indexName;
+      //List of strings takes values from newSpell and then returned.
+      indexDetails = newSpell.spellDetails(newSpell);
+      return indexDetails;
+    }
+
+    case indexType.WEAPON: {
+      //Weapon object created.
+      Weapon newWeapon = new Weapon();
+      //Future of type string parsed into a map.
+      Map<String, dynamic> jsonResponses = jsonDecode(jsonString);
+      //NewClass takes values from matching entry in jsonResponses map.
+      newWeapon = Weapon.fromJson(jsonResponses[indexName]);
+      newWeapon.name = indexName;
+      //List of strings takes values from newSpell and then returned.
+      indexDetails = newWeapon.weaponDetails(newWeapon);
+      return indexDetails;
+    }
 
   //Index type error handling.
-  else {
-    indexDetails.add("Something went wrong! Index not set correctly!");
-    return indexDetails;
+    default: {
+      indexDetails.add("Something went wrong! Index not set correctly!");
+      return indexDetails;
+    }
   }
-
 }
 
 //This method creates a string list of all entries.
@@ -86,7 +88,6 @@ Future<List<String>> fetchEntries(String jsonLocation) async {
   return permanentList;
 }
 
-
 //This method returns a list of strings that contain the user's query.
 Future<List<String>> fetchSearched(String searchQuery, indexType indexType1) async {
   //Parameter converted to lower case in new variable.
@@ -97,24 +98,34 @@ Future<List<String>> fetchSearched(String searchQuery, indexType indexType1) asy
   String jsonLocation = "";
 
   //Index type used to determine index type.
-  if (indexType1 == indexType.CLASS) {
-    //Appropriate file chosen.
-    jsonLocation = "data/sfrpg_classes.json";
-  }
+  switch(indexType1) {
+    case indexType.CLASS: {
+      //Appropriate file chosen.
+      jsonLocation = "data/sfrpg_classes.json";
+      break;
+    }
 
-  if (indexType1 == indexType.RACE) {
-    //Appropriate file chosen.
-    jsonLocation = "data/sfrpg_races.json";
-  }
+    case indexType.RACE: {
+      //Appropriate file chosen.
+      jsonLocation = "data/sfrpg_races.json";
+      break;
+    }
 
-  if (indexType1 == indexType.SPELL) {
-    //Appropriate file chosen.
-    jsonLocation = "data/sfrpg_spells.json";
-  }
+    case indexType.SPELL: {
+      //Appropriate file chosen.
+      jsonLocation = "data/sfrpg_spells.json";
+      break;
+    }
 
-  if (indexType1 == indexType.WEAPON) {
-    //Appropriate file chosen.
-    jsonLocation = "data/sfrpg_weapons.json";
+    case indexType.WEAPON: {
+      //Appropriate file chosen.
+      jsonLocation = "data/sfrpg_weapons.json";
+      break;
+    }
+
+    default: {
+      break;
+    }
   }
 
   //List of strings populated with keys.
