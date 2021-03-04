@@ -1,94 +1,74 @@
+import '../enums.dart';
+import '../jsonUtil.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_search_bar/flutter_search_bar.dart';
 
-import '../objects/weapon.dart';
-import 'dart:convert';
-import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-
+//Stateful WeaponList class.
 class WeaponList extends StatefulWidget {
   @override
   WeaponListState createState() => WeaponListState();
 }
 
+//State of stateful WeaponList class.
 class WeaponListState extends State<WeaponList> {
+  //Scaffold key used for SearchBar declared.
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+  //Store location of JSON data.
+  final String jsonLocation = "data/sfrpg_weapons.json";
+  //Index type identifies which index is being processed.
+  indexType weaponEnum = indexType.WEAPON;
 
-  List<String> listOfWeaponNames = new List();
+  //List of strings for different fetch methods initialised.
   List<String> weaponDetails = new List();
 
-  Future<String> _loadFromWeaponJson() async {
-    return await rootBundle.loadString("data/sfrpg_weapons.json");
-  }
-
-  Future<List<String>> fetchWeapon() async {
-    String jsonString = await _loadFromWeaponJson();
-    Map<String, dynamic> jsonResponses = jsonDecode(jsonString);
-    listOfWeaponNames = jsonResponses.keys.toList();
-    return listOfWeaponNames;
-  }
-
-  Future<List<String>> fetchAWeapon(String weaponName) async {
-    String jsonString = await _loadFromWeaponJson();
-    Weapon newWeapon = new Weapon();
-    Map<String, dynamic> jsonResponses = jsonDecode(jsonString);
-    newWeapon = Weapon.fromJson(jsonResponses[weaponName]);
-    newWeapon.name = weaponName;
-    weaponDetails = newWeapon.weaponDetails(newWeapon);
-    return weaponDetails;
-  }
-
-  Future<List<String>> fetchSearched(String searchQuery) async {
-    List<String> searchValues = new List();
-    searchQuery.toLowerCase();
-    List<String> tempList = listOfWeaponNames;
-    tempList = tempList.map((e) => e.toLowerCase()).toList();
-    for (var i = 0; i < listOfWeaponNames.length; i++) {
-      if (tempList[i].contains(searchQuery)) {
-        searchValues.add(listOfWeaponNames[i]);
-        print(searchValues[0]);
-      }
-    }
-    if (searchValues.isEmpty){
-      searchValues.add("No results found!");
-    }
-    return searchValues;
-  }
-
+  //Weapon detail display widget, with a weapon as a parameter.
   Widget selectedWeapon(BuildContext context, String weapon) {
     return Scaffold(
         appBar: AppBar(
           title: Text(weapon),
         ),
         body: FutureBuilder(
-            future: fetchAWeapon(weapon),
+          //Future builder which calls the fetchAnIndex method with parameter.
+            future: fetchAnEntry(jsonLocation, weaponEnum, weapon, weaponDetails),
             builder: (context, snapshot) {
+              //Some indication of activity for the user when delayed.
               if (snapshot.connectionState == ConnectionState.waiting) {
                 return Center(child: CircularProgressIndicator());
-              } else {
+              }
+              //Weapon detail display widget, for the body of selectedWeapon.
+              else {
                 return createWeaponSelectedView(context, snapshot);
               }
             }));
   }
 
+  //Search result display widget, with query as a parameter.
   Widget searchedWeapon(BuildContext context, String searchQuery) {
     return Scaffold(
         appBar: AppBar(
           title: Text(searchQuery),
         ),
         body: FutureBuilder(
-            future: fetchSearched(searchQuery),
+          //Future builder which calls the fetchSearched method with parameter.
+            future: fetchSearched(searchQuery, weaponEnum),
             builder: (context, snapshot) {
+              //Some indication of activity for the user when delayed.
               if (snapshot.connectionState == ConnectionState.waiting) {
                 return Center(child: CircularProgressIndicator());
-              } else {
+              }
+              //Weapon search result displayed in body of searchedWeapon.
+              else {
                 return createWeaponListView(context, snapshot);
               }
             }));
   }
 
+  //Weapon detail display widget, for the body of selectedWeapon.
   Widget createWeaponSelectedView(BuildContext context, AsyncSnapshot snapshot) {
+    //Snapshot data converted to a list of strings.
     List<String> values1 = snapshot.data;
     return new ListView.separated(
+      //Items counted, and a list of tiles created with snapshot data.
         itemCount: values1.length,
         itemBuilder: (BuildContext context, int index) {
           return new Column(
@@ -99,20 +79,25 @@ class WeaponListState extends State<WeaponList> {
             ],
           );
         },
+        //Create some separation between tiles.
         separatorBuilder: (context, index) {
           return Divider();
         });
   }
 
+  //Weapon search result displayed in body of searchedWeapon.
   Widget createWeaponListView(BuildContext context, AsyncSnapshot snapshot) {
+    //Snapshot data converted to a list of strings.
     List<String> values = snapshot.data;
     return new ListView.builder(
+      //Items counted, and a list of tiles created with snapshot data.
       itemCount: values.length,
       itemBuilder: (BuildContext context, int index) {
         return new Column(
           children: <Widget>[
             new ListTile(
               title: new Text(values[index]),
+              //When tapped, tile will load weapon details.
               onTap: () {
                 Navigator.push(
                     context,
@@ -121,6 +106,7 @@ class WeaponListState extends State<WeaponList> {
                             selectedWeapon(context, values[index])));
               },
             ),
+            //Create some separation between tiles.
             new Divider(
               height: 2.0,
             ),
@@ -130,17 +116,18 @@ class WeaponListState extends State<WeaponList> {
     );
   }
 
+  //SearchBar initialised.
   SearchBar searchBar;
 
+  //Build the AppBar with the search functionality.
   AppBar buildAppBar(BuildContext context) {
     return new AppBar(
         title: new Text('Weapons'),
         actions: [searchBar.getSearchAction(context)]);
   }
 
+  //When a search query is submitted, this method handles the input.
   onSubmitted(String value) {
-    /*setState(() => _scaffoldKey.currentState
-        .showSnackBar(new SnackBar(content: new Text('You wrote $value!'))));*/
     Navigator.push(
         context,
         MaterialPageRoute(
@@ -148,6 +135,7 @@ class WeaponListState extends State<WeaponList> {
                 searchedWeapon(context, value)));
   }
 
+  //SearchBar parameters set.
   WeaponListState() {
     searchBar = new SearchBar(
         inBar: false,
@@ -162,17 +150,24 @@ class WeaponListState extends State<WeaponList> {
         });
   }
 
+  //Build method for weaponListState.
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        //Custom AppBar used.
         appBar: searchBar.build(context),
+        //Private key used.
         key: _scaffoldKey,
         body: FutureBuilder(
-            future: fetchWeapon(),
+          //Future builder which calls the fetchWeapons method.
+            future: fetchEntries(jsonLocation),
             builder: (context, AsyncSnapshot snapshot) {
+              //Some indication of activity for the user when delayed.
               if (!snapshot.hasData) {
                 return Center(child: CircularProgressIndicator());
-              } else {
+              }
+              //Weapon list displayed in body of build method.
+              else {
                 return createWeaponListView(context, snapshot);
               }
             }));

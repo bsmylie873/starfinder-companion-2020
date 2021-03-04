@@ -1,95 +1,74 @@
+import '../enums.dart';
+import '../jsonUtil.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_search_bar/flutter_search_bar.dart';
 
-import '../objects/spell.dart';
-import 'dart:convert';
-import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-
+//Stateful SpellList class.
 class SpellList extends StatefulWidget {
   @override
   SpellListState createState() => SpellListState();
 }
 
+//State of stateful SpellList class.
 class SpellListState extends State<SpellList> {
+  //Scaffold key used for SearchBar declared.
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
-  String searchSpell = "";
+  //Store location of JSON data.
+  final String jsonLocation = "data/sfrpg_spells.json";
+  //Index type identifies which index is being processed.
+  indexType spellEnum = indexType.SPELL;
 
-  List<String> listOfSpellNames = new List();
+  //List of strings for fetch spell details.
   List<String> spellDetails = new List();
 
-  Future<String> _loadFromSpellJson() async {
-    return await rootBundle.loadString("data/sfrpg_spells.json");
-  }
-
-  Future<List<String>> fetchSpells() async {
-    String jsonString = await _loadFromSpellJson();
-    Map<String, dynamic> jsonResponses = jsonDecode(jsonString);
-    listOfSpellNames = jsonResponses.keys.toList();
-    return listOfSpellNames;
-  }
-
-  Future<List<String>> fetchASpell(String spellName) async {
-    String jsonString = await _loadFromSpellJson();
-    Spell newSpell = new Spell();
-    Map<String, dynamic> jsonResponses = jsonDecode(jsonString);
-    newSpell = Spell.fromJson(jsonResponses[spellName]);
-    newSpell.name = spellName;
-    spellDetails = newSpell.spellDetails(newSpell);
-    return spellDetails;
-  }
-
-  Future<List<String>> fetchSearched(String searchQuery) async {
-    List<String> searchValues = new List();
-    searchQuery.toLowerCase();
-    List<String> tempList = listOfSpellNames;
-    tempList = tempList.map((e) => e.toLowerCase()).toList();
-    for (var i = 0; i < listOfSpellNames.length; i++) {
-      if (tempList[i].contains(searchQuery)) {
-        searchValues.add(listOfSpellNames[i]);
-        print(searchValues[0]);
-      }
-    }
-    if (searchValues.isEmpty){
-      searchValues.add("No results found!");
-    }
-    return searchValues;
-  }
-
+  //Spell detail display widget, with a spell as a parameter.
   Widget selectedSpell(BuildContext context, String spell) {
     return Scaffold(
         appBar: AppBar(
           title: Text(spell),
         ),
         body: FutureBuilder(
-            future: fetchASpell(spell),
+          //Future builder which calls the fetchASpell method with parameter.
+            future: fetchAnEntry(jsonLocation, spellEnum, spell, spellDetails),
             builder: (context, snapshot) {
+              //Some indication of activity for the user when delayed.
               if (snapshot.connectionState == ConnectionState.waiting) {
                 return Center(child: CircularProgressIndicator());
-              } else {
+              }
+              //Spell detail display widget, for the body of selectedSpell.
+              else {
                 return createSpellSelectedView(context, snapshot);
               }
             }));
   }
 
+  //Search result display widget, with query as a parameter.
   Widget searchedSpell(BuildContext context, String searchQuery) {
     return Scaffold(
         appBar: AppBar(
           title: Text(searchQuery),
         ),
         body: FutureBuilder(
-            future: fetchSearched(searchQuery),
+          //Future builder which calls the fetchSearched method with parameter.
+            future: fetchSearched(searchQuery, spellEnum),
             builder: (context, snapshot) {
+              //Some indication of activity for the user when delayed.
               if (snapshot.connectionState == ConnectionState.waiting) {
                 return Center(child: CircularProgressIndicator());
-              } else {
+              }
+              //Spell search result displayed in body of searchedSpell.
+              else {
                 return createSpellListView(context, snapshot);
               }
             }));
   }
 
+  //Spell detail display widget, for the body of selectedSpell.
   Widget createSpellSelectedView(BuildContext context, AsyncSnapshot snapshot) {
+    //Snapshot data converted to a list of strings.
     List<String> values1 = snapshot.data;
     return new ListView.separated(
+      //Items counted, and a list of tiles created with snapshot data.
         itemCount: values1.length,
         itemBuilder: (BuildContext context, int index) {
           return new Column(
@@ -100,20 +79,25 @@ class SpellListState extends State<SpellList> {
             ],
           );
         },
+        //Create some separation between tiles.
         separatorBuilder: (context, index) {
           return Divider();
         });
   }
 
+  //Spell search result displayed in body of searchedSpell.
   Widget createSpellListView(BuildContext context, AsyncSnapshot snapshot) {
+    //Snapshot data converted to a list of strings.
     List<String> values = snapshot.data;
     return new ListView.builder(
+      //Items counted, and a list of tiles created with snapshot data.
       itemCount: values.length,
       itemBuilder: (BuildContext context, int index) {
         return new Column(
           children: <Widget>[
             new ListTile(
               title: new Text(values[index]),
+              //When tapped, tile will load spell details.
               onTap: () {
                 Navigator.push(
                     context,
@@ -122,6 +106,7 @@ class SpellListState extends State<SpellList> {
                             selectedSpell(context, values[index])));
               },
             ),
+            //Create some separation between tiles.
             new Divider(
               height: 2.0,
             ),
@@ -131,17 +116,18 @@ class SpellListState extends State<SpellList> {
     );
   }
 
+  //SearchBar initialised.
   SearchBar searchBar;
 
+  //Build the AppBar with the search functionality.
   AppBar buildAppBar(BuildContext context) {
     return new AppBar(
         title: new Text('Spells'),
         actions: [searchBar.getSearchAction(context)]);
   }
 
+  //When a search query is submitted, this method handles the input.
   onSubmitted(String value) {
-    /*setState(() => _scaffoldKey.currentState
-        .showSnackBar(new SnackBar(content: new Text('You wrote $value!'))));*/
     Navigator.push(
         context,
         MaterialPageRoute(
@@ -149,6 +135,7 @@ class SpellListState extends State<SpellList> {
                 searchedSpell(context, value)));
   }
 
+  //SearchBar parameters set.
   SpellListState() {
     searchBar = new SearchBar(
         inBar: false,
@@ -163,17 +150,24 @@ class SpellListState extends State<SpellList> {
         });
   }
 
+  //Build method for spellListState.
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        //Custom AppBar used.
         appBar: searchBar.build(context),
+        //Private key used.
         key: _scaffoldKey,
         body: FutureBuilder(
-            future: fetchSpells(),
+          //Future builder which calls the fetchSpells method.
+            future: fetchEntries(jsonLocation),
             builder: (context, AsyncSnapshot snapshot) {
+              //Some indication of activity for the user when delayed.
               if (!snapshot.hasData) {
                 return Center(child: CircularProgressIndicator());
-              } else {
+              }
+              //Spell list displayed in body of build method.
+              else {
                 return createSpellListView(context, snapshot);
               }
             }));

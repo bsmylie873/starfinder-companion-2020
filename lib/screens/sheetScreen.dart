@@ -1,12 +1,12 @@
+import 'dart:convert';
+import 'dart:io';
+import 'mainBoxes.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:testflutter/screens/mainBoxes.dart';
-import 'package:webview_flutter/webview_flutter.dart';
-import 'dart:convert';
-import 'package:path_provider/path_provider.dart';
-import 'dart:io';
 import 'package:path/path.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:webview_flutter/webview_flutter.dart';
 
 //Flexible class, displays and allows interaction with
 // the Character Sheet and Ship Sheet HTML files using
@@ -112,9 +112,9 @@ class PlayerSheetPage extends StatelessWidget {
   Future<String> get _localPath async {
     Directory appDocDirectory = await getApplicationDocumentsDirectory();
     Directory directory =
-        await new Directory(appDocDirectory.path + '/' + 'CharacterSheets')
-            .create(recursive: true)
-            .then((Directory directory) {
+    await new Directory(appDocDirectory.path + '/' + 'CharacterSheets')
+        .create(recursive: true)
+        .then((Directory directory) {
       print('Path of New Dir: ' + directory.path);
       return directory;
     });
@@ -179,9 +179,9 @@ class PlayerSheetPage extends StatelessWidget {
   Future<String> get _localShipPath async {
     Directory appDocDirectory = await getApplicationDocumentsDirectory();
     Directory directory =
-        await new Directory(appDocDirectory.path + '/' + 'ShipSheets')
-            .create(recursive: true)
-            .then((Directory directory) {
+    await new Directory(appDocDirectory.path + '/' + 'ShipSheets')
+        .create(recursive: true)
+        .then((Directory directory) {
       print('Path of New Dir: ' + directory.path);
       return directory;
     });
@@ -199,7 +199,7 @@ class PlayerSheetPage extends StatelessWidget {
   Future<void> loadHtmlFromAssets(String filename, controller) async {
     String fileText = await rootBundle.loadString(filename);
     controller.loadUrl(Uri.dataFromString(fileText,
-            mimeType: 'text/html', encoding: Encoding.getByName('utf-8'))
+        mimeType: 'text/html', encoding: Encoding.getByName('utf-8'))
         .toString());
   }
 }
@@ -243,7 +243,7 @@ class CharSheetFromDirectory extends StatelessWidget {
   Future<void> loadHtmlFromAssets(String fileName, controller) async {
     String fileText = await rootBundle.loadString(fileName);
     controller.loadUrl(Uri.dataFromString(fileText,
-            mimeType: 'text/html', encoding: Encoding.getByName('utf-8'))
+        mimeType: 'text/html', encoding: Encoding.getByName('utf-8'))
         .toString());
   }
 
@@ -261,9 +261,9 @@ class CharSheetFromDirectory extends StatelessWidget {
   Future<String> get _localPath async {
     Directory appDocDirectory = await getApplicationDocumentsDirectory();
     Directory directory =
-        await new Directory(appDocDirectory.path + '/' + 'CharacterSheets')
-            .create(recursive: true)
-            .then((Directory directory) {
+    await new Directory(appDocDirectory.path + '/' + 'CharacterSheets')
+        .create(recursive: true)
+        .then((Directory directory) {
       print('Path of New Dir: ' + directory.path);
       return directory;
     });
@@ -327,9 +327,9 @@ class CharSheetFromDirectory extends StatelessWidget {
   Future<String> get _localShipPath async {
     Directory appDocDirectory = await getApplicationDocumentsDirectory();
     Directory directory =
-        await new Directory(appDocDirectory.path + '/' + 'ShipSheets')
-            .create(recursive: true)
-            .then((Directory directory) {
+    await new Directory(appDocDirectory.path + '/' + 'ShipSheets')
+        .create(recursive: true)
+        .then((Directory directory) {
       print('Path of New Dir: ' + directory.path);
       return directory;
     });
@@ -380,9 +380,9 @@ class _FileListViewState extends State<FileListView> {
   Future<String> get _localPath async {
     Directory appDocDirectory = await getApplicationDocumentsDirectory();
     Directory directory =
-        await new Directory(appDocDirectory.path + '/' + 'CharacterSheets')
-            .create(recursive: true)
-            .then((Directory directory) {
+    await new Directory(appDocDirectory.path + '/' + 'CharacterSheets')
+        .create(recursive: true)
+        .then((Directory directory) {
       print('Path of New Dir: ' + directory.path);
       return directory;
     });
@@ -392,9 +392,9 @@ class _FileListViewState extends State<FileListView> {
   Future<String> get _localShipPath async {
     Directory appDocDirectory = await getApplicationDocumentsDirectory();
     Directory directory =
-        await new Directory(appDocDirectory.path + '/' + 'ShipSheets')
-            .create(recursive: true)
-            .then((Directory directory) {
+    await new Directory(appDocDirectory.path + '/' + 'ShipSheets')
+        .create(recursive: true)
+        .then((Directory directory) {
       print('Path of New Dir: ' + directory.path);
       return directory;
     });
@@ -483,13 +483,13 @@ class _CharacterSheetDirectoryState extends State<CharacterSheetDirectory> {
     }
     else{
       return Scaffold(
-        appBar: AppBar(
-          title: Text("No saved files found")
-        ),
-        body: Center(
-          child: Text("It seems there are no files saved here, you can find the"
-              "Character and Ship sheets under the Player Portal to get started"),
-        )
+          appBar: AppBar(
+              title: Text("No saved files found")
+          ),
+          body: Center(
+            child: Text("It seems there are no files saved here, you can find the"
+                "Character and Ship sheets under the Player Portal to get started"),
+          )
       );
     }
   }
@@ -582,15 +582,15 @@ class _LoadSheetPageState extends State<LoadSheetPage> {
       );
     }
     else{
-    return Scaffold(
-    appBar: AppBar(
-    title: Text("No saved files found")
-    ),
-    body: Center(
-    child: Text("It seems there are no files saved here, you can find the"
-    "Character and Ship sheets under the Player Portal to get started"),
-    )
-    );
+      return Scaffold(
+          appBar: AppBar(
+              title: Text("No saved files found")
+          ),
+          body: Center(
+            child: Text("It seems there are no files saved here, you can find the"
+                "Character and Ship sheets under the Player Portal to get started"),
+          )
+      );
     }
   }
 
@@ -634,10 +634,9 @@ class _LoadSheetPageState extends State<LoadSheetPage> {
 class ChooseSheetDirectory extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
     return Scaffold(
         appBar:
-            AppBar(title: Text("Choose which directory to read sheets from")),
+        AppBar(title: Text("Choose which directory to read sheets from")),
         body: GridView.count(
           primary: false,
           padding: const EdgeInsets.all(20),
