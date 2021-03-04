@@ -30,6 +30,9 @@ class ExpandedPlayerBox extends StatelessWidget {
         case 4:
           children.add(new PlayerBox4());
           break;
+        case 5:
+          children.add(new PlayerBox5());
+          break;
       }
     }
 

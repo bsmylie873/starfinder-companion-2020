@@ -7,7 +7,7 @@ import 'skillScreen.dart';
 
 //These values dictate the number of buttons to be displayed and the height of
 //each button.
-const double pConstNumOfButtons = 5;
+const double pConstNumOfButtons = 6;
 const double constContainerHeight = 1;
 
 //Box 1.
@@ -95,7 +95,7 @@ class PlayerBox3 extends StatelessWidget {
   }
 }
 
-//Box 5.
+//Box 5
 class PlayerBox4 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -110,7 +110,28 @@ class PlayerBox4 extends StatelessWidget {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                    builder: (context) => CharacterSheetAttempt()),
+                    builder: (context) => PlayerSheetPage(path: 'data/characterSheet.html')),
+              );
+            }));
+  }
+}
+
+//Box 6
+class PlayerBox5 extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+        margin: EdgeInsets.only(top: 50.0, bottom: 50.0),
+        //color: Colors.amber,
+        child: ListTile(
+            leading: Icon(Icons.contact_page_sharp),
+            title: Text('Ship Sheet'),
+            //contentPadding: EdgeInsets.only(bottom: 50.0),
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => PlayerSheetPage(path: 'data/shipSheet.html')),
               );
             }));
   }

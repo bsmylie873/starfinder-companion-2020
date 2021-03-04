@@ -65,7 +65,7 @@ class BlueBox2 extends StatelessWidget {
             onTap: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => FileListView()),
+                MaterialPageRoute(builder: (context) => ChooseSheetDirectory()),
               );
             }
             )
@@ -91,5 +91,50 @@ class BlueBox3 extends StatelessWidget {
                 MaterialPageRoute(builder: (context) => RefScreen()),
               );
             }));
+  }
+}
+
+class SheetBox1 extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+
+    return Card(
+        margin: EdgeInsets.only(top: 50.0, bottom: 50.0),
+        //color: Colors.amber,
+        child: ListTile(
+            leading: Icon(Icons.star),
+            title: Text('Character Sheet Portal'),
+            //contentPadding: EdgeInsets.only(bottom: 50.0),
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => FileListView(directoryPath: 'data/characterSheet.html',)),
+              );
+            }
+        )
+    );
+  }
+}
+
+
+class SheetBox2 extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+
+    return Card(
+        margin: EdgeInsets.only(top: 50.0, bottom: 50.0),
+        //color: Colors.amber,
+        child: ListTile(
+            leading: Icon(Icons.star),
+            title: Text('Ship Sheet Portal'),
+            //contentPadding: EdgeInsets.only(bottom: 50.0),
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => FileListView(directoryPath: 'data/shipSheet.html',)),
+              );
+            }
+        )
+    );
   }
 }
