@@ -1,3 +1,4 @@
+import '../enums.dart';
 import '../jsonUtil.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_search_bar/flutter_search_bar.dart';
@@ -15,7 +16,7 @@ class WeaponListState extends State<WeaponList> {
   //Store location of JSON data.
   final String jsonLocation = "data/sfrpg_weapons.json";
   //Index type identifies which index is being processed.
-  final String indexType = "Weapon";
+  indexType weaponEnum = indexType.WEAPON;
 
   //List of strings for different fetch methods initialised.
   List<String> weaponDetails = new List();
@@ -28,7 +29,7 @@ class WeaponListState extends State<WeaponList> {
         ),
         body: FutureBuilder(
           //Future builder which calls the fetchAnIndex method with parameter.
-            future: fetchAnIndex(jsonLocation, indexType, weapon, weaponDetails),
+            future: fetchAnEntry(jsonLocation, weaponEnum, weapon, weaponDetails),
             builder: (context, snapshot) {
               //Some indication of activity for the user when delayed.
               if (snapshot.connectionState == ConnectionState.waiting) {
@@ -49,7 +50,7 @@ class WeaponListState extends State<WeaponList> {
         ),
         body: FutureBuilder(
           //Future builder which calls the fetchSearched method with parameter.
-            future: fetchSearched(searchQuery, indexType),
+            future: fetchSearched(searchQuery, weaponEnum),
             builder: (context, snapshot) {
               //Some indication of activity for the user when delayed.
               if (snapshot.connectionState == ConnectionState.waiting) {

@@ -1,3 +1,4 @@
+import '../enums.dart';
 import '../jsonUtil.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_search_bar/flutter_search_bar.dart';
@@ -15,7 +16,7 @@ class SpellListState extends State<SpellList> {
   //Store location of JSON data.
   final String jsonLocation = "data/sfrpg_spells.json";
   //Index type identifies which index is being processed.
-  final String indexType = "Spell";
+  indexType spellEnum = indexType.SPELL;
 
   //List of strings for fetch spell details.
   List<String> spellDetails = new List();
@@ -28,7 +29,7 @@ class SpellListState extends State<SpellList> {
         ),
         body: FutureBuilder(
           //Future builder which calls the fetchASpell method with parameter.
-            future: fetchAnIndex(jsonLocation, indexType, spell, spellDetails),
+            future: fetchAnEntry(jsonLocation, spellEnum, spell, spellDetails),
             builder: (context, snapshot) {
               //Some indication of activity for the user when delayed.
               if (snapshot.connectionState == ConnectionState.waiting) {
@@ -49,7 +50,7 @@ class SpellListState extends State<SpellList> {
         ),
         body: FutureBuilder(
           //Future builder which calls the fetchSearched method with parameter.
-            future: fetchSearched(searchQuery, indexType),
+            future: fetchSearched(searchQuery, spellEnum),
             builder: (context, snapshot) {
               //Some indication of activity for the user when delayed.
               if (snapshot.connectionState == ConnectionState.waiting) {
