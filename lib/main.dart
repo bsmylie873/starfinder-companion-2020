@@ -7,11 +7,13 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
 import 'screens/licenseScreen.dart';
 import 'screens/mainBoxes.dart';
+import 'screens/settingsScreen.dart';
 import 'themeManager.dart';
 
 //These constants determine how many buttons are displayed, and their height.
 const double constNumOfButtons = 4;
 const double constContainerHeight = 1;
+bool permsGranted = false;
 
 //Main thread, which runs the MyApp class and creates the notifier for the theme
 //manager functionality.
@@ -28,6 +30,7 @@ void main() {
 class MyApp extends StatefulWidget{
   @override
   MyAppState createState() => MyAppState();
+
 }
 
 //The state of the main screen is handled here.
@@ -60,12 +63,13 @@ class MyAppState extends State<MyApp> {
 void requestPermissions() async {
   var status = await Permission.storage.status;
   if (status.isUndetermined) {
-    // You can request multiple permissions at once.
+    // Can request multiple permissions at once.
     Map<Permission, PermissionStatus> statuses = await [
       Permission.storage,
     ].request();
     print(statuses[Permission.storage]); // it should print PermissionStatus.granted
   }
+
 }
 
 //Main screen is built.
@@ -89,7 +93,7 @@ class MainScreen extends StatelessWidget {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => SettingsRoute()),
+                                  builder: (context) => SettingsScreen()),
                             );
                           },
                           tooltip: MaterialLocalizations
@@ -156,31 +160,6 @@ class ExpandedBlueBox extends StatelessWidget {
       children: children,
       shrinkWrap: true,
       physics: NeverScrollableScrollPhysics(),
-    );
-  }
-}
-
-//Unimplemented settings screen which would hold settings.
-class SettingsRoute extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text("Settings (To be implemented!)"),
-      ),
-      body: Center(
-
-        child: ListTile(
-          onTap: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (context) => LicenseScreen()),
-            );
-          },
-          title: Text('License'),
-        ),
-      ),
     );
   }
 }

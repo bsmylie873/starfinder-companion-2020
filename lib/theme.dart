@@ -21,7 +21,7 @@ import 'package:flutter/material.dart';
     accentColor: Color( 0xff0c8ef3 ),
     accentColorBrightness: Brightness.dark,
     canvasColor: Color( 0xfffafafa ),
-    scaffoldBackgroundColor: Color( 0xfffafafa ),
+    scaffoldBackgroundColor: Color( 0xffbcd5fa ),
     bottomAppBarColor: Color( 0xffffffff ),
     cardColor: Color( 0xffffffff ),
     dividerColor: Color( 0x1f000000 ),
@@ -52,7 +52,7 @@ import 'package:flutter/material.dart';
     )
  ,
       alignedDropdown: false ,
-      buttonColor: Color( 0xffe0e0e0 ),
+      buttonColor: Color( 0xff9ed2fa ),
       disabledColor: Color( 0x61000000 ),
       highlightColor: Color( 0x29000000 ),
       splashColor: Color( 0x1f000000 ),

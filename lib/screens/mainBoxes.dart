@@ -102,7 +102,7 @@ class SheetBox1 extends StatelessWidget {
         margin: EdgeInsets.only(top: 50.0, bottom: 50.0),
         //color: Colors.amber,
         child: ListTile(
-            leading: Icon(Icons.star),
+            leading: Icon(Icons.person),
             title: Text('Character Sheet Portal'),
             //contentPadding: EdgeInsets.only(bottom: 50.0),
             onTap: () {
