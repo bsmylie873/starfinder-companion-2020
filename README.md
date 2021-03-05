@@ -1,6 +1,6 @@
 # Starfinder Companion 2020
 
-A new Flutter application.
+Starfinder Companion 2020
 
 ## Getting Started
 

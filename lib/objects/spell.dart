@@ -1,12 +1,8 @@
-import 'dart:async';
-import 'dart:convert';
+import 'index.dart';
 
-import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-
-class Spell {
-  String name;
+//This object is used in the Spell index.
+class Spell extends Index{
+  //These parameters match the sfrpg_spells json fields.
   final String castingTime;
   final String classes;
   final String spellListDescription;
@@ -22,20 +18,14 @@ class Spell {
   final String spellResistance;
   final String targetsEffectArea;
 
-  Future<String> _loadFromAsset() async {
-    return await rootBundle.loadString("data/sfrpg_spells.json");
-  }
-
-  Future parseJson() async {
-    String jsonString = await _loadFromAsset();
-    final jsonResponse = jsonDecode(jsonString);
-    print(jsonString);
-    print(jsonResponse);
-  }
-
+  //This list parses the Spell index data in list strings.
   List<String> spellDetails(Spell spellToParse) {
+    //This populates a list of strings for each Spell.
     List<String> spellProperties = new List();
-    //spellProperties.add("Name: " + spellToParse.name);
+    //Strings use != null to skip null values. This is due to the flexible
+    //approach taken in the sfrpg_spell json file, having all fields as strings
+    //and not including certain fields. In the future, this data set would be
+    //improved with a more rigid structure with appropriate variable types.
     if (spellToParse.castingTime != null) {
       spellProperties.add("Casting Time: " + spellToParse.castingTime);
     }
@@ -78,17 +68,20 @@ class Spell {
     if (spellToParse.targetsEffectArea != null) {
       spellProperties.add("Target Effect Area: " + spellToParse.targetsEffectArea);
     }
+    //This returns the newly made list string to the list.
     return spellProperties;
   }
 
-
-  Spell({this.name, this.castingTime, this.classes, this.spellListDescription, this.descriptor,
+  //This is the constructor for the Spell object.
+  Spell({name, this.castingTime, this.classes, this.spellListDescription, this.descriptor,
     this.duration, this.level, this.description, this.range, this.savingThrow, this.school,
-    this.source, this.pageNo, this.spellResistance, this.targetsEffectArea});
+    this.source, this.pageNo, this.spellResistance, this.targetsEffectArea}): super(name: name);
 
+  //This parses the json into the Spell object.
   factory Spell.fromJson(Map<String, dynamic> json) {
+    final index = Index.fromJson(json);
     return Spell(
-      name: json['name'],
+      name: index.name,
       castingTime: json['CastingTime'],
       classes: json['Classes'],
       spellListDescription: json['SpellListDescription'],

@@ -1,26 +1,29 @@
-import 'package:flutter/material.dart';
-import 'package:testflutter/table.dart';
 import 'actionScreen.dart';
 import 'bestiaryScreen.dart';
 import 'deityScreen.dart';
 import 'languageScreen.dart';
+import 'package:flutter/material.dart';
 import 'spellScreen.dart';
 import 'vehicleScreen.dart';
-import 'WidgetScreens.dart';
+import 'widgetScreens.dart';
+
+//These values dictate the number of buttons to be displayed and the height of
+//each button.
 const double refConstNumOfButtons = 7;
 const double refConstContainerHeight = 1;
 
+//Box 1
 class RefBox extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-
+    //Uses card design.
     return Card(
         margin: EdgeInsets.only(top: 50.0, bottom: 50.0),
-        //color: Colors.amber,
         child: ListTile(
+          //Icon relevant to button destination.
             leading: Icon(Icons.hail),
             title: Text('Actions'),
-            //contentPadding: EdgeInsets.only(bottom: 50.0),
+            //When tapped, tile will load the new screen index.
             onTap: () {
               Navigator.push(
                 context,
@@ -30,17 +33,18 @@ class RefBox extends StatelessWidget {
   }
 }
 
+//Box 2
 class RefBox1 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-
+    //Uses card design.
     return Card(
         margin: EdgeInsets.only(top: 50.0, bottom: 50.0),
-        //color: Colors.amber,
         child: ListTile(
+          //Icon relevant to button destination.
             leading: Icon(Icons.pets),
             title: Text('Bestiary'),
-            //contentPadding: EdgeInsets.only(bottom: 50.0),
+            //When tapped, tile will load the new screen index.
             onTap: () {
               Navigator.push(
                 context,
@@ -50,16 +54,18 @@ class RefBox1 extends StatelessWidget {
   }
 }
 
+//Box 3
 class RefBox2 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    //Uses card design.
     return Card(
         margin: EdgeInsets.only(top: 50.0, bottom: 50.0),
-        //color: Colors.amber,
         child: ListTile(
+          //Icon relevant to button destination.
             leading: Icon(Icons.self_improvement),
             title: Text('Deities'),
-            //contentPadding: EdgeInsets.only(bottom: 50.0),
+            //When tapped, tile will load the new screen index.
             onTap: () {
               Navigator.push(
                 context,
@@ -68,16 +74,19 @@ class RefBox2 extends StatelessWidget {
             }));
   }
 }
+
+//Box 4
 class RefBox3 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    //Uses card design.
     return Card(
         margin: EdgeInsets.only(top: 50.0, bottom: 50.0),
-        //color: Colors.amber,
         child: ListTile(
+          //Icon relevant to button destination.
             leading: Icon(Icons.shield),
             title: Text('Equipment'),
-            //contentPadding: EdgeInsets.only(bottom: 50.0),
+            //When tapped, tile will load the new screen index.
             onTap: () {
               Navigator.push(
                 context,
@@ -87,16 +96,18 @@ class RefBox3 extends StatelessWidget {
   }
 }
 
+//Box 5
 class RefBox4 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    //Uses card design.
     return Card(
         margin: EdgeInsets.only(top: 50.0, bottom: 50.0),
-        //color: Colors.amber,
         child: ListTile(
+          //Icon relevant to button destination.
             leading: Icon(Icons.speaker_notes),
             title: Text('Languages'),
-            //contentPadding: EdgeInsets.only(bottom: 50.0),
+            //When tapped, tile will load the new screen index.
             onTap: () {
               Navigator.push(
                 context,
@@ -106,16 +117,18 @@ class RefBox4 extends StatelessWidget {
   }
 }
 
+//Box 6
 class RefBox5 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    //Uses card design.
     return Card(
         margin: EdgeInsets.only(top: 50.0, bottom: 50.0),
-        //color: Colors.amber,
         child: ListTile(
+          //Icon relevant to button destination.
             leading: Icon(Icons.auto_fix_high),
             title: Text('Spells'),
-            //contentPadding: EdgeInsets.only(bottom: 50.0),
+            //When tapped, tile will load the new screen index.
             onTap: () {
               Navigator.push(
                 context,
@@ -125,37 +138,23 @@ class RefBox5 extends StatelessWidget {
   }
 }
 
+//Box 7
 class RefBox6 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-
+    //Uses card design.
     return Card(
         margin: EdgeInsets.only(top: 50.0, bottom: 50.0),
-        //color: Colors.amber,
+        //Icon relevant to button destination.
         child: ListTile(
             leading: Icon(Icons.local_shipping),
             title: Text('Vehicles'),
-            //contentPadding: EdgeInsets.only(bottom: 50.0),
+            //When tapped, tile will load the new screen index.
             onTap: () {
               Navigator.push(
                 context,
                 MaterialPageRoute(builder: (context) => VehicleList()),
               );
             }));
-  }
-
-  Size screenSize(BuildContext context) {
-    return MediaQuery.of(context).size;
-  }
-
-  double buttonHeight(BuildContext context,
-      {double numOfButtons = refConstNumOfButtons, double sizeReduction = 0.0}) {
-    return (screenSize(context).height - sizeReduction) / numOfButtons;
-  }
-
-  double buttonHeightWithToolbar(BuildContext context,
-      {double numOfButtons = refConstNumOfButtons}) {
-    return buttonHeight(context,
-        numOfButtons: numOfButtons, sizeReduction: kToolbarHeight);
   }
 }
