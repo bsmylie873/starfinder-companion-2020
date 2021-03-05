@@ -369,7 +369,7 @@ class _FileListViewState extends State<FileListView> {
           future: fileDirectory(widget.directoryPath),
           builder: (context, snapshot) {
             return snapshot.hasData
-                ? new CharacterSheetDirectory(directory: snapshot.data)
+                ? new CharacterSheetDirectory(directory: snapshot.data, sheetPage: widget.directoryPath)
                 : new Center(child: CircularProgressIndicator());
           },
         ),
@@ -418,14 +418,13 @@ class _FileListViewState extends State<FileListView> {
   }
 }
 
-class CharacterSheetDirectory extends StatefulWidget {
+class CharacterSheetDirectory extends StatefulWidget{
   final Directory directory;
+  final String sheetPage;
 
-  const CharacterSheetDirectory({Key key, this.directory}) : super(key: key);
-
+  const CharacterSheetDirectory({Key key, this.directory, this.sheetPage}) : super(key: key);
   @override
-  _CharacterSheetDirectoryState createState() =>
-      _CharacterSheetDirectoryState();
+  _CharacterSheetDirectoryState createState() => _CharacterSheetDirectoryState();
 }
 
 // Reads everything in the passed directory and displays as a set of list tiles
@@ -465,7 +464,7 @@ class _CharacterSheetDirectoryState extends State<CharacterSheetDirectory> {
                           builder: (context) {
                             return CharSheetFromDirectory(
                                 filePath: file.path,
-                                pagePath: widget.directory.path);
+                                pagePath: widget.sheetPage);
                           },
                         ))
                       },

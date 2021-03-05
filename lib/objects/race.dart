@@ -1,8 +1,12 @@
-import 'index.dart';
+import 'dart:async';
+import 'dart:convert';
 
-//This object is used in the Races index.
-class Race extends Index{
-  //These parameters match the sfrpg_races json fields.
+import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+
+class Race {
+  String name;
   final String source;
   final String size;
   final String type;
@@ -43,135 +47,143 @@ class Race extends Index{
   final int abilityPicks;
   final int skillPicks;
 
-  //This list parses the Race index data in list strings.
+
+  Future<String> _loadFromAsset() async {
+    return await rootBundle.loadString("data/sfrpg_races.json");
+  }
+
+  Future parseJson() async {
+    String jsonString = await _loadFromAsset();
+    final jsonResponse = jsonDecode(jsonString);
+    print(jsonString);
+    print(jsonResponse);
+  }
+
   List<String> raceDetails(Race raceToParse) {
-    //This populates a list of strings for each Race.
     List<String> raceProperties = new List();
-    //Strings use the isNotEmpty method to skip null values.
-    if (raceToParse.source.isNotEmpty) {
+    //raceProperties.add("Name: " + spellToParse.name);
+    if (raceToParse.source != null) {
       raceProperties.add("Source: " + raceToParse.source);
     }
-    if (raceToParse.size.isNotEmpty) {
+    if (raceToParse.size != null) {
       raceProperties.add("Sizes: " + raceToParse.size);
     }
-    if (raceToParse.type.isNotEmpty) {
+    if (raceToParse.type != null) {
       raceProperties.add("Type: " + raceToParse.type);
     }
-    if (raceToParse.subtype.isNotEmpty) {
+    if (raceToParse.subtype != null) {
       raceProperties.add("Subtype: " + raceToParse.subtype);
     }
-    //Integers use the isNaN method with reverse logic to skip null values.
-    if (!raceToParse.hp.isNaN) {
+    if (raceToParse.hp != null) {
       raceProperties.add("HP: " + raceToParse.hp.toString());
     }
-    if (!raceToParse.speed.isNaN) {
+    if (raceToParse.speed != null) {
       raceProperties.add("Speed: " + raceToParse.speed.toString());
     }
-    if (raceToParse.abilityModifiers.isNotEmpty) {
+    if (raceToParse.abilityModifiers != null) {
       raceProperties.add("Ability Modifiers: " + raceToParse.abilityModifiers);
     }
-    if (raceToParse.averageHeight.isNotEmpty) {
+    if (raceToParse.averageHeight != null) {
       raceProperties.add("Average Height: " + raceToParse.averageHeight);
     }
-    if (raceToParse.averageWeight.isNotEmpty) {
+    if (raceToParse.averageWeight != null) {
       raceProperties.add("Average Weight: " + raceToParse.averageWeight);
     }
-    if (raceToParse.ageOfMaturity.isNotEmpty) {
+    if (raceToParse.ageOfMaturity != null) {
       raceProperties.add("Age Of Maturity: " + raceToParse.ageOfMaturity);
     }
-    if (raceToParse.maximumAge.isNotEmpty) {
+    if (raceToParse.maximumAge != null) {
       raceProperties.add("Maximum Age: " + raceToParse.maximumAge);
     }
-    if (!raceToParse.strMod.isNaN) {
+    if (raceToParse.strMod != null) {
       raceProperties.add("Strength Modifier: " + raceToParse.strMod.toString());
     }
-    if (!raceToParse.dexMod.isNaN) {
+    if (raceToParse.dexMod != null) {
       raceProperties.add("Dexterity Modifier: " + raceToParse.dexMod.toString());
     }
-    if (!raceToParse.conMod.isNaN) {
+    if (raceToParse.conMod != null) {
       raceProperties.add("Constitution Modifier: " + raceToParse.conMod.toString());
     }
-    if (!raceToParse.intMod.isNaN) {
+    if (raceToParse.intMod != null) {
       raceProperties.add("Intelligence Modifier: " + raceToParse.intMod.toString());
     }
-    if (!raceToParse.wisMod.isNaN) {
+    if (raceToParse.wisMod != null) {
       raceProperties.add("Wisdom Modifier: " + raceToParse.wisMod.toString());
     }
-    if (!raceToParse.chaMod.isNaN) {
+    if (raceToParse.chaMod != null) {
       raceProperties.add("Charisma Modifier: " + raceToParse.chaMod.toString());
     }
-    if (!raceToParse.reflexMod.isNaN) {
+    if (raceToParse.reflexMod != null) {
       raceProperties.add("Reflex Modifier: " + raceToParse.reflexMod.toString());
     }
-    if (!raceToParse.fortMod.isNaN) {
+    if (raceToParse.fortMod != null) {
       raceProperties.add("Fortitude Modifier: " + raceToParse.fortMod.toString());
     }
-    if (!raceToParse.willMod.isNaN) {
+    if (raceToParse.willMod != null) {
       raceProperties.add("Willpower Modifier: " + raceToParse.willMod.toString());
     }
-    if (!raceToParse.acrobaticsMod.isNaN) {
+    if (raceToParse.acrobaticsMod != null) {
       raceProperties.add("Acrobatics Modifier: " + raceToParse.acrobaticsMod.toString());
     }
-    if (!raceToParse.athleticsMod.isNaN) {
+    if (raceToParse.athleticsMod != null) {
       raceProperties.add("Athletics Modifier: " + raceToParse.acrobaticsMod.toString());
     }
-    if (!raceToParse.bluffMod.isNaN) {
+    if (raceToParse.bluffMod != null) {
       raceProperties.add("Bluff Modifier: " + raceToParse.bluffMod.toString());
     }
-    if (!raceToParse.cultureMod.isNaN) {
+    if (raceToParse.cultureMod != null) {
       raceProperties.add("Culture Modifier: " + raceToParse.cultureMod.toString());
     }
-    if (!raceToParse.diplomacyMod.isNaN) {
+    if (raceToParse.diplomacyMod != null) {
       raceProperties.add("Diplomacy Modifier: " + raceToParse.diplomacyMod.toString());
     }
-    if (!raceToParse.disguiseMod.isNaN) {
+    if (raceToParse.disguiseMod != null) {
       raceProperties.add("Disguise Modifier: " + raceToParse.disguiseMod.toString());
     }
-    if (!raceToParse.engineeringMod.isNaN) {
+    if (raceToParse.engineeringMod != null) {
       raceProperties.add("Engineering Modifier: " + raceToParse.engineeringMod.toString());
     }
-    if (!raceToParse.intimidateMod.isNaN) {
+    if (raceToParse.intimidateMod != null) {
       raceProperties.add("Intimidate Modifier: " + raceToParse.intimidateMod.toString());
     }
-    if (!raceToParse.lifeScienceMod.isNaN) {
+    if (raceToParse.lifeScienceMod != null) {
       raceProperties.add("Life Science Modifier: " + raceToParse.lifeScienceMod.toString());
     }
-    if (!raceToParse.mysticismMod.isNaN) {
+    if (raceToParse.mysticismMod != null) {
       raceProperties.add("Mysticism Modifier: " + raceToParse.mysticismMod.toString());
     }
-    if (!raceToParse.medicineMod.isNaN) {
+    if (raceToParse.medicineMod != null) {
       raceProperties.add("Medicine Modifier: " + raceToParse.medicineMod.toString());
     }
-    if (!raceToParse.perceptionMod.isNaN) {
+    if (raceToParse.perceptionMod != null) {
       raceProperties.add("Perception Modifier: " + raceToParse.perceptionMod.toString());
     }
-    if (!raceToParse.physicalScienceMod.isNaN) {
+    if (raceToParse.physicalScienceMod != null) {
       raceProperties.add("Physical Science Modifier: " + raceToParse.physicalScienceMod.toString());
     }
-    if (!raceToParse.senseMotiveMod.isNaN) {
+    if (raceToParse.senseMotiveMod != null) {
       raceProperties.add("Sense Motive Modifier: " + raceToParse.senseMotiveMod.toString());
     }
-    if (!raceToParse.stealthMod.isNaN) {
+    if (raceToParse.stealthMod != null) {
       raceProperties.add("Stealth Modifier: " + raceToParse.senseMotiveMod.toString());
     }
-    if (!raceToParse.survivalMod.isNaN) {
+    if (raceToParse.survivalMod != null) {
       raceProperties.add("Survival Modifier: " + raceToParse.survivalMod.toString());
     }
-    if (!raceToParse.acMod.isNaN) {
+    if (raceToParse.acMod != null) {
       raceProperties.add("AC Modifier: " + raceToParse.acMod.toString());
     }
-    if (!raceToParse.abilityPicks.isNaN) {
+    if (raceToParse.abilityPicks != null) {
       raceProperties.add("Ability Picks: " + raceToParse.abilityPicks.toString());
     }
-    if (raceToParse.skillPicks.isNaN) {
+    if (raceToParse.skillPicks != null) {
       raceProperties.add("Skill Picks: " + raceToParse.skillPicks.toString());
     }
-    //This returns the newly made list string to the list.
     return raceProperties;
   }
 
-  //This is the constructor for the Race object.
-  Race({name, this.source, this.size, this.type, this.subtype,
+
+  Race({this.name, this.source, this.size, this.type, this.subtype,
     this.hp, this.speed, this.abilityModifiers, this.averageHeight, this.averageWeight,
     this.ageOfMaturity, this.maximumAge, this.strMod, this.dexMod, this.conMod,
     this.intMod, this.wisMod, this.chaMod, this.reflexMod, this.fortMod, this.willMod,
@@ -179,13 +191,11 @@ class Race extends Index{
     this.disguiseMod, this.engineeringMod, this.intimidateMod, this.lifeScienceMod,
     this.mysticismMod, this.medicineMod, this.perceptionMod, this.physicalScienceMod,
     this.senseMotiveMod, this.stealthMod, this.survivalMod, this.acMod, this.abilityPicks,
-    this.skillPicks}): super(name: name);
+    this.skillPicks});
 
-  //This parses the json into the Race object.
   factory Race.fromJson(Map<String, dynamic> json) {
-    final index = Index.fromJson(json);
     return Race(
-      name: index.name,
+      name: json['Name'],
       source: json['Source'],
       size: json['Size'],
       type: json['Type'],
@@ -213,7 +223,7 @@ class Race extends Index{
       diplomacyMod: json['DiplomacyMod'],
       disguiseMod: json['DisguiseMod'],
       engineeringMod: json['EngineeringMod'],
-      intimidateMod: json['IntimidateMod'],
+      intimidateMod: json['IntimidationMod'],
       lifeScienceMod: json['LifeScienceMod'],
       mysticismMod: json['MysticismMod'],
       medicineMod: json['MedicineMod'],

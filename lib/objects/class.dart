@@ -1,8 +1,12 @@
-import 'index.dart';
+import 'dart:async';
+import 'dart:convert';
 
-//This object is used in the Classes index.
-class Class extends Index {
-  //These parameters match the sfrpg_classes json fields.
+import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+
+class Class {
+  String name;
   final String source;
   final int hp;
   final int stamina;
@@ -33,36 +37,43 @@ class Class extends Index {
   final bool stealth;
   final bool survival;
 
-  //This list parses the Class index data in list strings.
+
+  Future<String> _loadFromAsset() async {
+    return await rootBundle.loadString("data/sfrpg_classes.json");
+  }
+
+  Future parseJson() async {
+    String jsonString = await _loadFromAsset();
+    final jsonResponse = jsonDecode(jsonString);
+    print(jsonString);
+    print(jsonResponse);
+  }
+
   List<String> classDetails(Class classToParse) {
-    //This populates a list of strings for each Class.
     List<String> classProperties = new List();
-    //Strings use the isNotEmpty method to skip null values.
-    if (classToParse.source.isNotEmpty) {
+    //classProperties.add("Name: " + spellToParse.name);
+    if (classToParse.source != null) {
       classProperties.add("Source: " + classToParse.source);
     }
-    //Integers use the isNaN method with reverse logic to skip null values.
-    if (!classToParse.hp.isNaN) {
+    if (classToParse.hp != null) {
       classProperties.add("HP: " + classToParse.hp.toString());
     }
-    if (!classToParse.stamina.isNaN) {
+    if (classToParse.stamina != null) {
       classProperties.add("Stamina: " + classToParse.stamina.toString());
     }
-    if (!classToParse.levelPoints.isNaN) {
+    if (classToParse.levelPoints != null) {
       classProperties.add("Level Points: " + classToParse.levelPoints.toString());
     }
-    if (classToParse.armorProficiencies.isNotEmpty) {
+    if (classToParse.armorProficiencies != null) {
       classProperties.add("Armor Proficiencies: " + classToParse.armorProficiencies);
     }
-    if (classToParse.weaponProficiencies.isNotEmpty) {
+    if (classToParse.weaponProficiencies != null) {
       classProperties.add("Weapon Proficiencies: " + classToParse.weaponProficiencies);
     }
-    if (classToParse.keyAbility.isNotEmpty) {
+    if (classToParse.keyAbility != null) {
       classProperties.add("Key Ability: " + classToParse.keyAbility);
     }
     classProperties.add("Proficiencies:");
-    //Booleans use != null to skip null values. This doesn't comply with Dart
-    //rules and should be improved.
     if (classToParse.acrobatics != null) {
       classProperties.add("Acrobatics: " + classToParse.acrobatics.toString());
     }
@@ -129,24 +140,21 @@ class Class extends Index {
     if (classToParse.survival != null) {
       classProperties.add("Survival: " + classToParse.survival.toString());
     }
-    //This returns the newly made list string to the list.
     return classProperties;
   }
 
-  //This is the constructor for the Class object.
-  Class({name, this.source, this.hp, this.stamina, this.levelPoints,
+
+  Class({this.name, this.source, this.hp, this.stamina, this.levelPoints,
     this.armorProficiencies, this.weaponProficiencies, this.keyAbility, this.acrobatics,
     this.athletics, this.bluff, this.computers, this.culture, this.diplomacy, this.disguise,
     this.engineering, this.intimidate, this.lifeScience, this.medicine, this.mysticism,
     this.perception, this.piloting, this.physicalScience, this.professionCharisma,
     this.professionIntelligence, this.professionWisdom, this.senseMotive, this.sleightOfHand,
-    this.stealth, this.survival,}): super(name: name);
+    this.stealth, this.survival,});
 
-  //This parses the json into the Class object.
   factory Class.fromJson(Map<String, dynamic> json) {
-    final index = Index.fromJson(json);
     return Class(
-      name: index.name,
+      name: json['Name'],
       source: json['Source'],
       hp: json['Hp'],
       stamina: json['Stamina'],
