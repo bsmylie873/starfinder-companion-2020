@@ -52,7 +52,7 @@ import 'package:flutter/material.dart';
     )
  ,
       alignedDropdown: false ,
-      buttonColor: Color( 0xff9ed2fa ),
+      buttonColor: Color( 0xffe0e0e0 ),
       disabledColor: Color( 0x61000000 ),
       highlightColor: Color( 0x29000000 ),
       splashColor: Color( 0x1f000000 ),

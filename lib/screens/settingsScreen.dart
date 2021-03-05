@@ -47,9 +47,20 @@ class SettingsScreen extends StatelessWidget {
       body:
       Column(
         children: <Widget>[
+          Row(
+              children: <Widget>[
+                Container(
+                  padding: new EdgeInsets.only(top: 16.0, left: 16.0),
+                    width:  MediaQuery.of(context).size.width,
+                    child: new Text("This screen has yet to be fully implemented!"
+                ),
+                )
+              ]
+          ),
             Row(
               children: <Widget>[
                 Container(
+                    padding: new EdgeInsets.only(top: 200.0),
                     width:  MediaQuery.of(context).size.width,
                     child: new RaisedButton(
                         child: new Text('License'),
@@ -68,6 +79,7 @@ class SettingsScreen extends StatelessWidget {
           Row(
               children: <Widget>[
                 Container(
+                    padding: new EdgeInsets.only(top: 16.0),
                     width:  MediaQuery.of(context).size.width,
                     child: new RaisedButton(
                         child: new Text('Open Gaming Content'),
@@ -86,6 +98,7 @@ class SettingsScreen extends StatelessWidget {
           Row(
               children: <Widget>[
                 Container(
+                    padding: new EdgeInsets.only(top: 16.0),
                     width:  MediaQuery.of(context).size.width,
                     child: new RaisedButton(
                         child: new Text('Open Game License Version 1.0A'),
@@ -103,6 +116,7 @@ class SettingsScreen extends StatelessWidget {
           Row(
               children: <Widget>[
                 Container(
+                    padding: new EdgeInsets.only(top: 16.0),
                     width:  MediaQuery.of(context).size.width,
                     child: new RaisedButton(
                         child: new Text('Product Identity'),

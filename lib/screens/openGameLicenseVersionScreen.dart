@@ -1,9 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:flutter/services.dart';
 
 //Open Game Content screen.
 class OpenGameLicenseVersion extends StatelessWidget {
-  String text = "http://www.opengamingfoundation.org/ogl.html";
+  //Path variable created.
+  final String path = "data/license";
+  //Future method to load data with path parameter.
+  Future<String> getFileData(String path) async {
+    return await rootBundle.loadString(path);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -11,10 +17,18 @@ class OpenGameLicenseVersion extends StatelessWidget {
         appBar: AppBar(
           title: Text("Open Gaming License"),
         ),
-        body: SingleChildScrollView(
-            child: Text(
-              text,
-              style: TextStyle(fontSize: 16),
-            )));
+        body: FutureBuilder(
+          future: getFileData(path),
+            builder: (context, snapshot) {
+            //Data displayed.
+              return SingleChildScrollView(
+                  child: Text(
+                    snapshot.data.toString(),
+                    style: TextStyle(fontSize: 16),
+                  )
+              );
+            }
+        )
+    );
   }
 }
