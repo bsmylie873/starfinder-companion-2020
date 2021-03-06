@@ -1,10 +1,5 @@
 import '../lib/enums.dart';
 import '../lib/jsonUtil.dart';
-import '../lib/objects/class.dart';
-import '../lib/objects/race.dart';
-import '../lib/objects/spell.dart';
-import '../lib/objects/weapon.dart';
-import 'class_test.dart';
 import 'package:collection/collection.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -23,7 +18,7 @@ void main() {
             +'      "Stamina": 6,\n'
             +'      "LevelPoints": 8,\n'
             +'      "ArmorProficiencies": "light armor",\n'
-            +'      "WeaponProficiencies": "basic melee & grenades & small arms ",\n'
+            +'      "WeaponProficiencies": "basic melee & grenades & small arms",\n'
             +'      "KeyAbility": "CHA",\n'
             +'      "Acrobatics": true,\n'
             +'      "Athletics": true,\n'
@@ -54,7 +49,7 @@ void main() {
             +'      "Stamina": 6,\n'
             +'      "LevelPoints": 4,\n'
             +'      "ArmorProficiencies": "light armor",\n'
-            +'      "WeaponProficiencies": "basic melee & grenades & small arms ",\n'
+            +'      "WeaponProficiencies": "basic melee & grenades & small arms",\n'
             +'      "KeyAbility": "INT",\n'
             +'      "Acrobatics": false,\n'
             +'      "Athletics": true,\n'
@@ -85,7 +80,7 @@ void main() {
             +'      "Stamina": 6,\n'
             +'      "LevelPoints": 6,\n'
             +'      "ArmorProficiencies": "light armor",\n'
-            +'      "WeaponProficiencies": "basic melee & grenades & small arms ",\n'
+            +'      "WeaponProficiencies": "basic melee & grenades & small arms",\n'
             +'      "KeyAbility": "WIS",\n'
             +'      "Acrobatics": false,\n'
             +'      "Athletics": false,\n'
@@ -116,7 +111,7 @@ void main() {
             +'      "Stamina": 6,\n'
             +'      "LevelPoints": 8,\n'
             +'      "ArmorProficiencies": "light armor",\n'
-            +'      "WeaponProficiencies": "basic melee & small arms & sniper weapons ",\n'
+            +'      "WeaponProficiencies": "basic melee & small arms & sniper weapons",\n'
             +'      "KeyAbility": "DEX",\n'
             +'      "Acrobatics": true,\n'
             +'      "Athletics": true,\n'
@@ -146,7 +141,7 @@ void main() {
             +'      "Hp": 7,\n'
             +'      "Stamina": 7,\n'
             +'      "LevelPoints": 4,\n'
-            +'      "ArmorProficiencies": "light armor & heavy armor ",\n'
+            +'      "ArmorProficiencies": "light armor & heavy armor",\n'
             +'      "WeaponProficiencies": "basic melee & advanced melee & small arms & longarms & heavy weapons & sniper & grenades",\n'
             +'      "KeyAbility": "DEX | STR",\n'
             +'      "Acrobatics": true,\n'
@@ -209,7 +204,7 @@ void main() {
             +'      "Stamina": 5,\n'
             +'      "LevelPoints": 4,\n'
             +'      "ArmorProficiencies": "light armor",\n'
-            +'      "WeaponProficiencies": "basic melee & small arms ",\n'
+            +'      "WeaponProficiencies": "basic melee & small arms",\n'
             +'      "KeyAbility": "INT",\n'
             +'      "Acrobatics": false,\n'
             +'      "Athletics": false,\n'
@@ -290,5 +285,162 @@ void main() {
       returnList = fetchAnEntry(jsonLocation, indexType1, indexName, indexDetails);
       expect (await returnList, correctDetails);
     });
-  });
+  }
+  );
+
+  group('fetchEntries expected behaviour tests', () {
+    String jsonLocation;
+    List<String> correctDetails = List();
+    correctDetails.add("Envoy");
+    correctDetails.add("Mechanic");
+    correctDetails.add("Mystic");
+    correctDetails.add("Operative");
+    correctDetails.add("Solarian");
+    correctDetails.add("Soldier");
+    correctDetails.add("Technomancer");
+
+    test('All the classes names should be returned', () async {
+      jsonLocation = "data/sfrpg_classes.json";
+      Future<List<String>> returnList;
+      returnList = fetchEntries(jsonLocation);
+      expect (await returnList, correctDetails);
+    });
+  }
+  );
+
+  group('fetchSearched expected behaviour tests', () {
+    String searchQuery = "";
+    indexType indexType1;
+    List<String> correctDetails = List();
+
+    test('The Envoy class should be returned', () async {
+      correctDetails.clear();
+      indexType1 = indexType.CLASS;
+      correctDetails.add("Envoy");
+      searchQuery = "Envoy";
+      Future<List<String>> returnList;
+      returnList = fetchSearched(searchQuery, indexType1);
+      expect (await returnList, correctDetails);
+    });
+
+    test('The Mechanic, Mystic and Technomancer classes should be returned', () async {
+      correctDetails.clear();
+      indexType1 = indexType.CLASS;
+      correctDetails.add("Mechanic");
+      correctDetails.add("Mystic");
+      correctDetails.add("Technomancer");
+      searchQuery = "c";
+      Future<List<String>> returnList;
+      returnList = fetchSearched(searchQuery, indexType1);
+      expect (await returnList, correctDetails);
+    });
+
+
+    test('The Drow race should be returned', () async {
+      correctDetails.clear();
+      indexType1 = indexType.RACE;
+      correctDetails.add("Drow");
+      searchQuery = "Drow";
+      Future<List<String>> returnList;
+      returnList = fetchSearched(searchQuery, indexType1);
+      expect (await returnList, correctDetails);
+    });
+
+    test('The Android, Draelik, Dragonkin and Drow races should be returned', () async {
+      correctDetails.clear();
+      indexType1 = indexType.RACE;
+      correctDetails.add("Android");
+      correctDetails.add("Draelik");
+      correctDetails.add("Dragonkin");
+      correctDetails.add("Drow");
+      searchQuery = "dr";
+      Future<List<String>> returnList;
+      returnList = fetchSearched(searchQuery, indexType1);
+      expect (await returnList, correctDetails);
+    });
+
+    test('The Arcane Eye spell should be returned', () async {
+      correctDetails.clear();
+      indexType1 = indexType.SPELL;
+      correctDetails.add("Arcane Eye");
+      searchQuery = "Arcane Eye";
+      Future<List<String>> returnList;
+      returnList = fetchSearched(searchQuery, indexType1);
+      expect (await returnList, correctDetails);
+    });
+
+    test('The Arcane Eye, Arcane Sight and Arcing Surge spells should be returned', () async {
+      correctDetails.clear();
+      indexType1 = indexType.SPELL;
+      correctDetails.add("Arcane Eye");
+      correctDetails.add("Arcane Sight");
+      correctDetails.add("Arcing Surge");
+      searchQuery = "arc";
+      Future<List<String>> returnList;
+      returnList = fetchSearched(searchQuery, indexType1);
+      expect (await returnList, correctDetails);
+    });
+
+    test('The Bow weapon should be returned', () async {
+      correctDetails.clear();
+      indexType1 = indexType.WEAPON;
+      correctDetails.add("Bow");
+      searchQuery = "Bow";
+      Future<List<String>> returnList;
+      returnList = fetchSearched(searchQuery, indexType1);
+      expect (await returnList, correctDetails);
+    });
+
+    test('The Hook knife and Hook sword should be returned', () async {
+      correctDetails.clear();
+      indexType1 = indexType.WEAPON;
+      correctDetails.add("Hook knife");
+      correctDetails.add("Hook sword");
+      searchQuery = "hook";
+      Future<List<String>> returnList;
+      returnList = fetchSearched(searchQuery, indexType1);
+      expect (await returnList, correctDetails);
+    });
+
+    test('No results for classes should be returned', () async {
+      correctDetails.clear();
+      indexType1 = indexType.CLASS;
+      correctDetails.add("No results found!");
+      searchQuery = "thisresultdoesnotexist";
+      Future<List<String>> returnList;
+      returnList = fetchSearched(searchQuery, indexType1);
+      expect (await returnList, correctDetails);
+    });
+
+    test('No results for races should be returned', () async {
+      correctDetails.clear();
+      indexType1 = indexType.RACE;
+      correctDetails.add("No results found!");
+      searchQuery = "thisresultdoesnotexist";
+      Future<List<String>> returnList;
+      returnList = fetchSearched(searchQuery, indexType1);
+      expect (await returnList, correctDetails);
+    });
+
+    test('No results for spells should be returned', () async {
+      correctDetails.clear();
+      indexType1 = indexType.SPELL;
+      correctDetails.add("No results found!");
+      searchQuery = "thisresultdoesnotexist";
+      Future<List<String>> returnList;
+      returnList = fetchSearched(searchQuery, indexType1);
+      expect (await returnList, correctDetails);
+    });
+
+    test('No results for weapons should be returned', () async {
+      correctDetails.clear();
+      indexType1 = indexType.WEAPON;
+      correctDetails.add("No results found!");
+      searchQuery = "thisresultdoesnotexist";
+      Future<List<String>> returnList;
+      returnList = fetchSearched(searchQuery, indexType1);
+      expect (await returnList, correctDetails);
+    });
+  }
+  );
 }
