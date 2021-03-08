@@ -23,7 +23,7 @@ class EquipBox extends StatelessWidget {
         child: ListTile(
           //Icon relevant to button destination.
             leading: Icon(Icons.shield),
-            title: Text('Armor'),
+            title: Text('Armors'),
             //When tapped, tile will load the new screen index.
             onTap: () {
               Navigator.push(
