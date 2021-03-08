@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'productIdentityScreen.dart';
 
+//Same as in Widget Screens.
 class InfoPageBuilder extends StatelessWidget {
   final String fileText;
 
@@ -57,25 +58,6 @@ class SettingsScreen extends StatelessWidget {
                 )
               ]
           ),
-            Row(
-              children: <Widget>[
-                Container(
-                    padding: new EdgeInsets.only(top: 200.0),
-                    width:  MediaQuery.of(context).size.width,
-                    child: new RaisedButton(
-                        child: new Text('License'),
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => LicenseScreen()),
-                          );
-                        }
-                    )
-                ),
-
-              ]
-          ),
           Row(
               children: <Widget>[
                 Container(
@@ -111,6 +93,25 @@ class SettingsScreen extends StatelessWidget {
                         }
                     )
                 ),
+              ]
+          ),
+          Row(
+              children: <Widget>[
+                Container(
+                    padding: new EdgeInsets.only(top: 200.0),
+                    width:  MediaQuery.of(context).size.width,
+                    child: new RaisedButton(
+                        child: new Text('Paizo Community Use'),
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => LicenseScreen()),
+                          );
+                        }
+                    )
+                ),
+
               ]
           ),
           Row(
