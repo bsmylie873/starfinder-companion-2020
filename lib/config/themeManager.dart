@@ -1,7 +1,7 @@
-import 'darkTheme.dart';
+import 'constants/darkTheme.dart';
 import 'package:flutter/material.dart';
 import 'storageManager.dart';
-import 'theme.dart';
+import 'constants/theme.dart';
 
 //Class to handle the theme of the app changing.
 class ThemeManager with ChangeNotifier{
