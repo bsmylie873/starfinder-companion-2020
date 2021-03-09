@@ -1,5 +1,5 @@
-import '../enums.dart';
-import '../jsonUtil.dart';
+import '../config/constants/enums.dart';
+import '../utilities/jsonUtil.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_search_bar/flutter_search_bar.dart';
 

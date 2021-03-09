@@ -1,4 +1,4 @@
-import '../lib/sequentialListSearch.dart';
+import '../lib/utilities/sequentialListSearch.dart';
 import 'package:collection/collection.dart';
 import 'package:test/test.dart';
 

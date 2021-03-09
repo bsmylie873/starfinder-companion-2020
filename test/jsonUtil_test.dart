@@ -1,5 +1,5 @@
-import '../lib/enums.dart';
-import '../lib/jsonUtil.dart';
+import '../lib/config/constants/enums.dart';
+import '../lib/utilities/jsonUtil.dart';
 import 'package:collection/collection.dart';
 import 'package:flutter_test/flutter_test.dart';
 

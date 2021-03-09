@@ -8,7 +8,7 @@ import 'package:provider/provider.dart';
 import 'screens/licenseScreen.dart';
 import 'screens/mainBoxes.dart';
 import 'screens/settingsScreen.dart';
-import 'themeManager.dart';
+import 'config/themeManager.dart';
 
 //These constants determine how many buttons are displayed, and their height.
 const double constNumOfButtons = 4;
