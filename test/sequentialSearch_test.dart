@@ -11,6 +11,8 @@ void main() {
     upperCaseList.add("Cat");
     upperCaseList.add("Dog");
     upperCaseList.add("Rat");
+    List<String> completeQueryList = List();
+    completeQueryList.add("Cat");
     List<String> nullList = List();
     List<String> lowerCaseList = List();
     lowerCaseList.add("cat");
@@ -30,6 +32,15 @@ void main() {
       List<String> newList =
           sequentialListSearch(searchQuery, lowerCaseList, upperCaseList);
       if (eq(newList, correctResultList)) {
+        listsMatch = true;
+      }
+      expect(listsMatch, true);
+    });
+    test('Complete search "cat" passed in - Cat should be returned', () {
+      searchQuery = "cat";
+      List<String> newList =
+      sequentialListSearch(searchQuery, lowerCaseList, upperCaseList);
+      if (eq(newList, completeQueryList)) {
         listsMatch = true;
       }
       expect(listsMatch, true);
