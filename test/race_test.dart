@@ -78,6 +78,12 @@ void main() {
       expect(testRace2.name, "name");
     });
 
+    //Mutability test
+    test ('Name should be "newName"', () {
+      testRace.name = "newName";
+      expect(testRace.name, "newName");
+    });
+
     test('Source should be "source"', () {
       expect(testRace.source, "source");
     });

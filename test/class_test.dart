@@ -66,6 +66,12 @@ void main() {
       expect(testClass2.name, "name");
     });
 
+    //Mutability test
+    test ('Name should be "newName"', () {
+      testClass.name = "newName";
+      expect(testClass.name, "newName");
+    });
+
     test('Source should be "source"', () {
       expect(testClass.source, "source");
     });

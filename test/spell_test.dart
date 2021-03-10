@@ -41,6 +41,12 @@ void main() {
       expect(testSpell2.name, "name");
     });
 
+    //Mutability test
+    test ('Name should be "newName"', () {
+      testSpell.name = "newName";
+      expect(testSpell.name, "newName");
+    });
+
     test('CastingTime should be "castingTime"', () {
       expect(testSpell.castingTime, "casting time");
     });

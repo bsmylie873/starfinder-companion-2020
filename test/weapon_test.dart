@@ -287,9 +287,14 @@ void main() {
     test('Name should be "name"', () {
       expect(testWeapon.name, "name");
     });
-
     test('Name should be "name"', () {
       expect(testWeapon2.name, "name");
+    });
+
+    //Mutability test
+    test ('Name should be "newName"', () {
+      testWeapon.name = "newName";
+      expect(testWeapon.name, "newName");
     });
 
     test('Source should be "source"', () {
