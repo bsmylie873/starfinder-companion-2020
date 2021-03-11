@@ -64,6 +64,24 @@ class SettingsScreen extends StatelessWidget {
                     padding: new EdgeInsets.only(top: 16.0),
                     width:  MediaQuery.of(context).size.width,
                     child: new RaisedButton(
+                        child: new Text('Open Game License Version 1.0A'),
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => OpenGameLicenseVersion()),
+                          );
+                        }
+                    )
+                ),
+              ]
+          ),
+          Row(
+              children: <Widget>[
+                Container(
+                    padding: new EdgeInsets.only(top: 16.0),
+                    width:  MediaQuery.of(context).size.width,
+                    child: new RaisedButton(
                         child: new Text('Open Gaming Content'),
                         onPressed: () {
                           Navigator.push(
@@ -75,24 +93,6 @@ class SettingsScreen extends StatelessWidget {
                     )
                 ),
 
-              ]
-          ),
-          Row(
-              children: <Widget>[
-                Container(
-                    padding: new EdgeInsets.only(top: 16.0),
-                    width:  MediaQuery.of(context).size.width,
-                    child: new RaisedButton(
-                        child: new Text('Open Game License Version 1.0A'),
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => OpenGameLicenseVersion()),
-                          );
-                        }
-                    )
-                ),
               ]
           ),
           Row(
