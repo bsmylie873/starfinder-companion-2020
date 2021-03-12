@@ -61,7 +61,7 @@ class SettingsScreen extends StatelessWidget {
           Row(
               children: <Widget>[
                 Container(
-                    padding: new EdgeInsets.only(top: 16.0),
+                    padding: new EdgeInsets.only(top: 200.0),
                     width:  MediaQuery.of(context).size.width,
                     child: new RaisedButton(
                         child: new Text('Open Game License Version 1.0A'),
@@ -98,7 +98,7 @@ class SettingsScreen extends StatelessWidget {
           Row(
               children: <Widget>[
                 Container(
-                    padding: new EdgeInsets.only(top: 200.0),
+                    padding: new EdgeInsets.only(top: 16.0),
                     width:  MediaQuery.of(context).size.width,
                     child: new RaisedButton(
                         child: new Text('Paizo Community Use'),
