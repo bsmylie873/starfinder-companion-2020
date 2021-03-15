@@ -287,7 +287,7 @@ class GMRules extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text("Trying to read JSON files"),
+          title: Text("GM Rules"),
         ),
         body: Container(
             child: Center(

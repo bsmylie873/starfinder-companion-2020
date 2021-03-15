@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:testflutter/screens/weaponScreen.dart';
 import 'package:testflutter/table.dart';
 import 'WidgetScreens.dart';
 import 'armorScreen.dart';
