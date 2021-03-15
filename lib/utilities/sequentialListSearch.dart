@@ -1,3 +1,5 @@
+//CONTRIBUTION - BRANDON 100% CONOR 0%
+
 List<String> sequentialListSearch(String searchQuery,
     List<String> lowerCaseList, List<String> upperCaseList) {
   //New list for return statement.

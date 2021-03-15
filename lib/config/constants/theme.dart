@@ -1,3 +1,5 @@
+//CONTRIBUTION - BRANDON 100% CONOR 0%
+
 import 'package:flutter/material.dart';
   //This contains the light mode theme settings, which is imported into the main
   //class.

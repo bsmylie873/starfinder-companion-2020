@@ -1,3 +1,5 @@
+//CONTRIBUTION - BRANDON 100% CONOR 0%
+
 List<String> binaryListSearch<T extends Comparable<Object>>(List<String> sortedList, String value) {
   int min = 0;
   int max = sortedList.length;

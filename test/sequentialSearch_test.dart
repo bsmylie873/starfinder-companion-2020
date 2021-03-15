@@ -1,3 +1,5 @@
+//CONTRIBUTION - BRANDON 100% CONOR 0%
+
 import '../lib/utilities/sequentialListSearch.dart';
 import 'package:collection/collection.dart';
 import 'package:test/test.dart';

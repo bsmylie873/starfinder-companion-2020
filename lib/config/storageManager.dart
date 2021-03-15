@@ -1,3 +1,5 @@
+//CONTRIBUTION - BRANDON 100% CONOR 0%
+
 import 'package:shared_preferences/shared_preferences.dart';
 
 //This class handles the preferences of the user, which for now only handles the

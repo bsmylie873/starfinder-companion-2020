@@ -1,3 +1,5 @@
+//CONTRIBUTION - BRANDON 80% CONOR 20%
+
 import '../config/constants/enums.dart';
 import '../utilities/jsonUtil.dart';
 import 'package:flutter/material.dart';

@@ -1,3 +1,5 @@
+//CONTRIBUTION - BRANDON 50% CONOR 50%
+
 import 'actionScreen.dart';
 import 'bestiaryScreen.dart';
 import 'deityScreen.dart';

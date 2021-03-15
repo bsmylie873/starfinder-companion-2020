@@ -1,3 +1,5 @@
+//CONTRIBUTION - BRANDON 35% CONOR 65%
+
 import 'dart:convert';
 import 'equipBoxes.dart';
 import 'package:flutter/material.dart';
@@ -44,6 +46,7 @@ class ExpandedPlayerBox extends StatelessWidget {
       mainAxisSpacing: 10,
       crossAxisCount: 2,
       children: children,
+      physics: NeverScrollableScrollPhysics(),
     );
   }
 

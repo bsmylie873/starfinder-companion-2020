@@ -1,3 +1,5 @@
+//CONTRIBUTION - BRANDON 90% CONOR 10%
+
 import 'index.dart';
 
 //This object is used in the Spell index.

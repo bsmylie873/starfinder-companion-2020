@@ -1,3 +1,5 @@
+//CONTRIBUTION - BRANDON 50% CONOR 50%
+
 import 'config/themeManager.dart';
 import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:flutter/material.dart';
@@ -9,11 +11,9 @@ import 'package:provider/provider.dart';
 import 'screens/mainBoxes.dart';
 import 'screens/settingsScreen.dart';
 
-
 //These constants determine how many buttons are displayed, and their height.
 const double constNumOfButtons = 4;
 const double constContainerHeight = 1;
-bool permsGranted = false;
 
 //Main thread, which runs the MyApp class and creates the notifier for the theme
 //manager functionality.

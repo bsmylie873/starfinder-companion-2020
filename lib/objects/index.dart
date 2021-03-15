@@ -1,3 +1,5 @@
+//CONTRIBUTION - BRANDON 100% CONOR 0%
+
 //This object as a object the indexes inherit from.
 class Index {
   //These parameters are common amongst indexes.

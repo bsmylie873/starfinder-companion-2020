@@ -1,3 +1,5 @@
+//CONTRIBUTION - BRANDON 50% CONOR 50%
+
 import 'armorScreen.dart';
 import 'augmentationScreen.dart';
 import 'computerScreen.dart';

@@ -1,3 +1,5 @@
+//CONTRIBUTION - BRANDON 100% CONOR 0%
+
 import '../lib/config/constants/enums.dart';
 import '../lib/utilities/jsonUtil.dart';
 import 'package:collection/collection.dart';

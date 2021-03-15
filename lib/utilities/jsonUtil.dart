@@ -1,3 +1,5 @@
+//CONTRIBUTION - BRANDON 100% CONOR 0%
+
 import '../config/constants/enums.dart';
 import '../objects/class.dart';
 import '../objects/race.dart';
