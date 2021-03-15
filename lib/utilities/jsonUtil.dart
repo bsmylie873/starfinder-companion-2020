@@ -1,9 +1,9 @@
-import 'dart:convert';
 import '../config/constants/enums.dart';
 import '../objects/class.dart';
 import '../objects/race.dart';
 import '../objects/spell.dart';
 import '../objects/weapon.dart';
+import 'dart:convert';
 import 'package:flutter/services.dart';
 import 'sequentialListSearch.dart';
 

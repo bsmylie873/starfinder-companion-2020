@@ -1,3 +1,4 @@
+import 'config/themeManager.dart';
 import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -5,10 +6,9 @@ import 'package:flutter/services.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
-import 'screens/licenseScreen.dart';
 import 'screens/mainBoxes.dart';
 import 'screens/settingsScreen.dart';
-import 'config/themeManager.dart';
+
 
 //These constants determine how many buttons are displayed, and their height.
 const double constNumOfButtons = 4;
