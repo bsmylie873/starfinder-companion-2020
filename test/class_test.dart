@@ -1,5 +1,6 @@
 import 'package:test/test.dart';
 import '../lib/objects/class.dart';
+import '../lib/objects/index.dart';
 
 void main() {
   String name1 = "name";
@@ -33,7 +34,9 @@ void main() {
   bool stealth1 = true;
   bool survival1 = false;
 
-  Class testClass2 = new Class(name: name1, source: source1, hp: hp1, stamina:
+  Index testIndex = new Index(name: name1);
+
+  Class testClass = new Class(name: name1, source: source1, hp: hp1, stamina:
       stamina1, levelPoints: levelPoints1, armorProficiencies: armorProficiencies1,
     weaponProficiencies: weaponProficiencies1, keyAbility: keyAbility1, acrobatics: acrobatics1,
     athletics: athletics1, bluff: bluff1, computers: computers1, culture: culture1,
@@ -44,125 +47,145 @@ void main() {
     senseMotive: senseMotive1, sleightOfHand: sleightOfHand1, stealth: stealth1,
     survival: survival1);
 
+  Class testClass2 = new Class(name: testIndex.name, source: source1, hp: hp1, stamina:
+  stamina1, levelPoints: levelPoints1, armorProficiencies: armorProficiencies1,
+      weaponProficiencies: weaponProficiencies1, keyAbility: keyAbility1, acrobatics: acrobatics1,
+      athletics: athletics1, bluff: bluff1, computers: computers1, culture: culture1,
+      diplomacy: diplomacy1, disguise: disguise1, engineering: engineering1, intimidate: intimidate1,
+      lifeScience: lifeScience1, medicine: medicine1, mysticism: mysticism1, perception: perception1,
+      piloting: piloting1, physicalScience: physicalScience1, professionCharisma: professionCharisma1,
+      professionIntelligence: professionIntelligence1, professionWisdom: professionWisdom1,
+      senseMotive: senseMotive1, sleightOfHand: sleightOfHand1, stealth: stealth1,
+      survival: survival1);
+
   group('Assignment Test', () {
+    test('Name should be "name"', () {
+      expect(testClass.name, "name");
+    });
     test('Name should be "name"', () {
       expect(testClass2.name, "name");
     });
 
+    //Mutability test
+    test ('Name should be "newName"', () {
+      testClass.name = "newName";
+      expect(testClass.name, "newName");
+    });
+
     test('Source should be "source"', () {
-      expect(testClass2.source, "source");
+      expect(testClass.source, "source");
     });
 
     test('HP should be "0"', () {
-      expect(testClass2.hp, 0);
+      expect(testClass.hp, 0);
     });
 
     test('Stamina should be "0"', () {
-      expect(testClass2.stamina, 0);
+      expect(testClass.stamina, 0);
     });
 
     test('LevelPoints should be "0"', () {
-      expect(testClass2.levelPoints, 0);
+      expect(testClass.levelPoints, 0);
     });
 
     test('ArmorProficiencies should be "armor proficiencies"', () {
-      expect(testClass2.armorProficiencies, "armor proficiencies");
+      expect(testClass.armorProficiencies, "armor proficiencies");
     });
 
     test('WeaponProficiencies should be "weapon proficiencies"', () {
-      expect(testClass2.weaponProficiencies, "weapon proficiencies");
+      expect(testClass.weaponProficiencies, "weapon proficiencies");
     });
 
     test('KeyAbility should be "key ability"', () {
-      expect(testClass2.keyAbility, "key ability");
+      expect(testClass.keyAbility, "key ability");
     });
 
     test('Acrobatics should be "false"', () {
-      expect(testClass2.acrobatics, false);
+      expect(testClass.acrobatics, false);
     });
 
     test('Athletics should be "false"', () {
-      expect(testClass2.athletics, false);
+      expect(testClass.athletics, false);
     });
 
     test('Bluff should be "false"', () {
-      expect(testClass2.bluff, false);
+      expect(testClass.bluff, false);
     });
 
     test('Computers should be "false"', () {
-      expect(testClass2.computers, false);
+      expect(testClass.computers, false);
     });
 
     test('Culture should be "false"', () {
-      expect(testClass2.culture, false);
+      expect(testClass.culture, false);
     });
 
     test('Diplomacy should be "false"', () {
-      expect(testClass2.diplomacy, false);
+      expect(testClass.diplomacy, false);
     });
 
     test('Disguise should be "false"', () {
-      expect(testClass2.disguise, false);
+      expect(testClass.disguise, false);
     });
 
     test('Engineering should be "false"', () {
-      expect(testClass2.engineering, false);
+      expect(testClass.engineering, false);
     });
 
     test('Intimidate should be "false"', () {
-      expect(testClass2.intimidate, false);
+      expect(testClass.intimidate, false);
     });
 
     test('LifeScience should be "false"', () {
-      expect(testClass2.lifeScience, false);
+      expect(testClass.lifeScience, false);
     });
 
     test('Medicine should be "false"', () {
-      expect(testClass2.medicine, false);
+      expect(testClass.medicine, false);
     });
 
     test('Mysticism should be "false"', () {
-      expect(testClass2.mysticism, false);
+      expect(testClass.mysticism, false);
     });
 
     test('Perception should be "false"', () {
-      expect(testClass2.perception, false);
+      expect(testClass.perception, false);
     });
 
     test('Piloting should be "false"', () {
-      expect(testClass2.piloting, false);
+      expect(testClass.piloting, false);
     });
 
     test('PhysicalScience should be "false"', () {
-      expect(testClass2.physicalScience, false);
+      expect(testClass.physicalScience, false);
     });
 
     test('ProfessionCharisma should be "false"', () {
-      expect(testClass2.professionCharisma, false);
+      expect(testClass.professionCharisma, false);
     });
 
     test('ProfessionIntelligence should be "false"', () {
-      expect(testClass2.professionIntelligence, false);
+      expect(testClass.professionIntelligence, false);
     });
 
     test('ProfessionWisdom should be "false"', () {
-      expect(testClass2.professionWisdom, false);
+      expect(testClass.professionWisdom, false);
     });
 
     test('SenseMotive should be "false"', () {
-      expect(testClass2.senseMotive, false);
+      expect(testClass.senseMotive, false);
     });
 
     test('SleightOfHand should be "false"', () {
-      expect(testClass2.sleightOfHand, false);
+      expect(testClass.sleightOfHand, false);
     });
 
     test('Stealth should be "false"', () {
-      expect(testClass2.stealth, true);
+      expect(testClass.stealth, true);
     });
 
     test('Survival should be "false"', () {
-      expect(testClass2.survival, false);
+      expect(testClass.survival, false);
     });
 
   });

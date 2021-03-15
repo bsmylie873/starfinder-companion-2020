@@ -1,9 +1,7 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_search_bar/flutter_search_bar.dart';
 
-import '../objects/spell.dart';
-import 'dart:convert';
-import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+//THIS CLASS REMAINS UNIMPLEMENTED DUE TO LACK OF DATA. THERE ARE NO COMMENTS.
 
 class EquipmentList extends StatefulWidget {
   @override
