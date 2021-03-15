@@ -147,7 +147,9 @@ class PlayerSheetPage extends StatelessWidget {
         /*print(writeFile.writeAsString(content));*/
         return writeFile.writeAsString(content);
       }
-    } else {
+    }
+
+    else {
       final file = await _localShipFile;
       String shipName = tempMap["Shipname"];
       shipName = removeSpecialCharacters(shipName);
@@ -205,6 +207,7 @@ class PlayerSheetPage extends StatelessWidget {
 }
 
 class CharSheetFromDirectory extends StatelessWidget {
+  //Takes file path and page path to read the sheet in
   CharSheetFromDirectory({Key key, this.filePath, this.pagePath})
       : super(key: key);
   String filePath;
@@ -224,6 +227,7 @@ class CharSheetFromDirectory extends StatelessWidget {
         child: WebView(
           javascriptMode: JavascriptMode.unrestricted,
           javascriptChannels: <JavascriptChannel>[
+            //Initialising javascript channel
             _extractDataJSChannel(context),
           ].toSet(),
           initialUrl: '',
@@ -239,14 +243,14 @@ class CharSheetFromDirectory extends StatelessWidget {
       ),
     );
   }
-
+    //Loads in associated sheet using passed pagePath
   Future<void> loadHtmlFromAssets(String fileName, controller) async {
     String fileText = await rootBundle.loadString(fileName);
     controller.loadUrl(Uri.dataFromString(fileText,
         mimeType: 'text/html', encoding: Encoding.getByName('utf-8'))
         .toString());
   }
-
+    //Method to save data sent back from webview controller
   JavascriptChannel _extractDataJSChannel(BuildContext context) {
     return JavascriptChannel(
       name: 'Flutter',
@@ -258,6 +262,7 @@ class CharSheetFromDirectory extends StatelessWidget {
     );
   }
 
+  //Gets Character Sheet Directory
   Future<String> get _localPath async {
     Directory appDocDirectory = await getApplicationDocumentsDirectory();
     Directory directory =
@@ -269,7 +274,7 @@ class CharSheetFromDirectory extends StatelessWidget {
     });
     return directory.path;
   }
-
+  //Creates a file in the character sheet directory
   Future<File> get _localFile async {
     final path = await _localPath;
     print('$path');
@@ -336,7 +341,7 @@ class CharSheetFromDirectory extends StatelessWidget {
     return directory.path;
   }
 
-  //Makes a file at ship path directory
+  //Makes a file at saved ship sheet directory
   Future<File> get _localShipFile async {
     final path = await _localShipPath;
     print('$path');
@@ -360,6 +365,7 @@ class FileListView extends StatefulWidget {
   _FileListViewState createState() => _FileListViewState();
 }
 
+//Displays saved character sheets in specified directory in a list
 class _FileListViewState extends State<FileListView> {
   @override
   Widget build(BuildContext context) {
@@ -377,6 +383,7 @@ class _FileListViewState extends State<FileListView> {
     );
   }
 
+  //Gets saved Character Sheet Directory
   Future<String> get _localPath async {
     Directory appDocDirectory = await getApplicationDocumentsDirectory();
     Directory directory =
@@ -389,6 +396,7 @@ class _FileListViewState extends State<FileListView> {
     return directory.path;
   }
 
+  //Gets saved Ship Sheet Directory
   Future<String> get _localShipPath async {
     Directory appDocDirectory = await getApplicationDocumentsDirectory();
     Directory directory =
@@ -407,12 +415,12 @@ class _FileListViewState extends State<FileListView> {
       String path = await _localPath;
       Directory directory = new Directory(path);
       return directory;
-    } else if (directoryPath.contains('data/shipSheet.html')) {
+    } else if (directoryPath.contains('data/shipsheet.html')) {
       String path = await _localShipPath;
       Directory directory = new Directory(path);
       return directory;
     }
-    String path = await _localPath;
+    String path = directoryPath;
     Directory directory = new Directory(path);
     return directory;
   }
@@ -441,6 +449,8 @@ class _CharacterSheetDirectoryState extends State<CharacterSheetDirectory> {
         appBar: AppBar(
           title: Text("Saved Character Sheets"),
         ),
+        //Builds a list of saved files into list tiles to be pushed to a
+        //character sheet
         body: ListView.builder(
             itemCount: fileList == null ? 0 : fileList.length,
             itemBuilder: (BuildContext context, int index) {
@@ -472,7 +482,7 @@ class _CharacterSheetDirectoryState extends State<CharacterSheetDirectory> {
                       trailing: IconButton(
                         icon: Icon(CupertinoIcons.trash),
                         onPressed: () {
-                          showAlertDialog(context, file);
+                            showAlertDialog(context, file);
                         },
                       ),
                     )),
@@ -485,15 +495,16 @@ class _CharacterSheetDirectoryState extends State<CharacterSheetDirectory> {
           appBar: AppBar(
               title: Text("No saved files found")
           ),
-          body: Center(
+          body: Container(
             child: Text("It seems there are no files saved here, you can find the"
-                "Character and Ship sheets under the Player Portal to get started"),
+                " Character and Ship sheets under the Player Portal to get started"),
           )
       );
     }
   }
 
   showAlertDialog(BuildContext context, File file) {
+    //Declaring the buttons
     Widget cancelButton = FlatButton(
       child: Text("Cancel"),
       onPressed: () {
@@ -594,7 +605,7 @@ class _LoadSheetPageState extends State<LoadSheetPage> {
   }
 
   showAlertDialog(BuildContext context, File file) {
-    // set up the buttons
+   //Declaring the buttons
     Widget cancelButton = FlatButton(
       child: Text("Cancel"),
       //If cancel is selected, pops the alert dialog from context
