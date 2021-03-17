@@ -133,7 +133,7 @@ class PlayerBox5 extends StatelessWidget {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                    builder: (context) => PlayerSheetPage(path: 'data/shipsheet.html')),
+                    builder: (context) => PlayerSheetPage(path: 'data/shipSheet.html')),
               );
             }));
   }
