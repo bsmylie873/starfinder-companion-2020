@@ -416,7 +416,7 @@ class _FileListViewState extends State<FileListView> {
       String path = await _localPath;
       Directory directory = new Directory(path);
       return directory;
-    } else if (directoryPath.contains('data/shipsheet.html')) {
+    } else if (directoryPath.contains('data/shipSheet.html')) {
       String path = await _localShipPath;
       Directory directory = new Directory(path);
       return directory;

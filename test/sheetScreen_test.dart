@@ -253,7 +253,7 @@ void main() {
       await tester.pumpWidget(MaterialApp(
           home:
               CharacterSheetDirectory(directory: directory, sheetPage: path)));
-      final centerFinder = find.byType(Center);
+      final centerFinder = find.byType(Container);
       expect(centerFinder, findsNWidgets(1));
     });
     testWidgets(
@@ -290,7 +290,7 @@ void main() {
               home:
               CharacterSheetDirectory(directory: directory, sheetPage: path)));
           final textFinder = find.text("It seems there are no files saved here, you can find the"
-              "Character and Ship sheets under the Player Portal to get started");
+              " Character and Ship sheets under the Player Portal to get started");
           expect(textFinder, findsNWidgets(1));
         });
     testWidgets(
@@ -316,7 +316,7 @@ void main() {
               home:
               CharacterSheetDirectory(directory: directory, sheetPage: path)));
          
-          final centreFinder = find.byType(Center);
+          final centreFinder = find.byType(Container);
           expect(centreFinder, findsNWidgets(1));
         });
 
@@ -555,8 +555,8 @@ void main() {
               home: FileListView(directoryPath: directoryPath)
           ));
           await tester.pumpAndSettle();
-          final centreFinder = find.byType(Center);
-          expect(centreFinder, findsNWidgets(1));
+          final centreFinder = find.byType(Container);
+          expect(centreFinder, findsNWidgets(2));
         });
       testWidgets('FileListView must have correct widgets', (WidgetTester tester) async{
         String directoryPath = 'test';
