@@ -1,10 +1,11 @@
+//CONTRIBUTION - BRANDON 0% CONOR 100%
+
 import 'dart:convert';
 import 'dart:io';
 import 'mainBoxes.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
@@ -30,7 +31,7 @@ class PlayerSheetPage extends StatelessWidget {
       WebView.platform = SurfaceAndroidWebView();
     }
     return Scaffold(
-      appBar: AppBar(title: Text('Character Sheet')),
+      appBar: AppBar(title: Text('Starfinder Sheet')),
       body: WebView(
         javascriptMode: JavascriptMode.unrestricted,
         javascriptChannels: <JavascriptChannel>[
@@ -221,7 +222,7 @@ class CharSheetFromDirectory extends StatelessWidget {
     }
     return Scaffold(
       appBar: AppBar(
-        title: Text("Character Sheet"),
+        title: Text("Starfinder Sheet"),
       ),
       body: Center(
         child: WebView(
@@ -426,11 +427,11 @@ class _FileListViewState extends State<FileListView> {
   }
 }
 
-class CharacterSheetDirectory extends StatefulWidget{
+class CharacterSheetDirectory extends StatefulWidget {
   final Directory directory;
   final String sheetPage;
-
   const CharacterSheetDirectory({Key key, this.directory, this.sheetPage}) : super(key: key);
+
   @override
   _CharacterSheetDirectoryState createState() => _CharacterSheetDirectoryState();
 }

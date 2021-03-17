@@ -1,4 +1,8 @@
-  import 'package:flutter/material.dart';
+//CONTRIBUTION - BRANDON 100% CONOR 0%
+
+import 'package:flutter/material.dart';
+//This contains the dark mode theme settings, which is imported into the main
+//class.
   final ThemeData darkTheme = ThemeData(
     primarySwatch: MaterialColor(4280361249,{50: Color( 0xfff2f2f2 )
 		, 100: Color( 0xffe6e6e6 )

@@ -1,9 +1,11 @@
+//CONTRIBUTION - BRANDON 100% CONOR 0%
+
 //https://github.com/clean-code-dev/animated_splash_screen
 
 library animated_splash_screen;
 
-import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 
 enum _splashType { simpleSplash, backgroundScreenReturn }

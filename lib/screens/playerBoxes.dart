@@ -1,3 +1,5 @@
+//CONTRIBUTION - BRANDON 50% CONOR 50%
+
 import 'classScreen.dart';
 import 'featScreen.dart';
 import 'package:flutter/material.dart';

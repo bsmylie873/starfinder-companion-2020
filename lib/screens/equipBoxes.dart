@@ -1,28 +1,32 @@
-import 'package:flutter/material.dart';
-import 'package:testflutter/table.dart';
-import 'WidgetScreens.dart';
+//CONTRIBUTION - BRANDON 50% CONOR 50%
+
 import 'armorScreen.dart';
 import 'augmentationScreen.dart';
 import 'computerScreen.dart';
 import 'hybridScreen.dart';
 import 'magicScreen.dart';
 import 'otherScreen.dart';
+import 'package:flutter/material.dart';
 import 'techScreen.dart';
 import 'weaponScreen.dart';
+
+//These values dictate the number of buttons to be displayed and the height of
+//each button.
 const double equipConstNumOfButtons = 8;
 const double equipConstContainerHeight = 1;
 
+//Box 1.
 class EquipBox extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-
+    //Uses card design.
     return Card(
         margin: EdgeInsets.only(top: 50.0, bottom: 50.0),
-        //color: Colors.amber,
         child: ListTile(
+          //Icon relevant to button destination.
             leading: Icon(Icons.shield),
-            title: Text('Armor'),
-            //contentPadding: EdgeInsets.only(bottom: 50.0),
+            title: Text('Armors'),
+            //When tapped, tile will load the new screen index.
             onTap: () {
               Navigator.push(
                 context,
@@ -32,17 +36,18 @@ class EquipBox extends StatelessWidget {
   }
 }
 
+//Box 2.
 class EquipBox1 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-
+    //Uses card design.
     return Card(
         margin: EdgeInsets.only(top: 50.0, bottom: 50.0),
-        //color: Colors.amber,
         child: ListTile(
+          //Icon relevant to button destination.
             leading: Icon(Icons.android),
             title: Text('Augments'),
-            //contentPadding: EdgeInsets.only(bottom: 50.0),
+            //When tapped, tile will load the new screen index.
             onTap: () {
               Navigator.push(
                 context,
@@ -52,16 +57,18 @@ class EquipBox1 extends StatelessWidget {
   }
 }
 
+//Box 3.
 class EquipBox2 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    //Uses card design.
     return Card(
         margin: EdgeInsets.only(top: 50.0, bottom: 50.0),
-        //color: Colors.amber,
         child: ListTile(
+          //Icon relevant to button destination.
             leading: Icon(Icons.computer),
             title: Text('Computers'),
-            //contentPadding: EdgeInsets.only(bottom: 50.0),
+            //When tapped, tile will load the new screen index.
             onTap: () {
               Navigator.push(
                 context,
@@ -70,16 +77,19 @@ class EquipBox2 extends StatelessWidget {
             }));
   }
 }
+
+//Box 4.
 class EquipBox3 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    //Uses card design.
     return Card(
         margin: EdgeInsets.only(top: 50.0, bottom: 50.0),
-        //color: Colors.amber,
         child: ListTile(
+          //Icon relevant to button destination.
             leading: Icon(Icons.category),
             title: Text('Hybrid Items'),
-            //contentPadding: EdgeInsets.only(bottom: 50.0),
+            //When tapped, tile will load the new screen index.
             onTap: () {
               Navigator.push(
                 context,
@@ -89,16 +99,18 @@ class EquipBox3 extends StatelessWidget {
   }
 }
 
+//Box 5.
 class EquipBox4 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    //Uses card design.
     return Card(
         margin: EdgeInsets.only(top: 50.0, bottom: 50.0),
-        //color: Colors.amber,
         child: ListTile(
+          //Icon relevant to button destination.
             leading: Icon(Icons.auto_fix_high),
             title: Text('Magic Items'),
-            //contentPadding: EdgeInsets.only(bottom: 50.0),
+            //When tapped, tile will load the new screen index.
             onTap: () {
               Navigator.push(
                 context,
@@ -108,16 +120,18 @@ class EquipBox4 extends StatelessWidget {
   }
 }
 
+//Box 6.
 class EquipBox5 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    //Uses card design.
     return Card(
+      //Icon relevant to button destination.
         margin: EdgeInsets.only(top: 50.0, bottom: 50.0),
-        //color: Colors.amber,
         child: ListTile(
             leading: Icon(Icons.backpack),
             title: Text('Other Purchases'),
-            //contentPadding: EdgeInsets.only(bottom: 50.0),
+            //When tapped, tile will load the new screen index.
             onTap: () {
               Navigator.push(
                 context,
@@ -127,16 +141,18 @@ class EquipBox5 extends StatelessWidget {
   }
 }
 
+//Box 7.
 class EquipBox6 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    //Uses card design.
     return Card(
+      //Icon relevant to button destination.
         margin: EdgeInsets.only(top: 50.0, bottom: 50.0),
-        //color: Colors.amber,
         child: ListTile(
             leading: Icon(Icons.biotech),
             title: Text('Tech Items'),
-            //contentPadding: EdgeInsets.only(bottom: 50.0),
+            //When tapped, tile will load the new screen index.
             onTap: () {
               Navigator.push(
                 context,
@@ -146,56 +162,23 @@ class EquipBox6 extends StatelessWidget {
   }
 }
 
-/*class EquipBox7 extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Card(
-        margin: EdgeInsets.only(top: 50.0, bottom: 50.0),
-        //color: Colors.amber,
-        child: ListTile(
-            leading: Icon(Icons.local_shipping),
-            title: Text('Vehicles'),
-            //contentPadding: EdgeInsets.only(bottom: 50.0),
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => VehicleList()),
-              );
-            }));
-  }
-}*/
-
+//Box 8.
 class EquipBox7 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-
+    //Uses card design.
     return Card(
+      //Icon relevant to button destination.
         margin: EdgeInsets.only(top: 50.0, bottom: 50.0),
-        //color: Colors.amber,
         child: ListTile(
             leading: Icon(Icons.colorize),
             title: Text('Weapons'),
-            //contentPadding: EdgeInsets.only(bottom: 50.0),
+            //When tapped, tile will load the new screen index.
             onTap: () {
               Navigator.push(
                 context,
                 MaterialPageRoute(builder: (context) => WeaponList()),
               );
             }));
-  }
-
-  Size screenSize(BuildContext context) {
-    return MediaQuery.of(context).size;
-  }
-
-  double buttonHeight(BuildContext context,
-      {double numOfButtons = equipConstNumOfButtons, double sizeReduction = 0.0}) {
-    return (screenSize(context).height - sizeReduction) / numOfButtons;
-  }
-
-  double buttonHeightWithToolbar(BuildContext context,
-      {double numOfButtons = equipConstNumOfButtons}) {
-    return buttonHeight(context,
-        numOfButtons: numOfButtons, sizeReduction: kToolbarHeight);
   }
 }

@@ -1,12 +1,10 @@
-import 'dart:async';
-import 'dart:convert';
+//CONTRIBUTION - BRANDON 90% CONOR 10%
 
-import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+import 'index.dart';
 
-class Weapon {
-  String name;
+//This object is used in the Weapon index.
+class Weapon extends Index{
+  //These parameters match the sfrpg_weapons json fields.
   final String source;
   final String type;
   final String handed;
@@ -98,62 +96,56 @@ class Weapon {
   final bool isRanged;
   final int units;
 
-  Future<String> _loadFromAsset() async {
-    return await rootBundle.loadString("data/sfrpg_weapons.json");
-  }
-
-  Future parseJson() async {
-    String jsonString = await _loadFromAsset();
-    final jsonResponse = jsonDecode(jsonString);
-    print(jsonString);
-    print(jsonResponse);
-  }
-
+  //This list parses the Weapon index data in list strings.
   List<String> weaponDetails(Weapon weaponToParse) {
+    //This populates a list of strings for each Weapon.
     List<String> weaponProperties = new List();
-    //weaponProperties.add("Name: " + spellToParse.name);
-    if (weaponToParse.source != null) {
+    //Strings use the isNotEmpty method to skip null values.
+    if (weaponToParse.source.isNotEmpty) {
       weaponProperties.add("Source: " + weaponToParse.source);
     }
-    if (weaponToParse.type != null) {
+    if (weaponToParse.type.isNotEmpty) {
       weaponProperties.add("Type: " + weaponToParse.type);
     }
-    if (weaponToParse.handed != null) {
+    if (weaponToParse.handed.isNotEmpty) {
       weaponProperties.add("Handedness: " + weaponToParse.handed);
     }
-    if (weaponToParse.category != null) {
+    if (weaponToParse.category.isNotEmpty) {
       weaponProperties.add("Categories: " + weaponToParse.category);
     }
-    if (weaponToParse.level != null) {
+    //Integers use the isNaN method with reverse logic to skip null values.
+    if (!weaponToParse.level.isNaN) {
       weaponProperties.add("Level: " + weaponToParse.level.toString());
     }
-    if (weaponToParse.price != null) {
+    if (!weaponToParse.price.isNaN) {
       weaponProperties.add("Price: " + weaponToParse.price.toString());
     }
-    if (weaponToParse.damage != null) {
+    if (weaponToParse.damage.isNotEmpty) {
       weaponProperties.add("Damage: " + weaponToParse.damage);
     }
-    if (weaponToParse.range != null) {
+    if (weaponToParse.range.isNotEmpty) {
       weaponProperties.add("Range: " + weaponToParse.range);
     }
-    if (weaponToParse.critical != null) {
+    if (weaponToParse.critical.isNotEmpty) {
       weaponProperties.add("Critical: " + weaponToParse.critical);
     }
-    if (weaponToParse.ammo != null) {
+    if (weaponToParse.ammo.isNotEmpty) {
       weaponProperties.add("Ammo: " + weaponToParse.ammo);
     }
-    if (weaponToParse.capacity != null) {
+    if (weaponToParse.capacity.isNotEmpty) {
       weaponProperties.add("Capacity: " + weaponToParse.capacity);
     }
-    if (weaponToParse.usage != null) {
+    if (weaponToParse.usage.isNotEmpty) {
       weaponProperties.add("Usage: " + weaponToParse.usage);
     }
-    if (weaponToParse.bulk != null) {
+    if (weaponToParse.bulk.isNotEmpty) {
       weaponProperties.add("Bulk: " + weaponToParse.bulk);
     }
-    if (weaponToParse.special != null) {
+    if (weaponToParse.special.isNotEmpty) {
       weaponProperties.add("Special: " + weaponToParse.special);
     }
+    //Booleans use != null to skip null values. This doesn't comply with Dart
+    //rules and should be improved.
     if (weaponToParse.analog != null) {
       weaponProperties.add("Analog: " + weaponToParse.analog.toString());
     }
@@ -176,7 +168,7 @@ class Weapon {
     if (weaponToParse.block != null) {
       weaponProperties.add("Block: " + weaponToParse.block.toString());
     }
-    if (weaponToParse.boost != null) {
+    if (weaponToParse.boost.isNotEmpty) {
       weaponProperties.add("Boost: " + weaponToParse.boost.toString());
     }
     if (weaponToParse.breach != null) {
@@ -188,13 +180,13 @@ class Weapon {
     if (weaponToParse.bright != null) {
       weaponProperties.add("Bright: " + weaponToParse.bright.toString());
     }
-    if (weaponToParse.cluster != null) {
+    if (weaponToParse.cluster.isNotEmpty) {
       weaponProperties.add("Cluster: " + weaponToParse.cluster);
     }
     if (weaponToParse.conceal != null) {
       weaponProperties.add("Conceal: " + weaponToParse.conceal.toString());
     }
-    if (weaponToParse.deconstruct != null) {
+    if (weaponToParse.deconstruct.isNotEmpty) {
       weaponProperties.add("Deconstruct: " + weaponToParse.deconstruct);
     }
     if (weaponToParse.deflect != null) {
@@ -203,7 +195,7 @@ class Weapon {
     if (weaponToParse.disarm != null) {
       weaponProperties.add("Disarm: " + weaponToParse.disarm.toString());
     }
-    if (weaponToParse.double != null) {
+    if (weaponToParse.double.isNotEmpty) {
       weaponProperties.add("Double: " + weaponToParse.double);
     }
     if (weaponToParse.drainCharge != null) {
@@ -213,10 +205,10 @@ class Weapon {
     if (weaponToParse.echo != null) {
       weaponProperties.add("Echo: " + weaponToParse.echo.toString());
     }
-    if (weaponToParse.entangle != null) {
+    if (weaponToParse.entangle.isNotEmpty) {
       weaponProperties.add("Entangle: " + weaponToParse.entangle);
     }
-    if (weaponToParse.explode != null) {
+    if (weaponToParse.explode.isNotEmpty) {
       weaponProperties.add("Explode: " + weaponToParse.explode);
     }
     if (weaponToParse.extinguish != null) {
@@ -226,17 +218,16 @@ class Weapon {
     if (weaponToParse.feint != null) {
       weaponProperties.add("Feint: " + weaponToParse.feint.toString());
     }
-    if (weaponToParse.firstArc != null) {
+    if (weaponToParse.firstArc.isNotEmpty) {
       weaponProperties.add("First Arc: " + weaponToParse.firstArc);
     }
     if (weaponToParse.flexibleLine != null) {
-      weaponProperties
-          .add("Flexible Line: " + weaponToParse.flexibleLine.toString());
+      weaponProperties.add("Flexible Line: " + weaponToParse.flexibleLine.toString());
     }
     if (weaponToParse.force != null) {
       weaponProperties.add("Force: " + weaponToParse.force.toString());
     }
-    if (weaponToParse.freeHands != null) {
+    if (weaponToParse.freeHands.isNotEmpty) {
       weaponProperties.add("Free Hands: " + weaponToParse.freeHands.toString());
     }
     if (weaponToParse.fueled != null) {
@@ -245,7 +236,7 @@ class Weapon {
     if (weaponToParse.grapple != null) {
       weaponProperties.add("Grapple: " + weaponToParse.grapple.toString());
     }
-    if (weaponToParse.gravitation != null) {
+    if (weaponToParse.gravitation.isNotEmpty) {
       weaponProperties.add("Gravitation: " + weaponToParse.gravitation);
     }
     if (weaponToParse.guided != null) {
@@ -254,7 +245,7 @@ class Weapon {
     if (weaponToParse.harrying != null) {
       weaponProperties.add("Harrying: " + weaponToParse.harrying.toString());
     }
-    if (weaponToParse.ignite != null) {
+    if (weaponToParse.ignite.isNotEmpty) {
       weaponProperties.add("Ignite: " + weaponToParse.ignite);
     }
     if (weaponToParse.indirect != null) {
@@ -263,7 +254,7 @@ class Weapon {
     if (weaponToParse.injection != null) {
       weaponProperties.add("Injection: " + weaponToParse.injection.toString());
     }
-    if (weaponToParse.integrated != null) {
+    if (weaponToParse.integrated.isNotEmpty) {
       weaponProperties.add("Integrated: " + weaponToParse.integrated);
     }
     if (weaponToParse.line != null) {
@@ -279,7 +270,7 @@ class Weapon {
     if (weaponToParse.mine != null) {
       weaponProperties.add("Mine: " + weaponToParse.mine.toString());
     }
-    if (weaponToParse.modal != null) {
+    if (weaponToParse.modal.isNotEmpty) {
       weaponProperties.add("Modal: " + weaponToParse.modal);
     }
     if (weaponToParse.noSpecial != null) {
@@ -295,13 +286,13 @@ class Weapon {
       weaponProperties
           .add("Penetrating: " + weaponToParse.penetrating.toString());
     }
-    if (weaponToParse.polarize != null) {
+    if (weaponToParse.polarize.isNotEmpty) {
       weaponProperties.add("Polarize: " + weaponToParse.polarize);
     }
     if (weaponToParse.powered != null) {
       weaponProperties.add("Powered: " + weaponToParse.powered.toString());
     }
-    if (weaponToParse.professional != null) {
+    if (weaponToParse.professional.isNotEmpty) {
       weaponProperties.add("Professional: " + weaponToParse.professional);
     }
     if (weaponToParse.quickReload != null) {
@@ -315,19 +306,19 @@ class Weapon {
     if (weaponToParse.reach != null) {
       weaponProperties.add("Reach: " + weaponToParse.reach.toString());
     }
-    if (weaponToParse.recall != null) {
+    if (weaponToParse.recall.isNotEmpty) {
       weaponProperties.add("Recall: " + weaponToParse.recall);
     }
-    if (weaponToParse.shape != null) {
+    if (weaponToParse.shape.isNotEmpty) {
       weaponProperties.add("Shape: " + weaponToParse.shape);
     }
     if (weaponToParse.shells != null) {
       weaponProperties.add("Shells: " + weaponToParse.shells.toString());
     }
-    if (weaponToParse.shield != null) {
+    if (weaponToParse.shield.isNotEmpty) {
       weaponProperties.add("Shield: " + weaponToParse.shield);
     }
-    if (weaponToParse.sniper != null) {
+    if (weaponToParse.sniper.isNotEmpty) {
       weaponProperties.add("Sniper: " + weaponToParse.sniper);
     }
     if (weaponToParse.stun != null) {
@@ -360,27 +351,27 @@ class Weapon {
     if (weaponToParse.wideLine != null) {
       weaponProperties.add("Wide Line: " + weaponToParse.wideLine.toString());
     }
-    if (weaponToParse.damageRoll != null) {
+    if (weaponToParse.damageRoll.isNotEmpty) {
       weaponProperties.add("Damage Roll: " + weaponToParse.damageRoll);
     }
-    if (weaponToParse.damageType != null) {
+    if (weaponToParse.damageType.isNotEmpty) {
       weaponProperties.add("Damage Type: " + weaponToParse.damageType);
     }
-    if (weaponToParse.damageType2 != null) {
+    if (weaponToParse.damageType2.isNotEmpty) {
       weaponProperties.add("Damage Type2: " + weaponToParse.damageType2);
     }
-    if (weaponToParse.weaponTier != null) {
+    if (!weaponToParse.weaponTier.isNaN) {
       weaponProperties
           .add("Weapon Tier: " + weaponToParse.weaponTier.toString());
     }
-    if (weaponToParse.criticalType != null) {
+    if (weaponToParse.criticalType.isNotEmpty) {
       weaponProperties.add("Critical Type: " + weaponToParse.criticalType);
     }
-    if (weaponToParse.criticalDuration != null) {
+    if (weaponToParse.criticalDuration.isNotEmpty) {
       weaponProperties
           .add("Critical Duration: " + weaponToParse.criticalDuration);
     }
-    if (weaponToParse.criticalValue != null) {
+    if (weaponToParse.criticalValue.isNotEmpty) {
       weaponProperties.add("Critical Value: " + weaponToParse.criticalValue);
     }
     if (weaponToParse.isMelee != null) {
@@ -389,13 +380,15 @@ class Weapon {
     if (weaponToParse.isRanged != null) {
       weaponProperties.add("Ranged: " + weaponToParse.isRanged.toString());
     }
-    if (weaponToParse.units != null) {
+    if (!weaponToParse.units.isNaN) {
       weaponProperties.add("Units: " + weaponToParse.units.toString());
     }
+    //This returns the newly made list string to the list.
     return weaponProperties;
   }
 
-  Weapon({this.name, this.source, this.type, this.handed, this.category, this.level,
+  //This is the constructor for the Weapon object.
+  Weapon({name, this.source, this.type, this.handed, this.category, this.level,
     this.price, this.damage, this.range, this.critical, this.ammo, this.capacity,
     this.usage, this.bulk, this.special, this.analog, this.antibiological, this.archaic,
     this.aurora, this.automatic, this.blast, this.block, this.boost, this.breach,
@@ -411,11 +404,13 @@ class Weapon {
     this.sunder, this.tail, this.thought, this.throttle, this.thrown, this.trip,
     this.unwieldy, this.wideLine, this.damageRoll, this.damageType, this.damageType2,
     this.weaponTier, this.criticalType, this.criticalDuration, this.criticalValue,
-    this.isMelee, this.isRanged, this.units});
+    this.isMelee, this.isRanged, this.units}): super(name: name);
 
+  //This parses the json into the Weapon object.
   factory Weapon.fromJson(Map<String, dynamic> json) {
+    final index = Index.fromJson(json);
     return Weapon(
-        name: json['Name'],
+        name: index.name,
         source: json['Source'],
         type: json['Type'],
         handed: json['Handed'],
