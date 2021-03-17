@@ -191,27 +191,8 @@
 
 	</style>
 	<script>
-	function AttachListeners(){
-		var inputs = document.getElementsByTagName("input");
-		var areas = document.getElementsByTagName("textarea");
-		var selects = document.getElementsByTagName("select");
-		for(var i=0; i < inputs.length; i++)
-		{
-			inputs[i].addEventListener("change", UpdateDLLink);
-		}
 
-		for(var i=0; i < areas.length; i++)
-		{
-			areas[i].addEventListener("change", UpdateDLLink);
-		}
-
-		for(var i=0; i < selects.length; i++)
-		{
-			selects[i].addEventListener("change", UpdateDLLink);
-		}
-
-	}
-
+	
 	function ModCapacity(boxnumber)
 	{
 		var boxname = "AmmoCapacity" + boxnumber;
@@ -303,7 +284,6 @@
 				}
 		}
 		PopulateNameAndID();
-		UpdateDLLink();
 		ModCapacity(1);
 		ModCapacity(2);
 		ModCapacity(3);
@@ -336,54 +316,6 @@
 		reader.readAsText(file);
 	}
 
-	function UpdateDLLink(){
-		var cjson = {};
-		var charname = document.getElementById("Charname").value;
-		var charvars = document.querySelectorAll("input[type=text]");
-		var longvars = document.getElementsByTagName("textarea");
-		var boolvars = document.querySelectorAll("input[type=checkbox]");
-		var allowrecoverysave = false;
-
-		if(charname==""){
-			charname = "Unnamed Character";
-			}
-		else
-			allowrecoverysave = true;
-
-		for(var i=0; i < charvars.length; i++)
-		{
-			cjson[charvars[i].id]=charvars[i].value;
-		}
-
-		for(var i=0; i < longvars.length; i++)
-		{
-			cjson[longvars[i].id]=longvars[i].value;
-		}
-
-		for(var i=0; i < boolvars.length; i++)
-		{
-			if(boolvars[i].checked)
-			{
-				cjson[boolvars[i].id]=true;
-			}
-		}
-
-		cjson['BackPack'] = document.getElementById("BackPack").value;
-
-		var cstring=JSON.stringify(cjson);
-		var charblob = new Blob([cstring], {type: "application/json"});
-		var url = URL.createObjectURL(charblob);
-
-		var a = document.createElement('a');
-		a.download    = charname+".json";
-		a.href        = url;
-		a.textContent = "Save";
-
-		document.getElementById('DownloadLink').innerHTML="";
-		document.getElementById('DownloadLink').appendChild(a);
-
-
-	}
 
 	function saveSheet(){
 	var cjson = {};
@@ -434,7 +366,7 @@
 		{
 			fields[i].value = modifier;
 		}
-		UpdateDLLink();
+
 	}
 
 	function PopulateAll()
@@ -466,7 +398,7 @@
 			document.getElementById('CapacityU').value = "" + uBulk;
 			document.getElementById('CapacityE').value = (uBulk+1) + "-" + eStrMod;
 			document.getElementById('CapacityO').value = (eStrMod + 1);
-			UpdateDLLink();
+
 		}
 	}
 
@@ -483,7 +415,7 @@
 		}
 
 		document.getElementById("CapacityC").value=Math.trunc(totalbulk/10);
-		UpdateDLLink();
+
 	}
 
 	function AddEight(dstfield,srcfield)
@@ -499,7 +431,7 @@
 			}
 		}
 		document.getElementById(dstfield).value = total;
-		UpdateDLLink();
+
 	}
 
 	function SumUp(dstfield,srcfields)
@@ -519,7 +451,7 @@
 		}
 
 		document.getElementById(dstfield).value = total;
-		UpdateDLLink();
+
 	}
 
 	function SumPlusTen(dstfield,srcfields)
@@ -539,7 +471,7 @@
 		}
 
 		document.getElementById(dstfield).value = total;
-		UpdateDLLink();
+
 	}
 
 	function SumUpSkill(skill, trainedonly, applyACP)
@@ -564,7 +496,7 @@
 				document.getElementById(SkillTotal).value = "-";
 			}
 		}
-		UpdateDLLink();
+
 	}
 
 	function CalcAllSkills()
@@ -602,12 +534,9 @@
 
 	</script>
 	<title>Starfinder Character Sheet</title>
-</head>
-<body>
-<span class="nonprinting fixedcontrols">
-			Load:<input type="file" id="inputfile" onchange="LoadFile()">
-			<span id="DownloadLink"></span>
-			<button onclick="CrashRecovery()" title="Load last auto-saved character.">Crash Recovery</button>
+	</head>
+	<body>
+		<span class="nonprinting fixedcontrols">
 			<button onclick="saveSheet()" title="Attempting to send back information">Save Char</button>
 			<button onclick="loadSheetAttempt()" title="Attempting to send back information">Load Char</button>
 		</span>
@@ -3094,15 +3023,14 @@
 						<span id="AmmoUsed5_99o"><input type="checkbox" id="AmmoUsed5_99"></span>
 						<span id="AmmoUsed5_100o"><input type="checkbox" id="AmmoUsed5_100">&nbsp;</span>
 					</span>
-		</th>
-</table>
-<h3>Community Use Policy</h3><br>This character sheet uses trademarks and/or copyrights owned by Paizo Inc., which are used under Paizo's Community Use Policy. We are expressly prohibited from charging you to use or access this content. This character sheet is not published, endorsed, or specifically approved by Paizo Inc. For more information about Paizo's Community Use Policy, please visit <a href="http://paizo.com/paizo/about/communityuse">paizo.com/communityuse</a>. For more information about Paizo Inc. and Paizo products, please visit <a href="http://paizo.com/">paizo.com</a>.
-<script>AttachListeners()</script>
-<script>ModCapacity(1)</script>
-<script>ModCapacity(2)</script>
-<script>ModCapacity(3)</script>
-<script>ModCapacity(4)</script>
-<script>ModCapacity(5)</script>
-</body>
+				</th>
+		</table>
+		<h3>Community Use Policy</h3><br>This character sheet uses trademarks and/or copyrights owned by Paizo Inc., which are used under Paizo's Community Use Policy. We are expressly prohibited from charging you to use or access this content. This character sheet is not published, endorsed, or specifically approved by Paizo Inc. For more information about Paizo's Community Use Policy, please visit <a href="http://paizo.com/paizo/about/communityuse">paizo.com/communityuse</a>. For more information about Paizo Inc. and Paizo products, please visit <a href="http://paizo.com/">paizo.com</a>.
+	<script>ModCapacity(1)</script>
+	<script>ModCapacity(2)</script>
+	<script>ModCapacity(3)</script>
+	<script>ModCapacity(4)</script>
+	<script>ModCapacity(5)</script>
+	</body>
 </html>
 
